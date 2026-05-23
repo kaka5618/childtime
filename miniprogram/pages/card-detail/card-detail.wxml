@@ -1,0 +1,14 @@
+<view class="page detail-page" wx:if="{{card}}">
+  <card-face card="{{card}}" size="large" />
+
+  <view class="info panel">
+    <view class="info-row">
+      <text>稀有度</text>
+      <text>{{card.rarity}}</text>
+    </view>
+    <view class="info-row">
+      <text>拥有数量</text>
+      <text>{{count}}</text>
+    </view>
+  </view>
+</view>

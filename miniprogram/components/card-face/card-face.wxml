@@ -1,0 +1,17 @@
+<view class="card-face size-{{size}} rarity-{{card.rarity}} {{owned ? '' : 'locked'}}">
+  <image wx:if="{{owned}}" class="card-img" src="{{card.image}}" mode="aspectFill" />
+  <view wx:else class="placeholder">{{card.no}}</view>
+
+  <view class="card-shine"></view>
+
+  <view class="rarity-mark">
+    <view class="rarity-text">{{card.rarity}}</view>
+    <view class="star-row">★ ★ ★</view>
+  </view>
+
+  <view class="name-plate">
+    <view class="card-name">{{owned ? card.name : '未获得'}}</view>
+    <view wx:if="{{owned}}" class="card-no">{{card.no}}</view>
+    <view wx:if="{{showCount}}" class="card-count">{{count || 0}}</view>
+  </view>
+</view>

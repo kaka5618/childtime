@@ -14,5 +14,6 @@
     </view>
   </view>
 
-  <button class="primary-btn save-btn" bindtap="saveTask">保存任务</button>
+  <button class="primary-btn save-btn" bindtap="saveTask">{{isEditing ? '保存修改' : '保存任务'}}</button>
+  <button wx:if="{{isEditing}}" class="delete-btn" bindtap="deleteTask">删除任务</button>
 </view>

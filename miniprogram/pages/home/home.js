@@ -31,6 +31,11 @@ Page({
     wx.navigateTo({ url: `/pages/focus/focus?id=${id}` })
   },
 
+  goEditTask(event) {
+    const { id } = event.currentTarget.dataset
+    wx.navigateTo({ url: `/pages/task-edit/task-edit?id=${id}` })
+  },
+
   goPack() {
     wx.navigateTo({ url: '/pages/pack-open/pack-open' })
   },

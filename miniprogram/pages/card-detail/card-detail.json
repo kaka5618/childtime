@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "开包",
+  "navigationBarTitleText": "卡片详情",
   "usingComponents": {
     "card-face": "/components/card-face/card-face"
   }

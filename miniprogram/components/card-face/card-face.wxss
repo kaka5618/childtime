@@ -1,0 +1,298 @@
+.card-face {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18rpx;
+  background: #f5f2e9;
+  text-align: center;
+}
+
+.size-small {
+  height: 310rpx;
+  border-radius: 12rpx;
+}
+
+.size-medium {
+  height: 470rpx;
+}
+
+.size-large {
+  height: 900rpx;
+  border-radius: 28rpx;
+}
+
+.card-img,
+.card-shine {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.card-img {
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.placeholder {
+  position: absolute;
+  top: 30rpx;
+  right: 6rpx;
+  bottom: 56rpx;
+  left: 6rpx;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(233, 236, 232, 0.78);
+  color: #98a39c;
+  font-weight: 700;
+}
+
+.card-shine {
+  z-index: 2;
+  background: transparent;
+  pointer-events: none;
+}
+
+.rarity-mark {
+  position: absolute;
+  top: 13.5%;
+  left: 86%;
+  z-index: 3;
+  display: flex;
+  width: 104rpx;
+  height: 84rpx;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #60b89b;
+  font-family: "Arial Rounded MT Bold", "PingFang SC", "Hiragino Sans GB", sans-serif;
+  font-style: italic;
+  font-weight: 900;
+  text-align: center;
+  text-shadow:
+    0 2rpx 0 rgba(255, 255, 255, 0.96),
+    0 -2rpx 0 rgba(255, 255, 255, 0.88),
+    2rpx 0 0 rgba(255, 255, 255, 0.88),
+    -2rpx 0 0 rgba(255, 255, 255, 0.88),
+    0 5rpx 8rpx rgba(79, 129, 114, 0.22);
+  transform: translate(-50%, -50%);
+}
+
+.rarity-text {
+  width: 100%;
+  font-size: 36rpx;
+  line-height: 38rpx;
+}
+
+.star-row {
+  width: 100%;
+  margin-top: 2rpx;
+  color: #ffd36b;
+  font-size: 18rpx;
+  font-style: normal;
+  line-height: 18rpx;
+  letter-spacing: 0;
+  text-shadow:
+    0 1rpx 0 rgba(255, 255, 255, 0.92),
+    0 3rpx 5rpx rgba(166, 122, 32, 0.24);
+}
+
+.name-plate {
+  position: absolute;
+  right: 14%;
+  bottom: 5.4%;
+  left: 14%;
+  z-index: 3;
+  display: flex;
+  min-height: 64rpx;
+  align-items: center;
+  justify-content: center;
+  padding: 0 54rpx 0 18rpx;
+  color: #60b89b;
+  text-shadow:
+    0 2rpx 0 rgba(255, 255, 255, 0.96),
+    0 -2rpx 0 rgba(255, 255, 255, 0.9),
+    2rpx 0 0 rgba(255, 255, 255, 0.9),
+    -2rpx 0 0 rgba(255, 255, 255, 0.9),
+    0 5rpx 8rpx rgba(79, 129, 114, 0.22);
+}
+
+.card-name {
+  overflow: hidden;
+  max-width: 78%;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: "Arial Rounded MT Bold", "PingFang SC", "Hiragino Sans GB", sans-serif;
+  font-size: 32rpx;
+  font-weight: 900;
+}
+
+.card-no,
+.card-count {
+  position: absolute;
+  right: 4rpx;
+  flex: 0 0 auto;
+  color: #9b7a34;
+  font-size: 22rpx;
+  font-weight: 900;
+  text-shadow:
+    0 1rpx 0 rgba(255, 255, 255, 0.92),
+    0 3rpx 5rpx rgba(130, 92, 28, 0.22);
+}
+
+.card-count {
+  min-width: 28rpx;
+}
+
+.locked {
+  opacity: 0.72;
+}
+
+.rarity-R {
+  background: #dff2ff;
+}
+
+.rarity-R .rarity-mark,
+.rarity-R .name-plate {
+  color: #5da6d7;
+  text-shadow:
+    0 2rpx 0 rgba(255, 255, 255, 0.96),
+    0 -2rpx 0 rgba(255, 255, 255, 0.9),
+    2rpx 0 0 rgba(255, 255, 255, 0.9),
+    -2rpx 0 0 rgba(255, 255, 255, 0.9),
+    0 5rpx 8rpx rgba(66, 111, 143, 0.22);
+}
+
+.rarity-SR {
+  background: #fff1a8;
+}
+
+.rarity-SR .rarity-mark,
+.rarity-SR .name-plate {
+  color: #d69b22;
+  text-shadow:
+    0 2rpx 0 rgba(255, 252, 229, 0.98),
+    0 -2rpx 0 rgba(255, 252, 229, 0.94),
+    2rpx 0 0 rgba(255, 252, 229, 0.94),
+    -2rpx 0 0 rgba(255, 252, 229, 0.94),
+    0 5rpx 8rpx rgba(143, 93, 18, 0.24);
+}
+
+.rarity-SSR {
+  background: #ffd3e5;
+}
+
+.rarity-SSR .rarity-mark,
+.rarity-SSR .name-plate {
+  color: #d97aa8;
+  text-shadow:
+    0 2rpx 0 rgba(255, 255, 255, 0.98),
+    0 -2rpx 0 rgba(255, 255, 255, 0.94),
+    2rpx 0 0 rgba(255, 255, 255, 0.94),
+    -2rpx 0 0 rgba(255, 255, 255, 0.94),
+    0 5rpx 8rpx rgba(146, 68, 104, 0.24);
+}
+
+.rarity-SSR .star-row {
+  color: #f2b7d7;
+}
+
+.rarity-SR .star-row {
+  color: #ffd15c;
+}
+
+.rarity-R .star-row {
+  color: #8ed0f0;
+}
+
+.size-small .rarity-mark {
+  width: 54rpx;
+  height: 42rpx;
+  text-shadow:
+    0 1rpx 0 rgba(255, 255, 255, 0.94),
+    1rpx 0 0 rgba(255, 255, 255, 0.86),
+    -1rpx 0 0 rgba(255, 255, 255, 0.86);
+}
+
+.size-small .rarity-text {
+  font-size: 16rpx;
+  line-height: 17rpx;
+}
+
+.size-small .star-row {
+  margin-top: 0;
+  font-size: 9rpx;
+  line-height: 10rpx;
+}
+
+.size-small .name-plate {
+  right: 14%;
+  bottom: 5.4%;
+  left: 14%;
+  min-height: 46rpx;
+  padding: 0 28rpx 0 8rpx;
+  text-shadow:
+    0 1rpx 0 rgba(255, 255, 255, 0.94),
+    1rpx 0 0 rgba(255, 255, 255, 0.86),
+    -1rpx 0 0 rgba(255, 255, 255, 0.86);
+}
+
+.size-small .card-name {
+  font-size: 20rpx;
+}
+
+.size-small .card-no,
+.size-small .card-count {
+  right: 0;
+  font-size: 14rpx;
+}
+
+.size-large .rarity-mark {
+  width: 148rpx;
+  height: 112rpx;
+  text-shadow:
+    0 3rpx 0 rgba(255, 255, 255, 0.98),
+    0 -3rpx 0 rgba(255, 255, 255, 0.92),
+    3rpx 0 0 rgba(255, 255, 255, 0.92),
+    -3rpx 0 0 rgba(255, 255, 255, 0.92),
+    0 7rpx 10rpx rgba(89, 42, 0, 0.2);
+}
+
+.size-large .rarity-text {
+  font-size: 50rpx;
+  line-height: 52rpx;
+}
+
+.size-large .star-row {
+  margin-top: 4rpx;
+  font-size: 25rpx;
+  line-height: 25rpx;
+}
+
+.size-large .name-plate {
+  right: 14%;
+  bottom: 5.4%;
+  left: 14%;
+  min-height: 112rpx;
+  padding: 0 86rpx 0 28rpx;
+  text-shadow:
+    0 3rpx 0 rgba(255, 255, 255, 0.98),
+    0 -3rpx 0 rgba(255, 255, 255, 0.92),
+    3rpx 0 0 rgba(255, 255, 255, 0.92),
+    -3rpx 0 0 rgba(255, 255, 255, 0.92),
+    0 7rpx 10rpx rgba(92, 45, 0, 0.2);
+}
+
+.size-large .card-name {
+  font-size: 48rpx;
+}
+
+.size-large .card-no {
+  right: 4rpx;
+  font-size: 30rpx;
+}

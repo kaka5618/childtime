@@ -39,29 +39,3 @@
   gap: 20rpx;
   margin-top: 28rpx;
 }
-
-.card {
-  padding: 16rpx;
-}
-
-.card-img {
-  width: 100%;
-  height: 260rpx;
-}
-
-.card-name {
-  margin-top: 12rpx;
-  font-weight: 700;
-}
-
-.rarity {
-  margin-top: 6rpx;
-  color: #7ba68c;
-  font-size: 24rpx;
-  font-weight: 700;
-}
-
-.rarity-SR,
-.rarity-SSR {
-  border-color: rgba(245, 194, 107, 0.8);
-}

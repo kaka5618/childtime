@@ -67,22 +67,60 @@ function allCompleted(tasks) {
   return tasks.length > 0 && tasks.every((task) => task.completed)
 }
 
-function rollPack() {
-  const collection = getCollection()
-  const missing = cards.filter((card) => !collection[card.id])
+function buildPack(collection, options = {}) {
+  const excludedIds = options.excludedIds || []
+  const missing = cards.filter((card) => !collection[card.id] && !excludedIds.includes(card.id))
   const guaranteed = missing.length ? missing[0] : cards[0]
-  const pool = cards.filter((card) => card.rarity === 'N' || card.rarity === 'R')
+  const pool = cards.filter((card) => {
+    return (card.rarity === 'N' || card.rarity === 'R') && !excludedIds.includes(card.id)
+  })
   const extra = pool[Math.floor(Math.random() * pool.length)]
-  const pack = [guaranteed, extra].filter(Boolean)
+  return [guaranteed, extra].filter(Boolean)
+}
 
+function addPackToCollection(collection, pack) {
   pack.forEach((card) => {
     collection[card.id] = (collection[card.id] || 0) + 1
   })
+}
+
+function rollPack() {
+  const collection = getCollection()
+  const pack = buildPack(collection)
+
+  addPackToCollection(collection, pack)
 
   saveCollection(collection)
   saveLastPack(pack)
   wx.setStorageSync(PACK_GENERATED_DATE_KEY, todayKey())
   return pack
+}
+
+function synthesizePack(sourceCardId) {
+  const collection = getCollection()
+  const count = collection[sourceCardId] || 0
+
+  if (count < 4) {
+    return {
+      ok: false,
+      message: '数量不足，4 张重复卡可合成 1 包',
+      pack: []
+    }
+  }
+
+  collection[sourceCardId] = count - 4
+  if (collection[sourceCardId] <= 0) delete collection[sourceCardId]
+
+  const pack = buildPack(collection, { excludedIds: [sourceCardId] })
+  addPackToCollection(collection, pack)
+  saveCollection(collection)
+  saveLastPack(pack)
+
+  return {
+    ok: true,
+    message: '',
+    pack
+  }
 }
 
 module.exports = {
@@ -97,5 +135,6 @@ module.exports = {
   hasGeneratedToday,
   chargePercent,
   allCompleted,
-  rollPack
+  rollPack,
+  synthesizePack
 }

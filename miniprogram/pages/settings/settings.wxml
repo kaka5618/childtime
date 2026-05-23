@@ -11,4 +11,9 @@
     <view class="block-title">保底规则</view>
     <view class="muted">当前主题未集齐时，每日基础包至少包含 1 张未拥有卡。MVP 版本先使用本地存储模拟收藏进度。</view>
   </view>
+
+  <view class="panel block">
+    <view class="block-title">合成规则</view>
+    <view class="muted">同一张卡拥有 4 张或以上时，可以在收藏本中消耗 4 张合成 1 个额外卡包。合成包不占用每日基础开包机会。</view>
+  </view>
 </view>

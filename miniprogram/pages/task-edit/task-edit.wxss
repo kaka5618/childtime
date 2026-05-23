@@ -36,3 +36,10 @@
 .save-btn {
   margin-top: 32rpx;
 }
+
+.delete-btn {
+  margin-top: 18rpx;
+  border: 1rpx solid rgba(200, 90, 84, 0.36);
+  background: rgba(200, 90, 84, 0.08);
+  color: #c85a54;
+}

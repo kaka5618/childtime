@@ -5,6 +5,7 @@
     "pages/focus/focus",
     "pages/pack-open/pack-open",
     "pages/album/album",
+    "pages/card-detail/card-detail",
     "pages/settings/settings"
   ],
   "window": {

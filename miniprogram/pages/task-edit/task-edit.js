@@ -2,8 +2,30 @@ const state = require('../../utils/state')
 
 Page({
   data: {
+    taskId: '',
+    isEditing: false,
     name: '',
-    minutes: 20
+    minutes: 20,
+    completed: false
+  },
+
+  onLoad(query) {
+    if (!query.id) return
+
+    const task = state.getTasks().find((item) => item.id === query.id)
+    if (!task) {
+      wx.showToast({ title: '任务不存在', icon: 'none' })
+      wx.navigateBack()
+      return
+    }
+
+    this.setData({
+      taskId: task.id,
+      isEditing: true,
+      name: task.name,
+      minutes: Number(task.minutes),
+      completed: Boolean(task.completed)
+    })
   },
 
   onNameInput(event) {
@@ -31,12 +53,26 @@ Page({
       wx.showToast({ title: '时间为 5-90 分钟', icon: 'none' })
       return
     }
-    if (tasks.length >= 8) {
+    if (!this.data.isEditing && tasks.length >= 8) {
       wx.showToast({ title: '每天最多 8 项', icon: 'none' })
       return
     }
     if (state.hasOpenedToday()) {
       wx.showToast({ title: '今日已开包，不能修改任务', icon: 'none' })
+      return
+    }
+
+    if (this.data.isEditing) {
+      const nextTasks = tasks.map((task) => {
+        if (task.id !== this.data.taskId) return task
+        return {
+          ...task,
+          name,
+          minutes
+        }
+      })
+      state.saveTasks(nextTasks)
+      wx.navigateBack()
       return
     }
 
@@ -48,5 +84,24 @@ Page({
     })
     state.saveTasks(tasks)
     wx.navigateBack()
+  },
+
+  deleteTask() {
+    if (state.hasOpenedToday()) {
+      wx.showToast({ title: '今日已开包，不能修改任务', icon: 'none' })
+      return
+    }
+
+    wx.showModal({
+      title: '删除任务',
+      content: '确定要删除这项任务吗？',
+      confirmColor: '#C85A54',
+      success: (res) => {
+        if (!res.confirm) return
+        const nextTasks = state.getTasks().filter((task) => task.id !== this.data.taskId)
+        state.saveTasks(nextTasks)
+        wx.navigateBack()
+      }
+    })
   }
 })

@@ -1,19 +1,15 @@
 <view class="page pack-page">
   <view wx:if="{{!revealed}}" class="pack-stage panel">
     <view class="pack-bag">?</view>
-    <view class="pack-title">星梦泡泡卡包</view>
-    <view class="muted">今天的能量已经装满。</view>
+    <view class="pack-title">{{source === 'synthesis' ? '合成卡包' : '星梦泡泡卡包'}}</view>
+    <view class="muted">{{source === 'synthesis' ? '重复卡变成了新的惊喜。' : '今天的能量已经装满。'}}</view>
     <button class="primary-btn open-btn" bindtap="reveal">打开卡包</button>
   </view>
 
   <view wx:else>
     <view class="result-title">获得 {{pack.length}} 张卡</view>
     <view class="card-grid">
-      <view wx:for="{{pack}}" wx:key="id" class="card panel rarity-{{item.rarity}}">
-        <image class="card-img" src="{{item.image}}" mode="aspectFit" />
-        <view class="card-name">{{item.name}}</view>
-        <view class="rarity">{{item.rarity}}</view>
-      </view>
+      <card-face wx:for="{{pack}}" wx:key="id" card="{{item}}" size="medium" />
     </view>
     <button class="secondary-btn open-btn" bindtap="goAlbum">放进收藏本</button>
   </view>

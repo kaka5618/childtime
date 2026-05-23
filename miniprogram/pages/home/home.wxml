@@ -36,7 +36,10 @@
         <view class="task-name">{{item.name}}</view>
         <view class="muted">{{item.minutes}} 分钟</view>
       </view>
-      <view class="task-status">{{item.completed ? '已完成' : '开始'}}</view>
+      <view class="task-actions">
+        <view class="task-status">{{item.completed ? '已完成' : '开始'}}</view>
+        <button class="edit-btn" catchtap="goEditTask" data-id="{{item.id}}">编辑</button>
+      </view>
     </view>
   </view>
 
