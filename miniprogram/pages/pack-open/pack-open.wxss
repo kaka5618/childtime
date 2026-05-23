@@ -1,0 +1,67 @@
+.pack-page {
+  text-align: center;
+}
+
+.pack-stage {
+  padding: 48rpx 32rpx;
+}
+
+.pack-bag {
+  display: flex;
+  width: 220rpx;
+  height: 260rpx;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  border: 8rpx solid #f5c26b;
+  border-radius: 46% 46% 36% 36%;
+  background: linear-gradient(180deg, #fff4bc, #f7c0d4);
+  color: #7b4c00;
+  font-size: 88rpx;
+  font-weight: 700;
+  box-shadow: 0 0 36rpx rgba(245, 194, 107, 0.65);
+}
+
+.pack-title,
+.result-title {
+  margin-top: 28rpx;
+  font-size: 38rpx;
+  font-weight: 700;
+}
+
+.open-btn {
+  margin-top: 32rpx;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20rpx;
+  margin-top: 28rpx;
+}
+
+.card {
+  padding: 16rpx;
+}
+
+.card-img {
+  width: 100%;
+  height: 260rpx;
+}
+
+.card-name {
+  margin-top: 12rpx;
+  font-weight: 700;
+}
+
+.rarity {
+  margin-top: 6rpx;
+  color: #7ba68c;
+  font-size: 24rpx;
+  font-weight: 700;
+}
+
+.rarity-SR,
+.rarity-SSR {
+  border-color: rgba(245, 194, 107, 0.8);
+}

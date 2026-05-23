@@ -1,0 +1,14 @@
+<view class="page settings-page">
+  <view class="panel block">
+    <view class="block-title">抽卡概率</view>
+    <view class="row"><text>传说 SSR</text><text>3.0%</text></view>
+    <view class="row"><text>稀有 SR</text><text>12.0%</text></view>
+    <view class="row"><text>精良 R</text><text>30.0%</text></view>
+    <view class="row"><text>普通 N</text><text>55.0%</text></view>
+  </view>
+
+  <view class="panel block">
+    <view class="block-title">保底规则</view>
+    <view class="muted">当前主题未集齐时，每日基础包至少包含 1 张未拥有卡。MVP 版本先使用本地存储模拟收藏进度。</view>
+  </view>
+</view>

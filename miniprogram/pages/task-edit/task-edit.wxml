@@ -1,0 +1,18 @@
+<view class="page edit-page">
+  <view class="form panel">
+    <view class="field">
+      <view class="label">任务名</view>
+      <input class="input" maxlength="20" value="{{name}}" placeholder="例如：数学练习" bindinput="onNameInput" />
+    </view>
+
+    <view class="field">
+      <view class="label">预估时间</view>
+      <view class="minutes-row">
+        <slider min="5" max="90" step="5" value="{{minutes}}" activeColor="#7BA68C" bindchange="onMinutesInput" />
+        <view class="minutes">{{minutes}} 分钟</view>
+      </view>
+    </view>
+  </view>
+
+  <button class="primary-btn save-btn" bindtap="saveTask">保存任务</button>
+</view>

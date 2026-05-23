@@ -1,0 +1,44 @@
+<view class="page home-page">
+  <view class="topbar">
+    <view>
+      <view class="eyebrow">今日任务</view>
+      <view class="title">把能量袋装满</view>
+    </view>
+    <button class="icon-btn" bindtap="goSettings">设置</button>
+  </view>
+
+  <view class="bag-panel panel">
+    <view class="bag {{percent === 100 ? 'full' : ''}}">
+      <view class="bag-fill" style="height: {{percent}}%;"></view>
+      <view class="bag-label">{{percent}}%</view>
+    </view>
+    <view class="bag-copy">
+      <view class="bag-title">{{allDone ? '能量满了' : '星梦泡泡能量袋'}}</view>
+      <view class="muted">完成任务会按预估时间为能量袋充能。</view>
+    </view>
+    <button wx:if="{{allDone && !openedToday}}" class="primary-btn pack-btn" bindtap="goPack">去开包</button>
+    <button wx:elif="{{openedToday}}" class="secondary-btn pack-btn" bindtap="goAlbum">查看收藏</button>
+  </view>
+
+  <view class="section-head">
+    <view class="section-title">任务清单</view>
+    <button class="small-btn primary-btn" bindtap="goAddTask">添加</button>
+  </view>
+
+  <view wx:if="{{tasks.length === 0}}" class="empty panel">
+    <view class="empty-title">还没有任务</view>
+    <view class="muted">添加今晚要完成的作业，能量袋就会开始等待充能。</view>
+  </view>
+
+  <view wx:else class="task-list">
+    <view wx:for="{{tasks}}" wx:key="id" class="task panel {{item.completed ? 'done' : ''}}" bindtap="goFocus" data-id="{{item.id}}">
+      <view>
+        <view class="task-name">{{item.name}}</view>
+        <view class="muted">{{item.minutes}} 分钟</view>
+      </view>
+      <view class="task-status">{{item.completed ? '已完成' : '开始'}}</view>
+    </view>
+  </view>
+
+  <button class="album-btn secondary-btn" bindtap="goAlbum">收藏本</button>
+</view>

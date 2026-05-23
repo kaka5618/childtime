@@ -1,0 +1,34 @@
+.focus-page {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 120rpx;
+  text-align: center;
+}
+
+.focus-card {
+  padding: 56rpx 30rpx;
+}
+
+.focus-label {
+  color: #7ba68c;
+  font-weight: 700;
+}
+
+.focus-title {
+  margin-top: 18rpx;
+  font-size: 42rpx;
+  font-weight: 700;
+}
+
+.timer {
+  margin: 50rpx 0 24rpx;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 92rpx;
+  font-weight: 700;
+}
+
+.complete-btn {
+  margin-top: 48rpx;
+}

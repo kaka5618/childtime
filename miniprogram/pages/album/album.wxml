@@ -1,0 +1,18 @@
+<view class="page album-page">
+  <view class="album-head">
+    <view>
+      <view class="eyebrow">星梦泡泡</view>
+      <view class="title">收藏本</view>
+    </view>
+    <view class="progress">{{ownedCount}}/50</view>
+  </view>
+
+  <view class="album-grid">
+    <view wx:for="{{cards}}" wx:key="id" class="slot panel {{item.owned ? '' : 'locked'}}">
+      <image wx:if="{{item.owned}}" class="slot-img" src="{{item.image}}" mode="aspectFit" />
+      <view wx:else class="placeholder">{{item.no}}</view>
+      <view class="slot-name">{{item.owned ? item.name : '未获得'}}</view>
+      <view class="slot-meta">{{item.rarity}} · {{item.count || 0}}</view>
+    </view>
+  </view>
+</view>

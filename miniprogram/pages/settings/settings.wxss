@@ -1,0 +1,21 @@
+.block {
+  padding: 28rpx;
+}
+
+.block + .block {
+  margin-top: 22rpx;
+}
+
+.block-title {
+  margin-bottom: 18rpx;
+  font-size: 32rpx;
+  font-weight: 700;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  padding: 14rpx 0;
+  border-top: 1rpx solid rgba(35, 51, 43, 0.08);
+  font-weight: 700;
+}
