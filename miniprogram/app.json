@@ -1,0 +1,18 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/task-edit/task-edit",
+    "pages/focus/focus",
+    "pages/pack-open/pack-open",
+    "pages/album/album",
+    "pages/settings/settings"
+  ],
+  "window": {
+    "navigationBarTitleText": "星梦泡泡",
+    "navigationBarBackgroundColor": "#7BA68C",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#FAF6F0"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

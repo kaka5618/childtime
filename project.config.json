@@ -1,0 +1,18 @@
+{
+  "description": "儿童学习陪伴小程序 MVP",
+  "packOptions": {
+    "ignore": []
+  },
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": true
+  },
+  "compileType": "miniprogram",
+  "libVersion": "3.4.0",
+  "appid": "touristappid",
+  "projectname": "childtime",
+  "miniprogramRoot": "miniprogram/"
+}
