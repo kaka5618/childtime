@@ -1,15 +1,24 @@
 <view class="page pack-page">
-  <view wx:if="{{!revealed}}" class="pack-stage panel">
-    <view class="pack-bag">?</view>
+  <view wx:if="{{!revealed}}" class="pack-stage panel {{opening ? 'opening' : ''}}">
+    <view class="burst"></view>
+    <view class="spark spark-a"></view>
+    <view class="spark spark-b"></view>
+    <view class="spark spark-c"></view>
+    <view class="pack-bag">
+      <view class="pack-mark">?</view>
+    </view>
     <view class="pack-title">{{source === 'synthesis' ? '合成卡包' : '星梦泡泡卡包'}}</view>
     <view class="muted">{{source === 'synthesis' ? '重复卡变成了新的惊喜。' : '今天的能量已经装满。'}}</view>
-    <button class="primary-btn open-btn" bindtap="reveal">打开卡包</button>
+    <button class="primary-btn open-btn" disabled="{{opening}}" bindtap="beginOpen">{{opening ? '打开中' : '打开卡包'}}</button>
   </view>
 
   <view wx:else>
-    <view class="result-title">获得 {{pack.length}} 张卡</view>
+    <view class="result-title reveal-title">获得 {{pack.length}} 张卡</view>
     <view class="card-grid">
-      <card-face wx:for="{{pack}}" wx:key="id" card="{{item}}" size="medium" />
+      <view wx:for="{{pack}}" wx:key="id" class="reveal-card rarity-{{item.rarity}}" style="animation-delay: {{index * 120}}ms;">
+        <view class="rare-flash"></view>
+        <card-face card="{{item}}" size="medium" />
+      </view>
     </view>
     <button class="secondary-btn open-btn" bindtap="goAlbum">放进收藏本</button>
   </view>

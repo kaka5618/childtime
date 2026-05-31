@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "选择收集主题",
+  "usingComponents": {
+    "card-face": "/components/card-face/card-face"
+  }
+}

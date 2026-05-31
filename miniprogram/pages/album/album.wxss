@@ -22,6 +22,27 @@
   font-weight: 700;
 }
 
+.switch-theme-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10rpx;
+  height: 64rpx;
+  margin: 22rpx 0 0;
+  border: 1rpx solid rgba(123, 166, 140, 0.38);
+  background: rgba(123, 166, 140, 0.12);
+  color: #4e7a60;
+  font-size: 25rpx;
+  line-height: 64rpx;
+}
+
+.switch-dot {
+  width: 18rpx;
+  height: 18rpx;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4rpx rgba(255, 255, 255, 0.72);
+}
+
 .album-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

@@ -4,8 +4,11 @@ Page({
   data: {
     pack: [],
     revealed: false,
+    opening: false,
     source: 'daily'
   },
+
+  openTimer: null,
 
   onLoad(query) {
     const source = query.source || 'daily'
@@ -30,8 +33,27 @@ Page({
     this.setData({ pack, source })
   },
 
+  onUnload() {
+    if (this.openTimer) {
+      clearTimeout(this.openTimer)
+      this.openTimer = null
+    }
+  },
+
+  beginOpen() {
+    if (this.data.opening) return
+
+    this.setData({ opening: true })
+    this.openTimer = setTimeout(() => {
+      this.reveal()
+    }, 900)
+  },
+
   reveal() {
-    this.setData({ revealed: true })
+    this.setData({
+      revealed: true,
+      opening: false
+    })
     if (this.data.source === 'daily') {
       state.markOpenedToday()
     }

@@ -5,6 +5,7 @@ const COLLECTION_KEY = 'childtime_collection'
 const PACK_KEY = 'childtime_last_pack'
 const PACK_DATE_KEY = 'childtime_pack_date'
 const PACK_GENERATED_DATE_KEY = 'childtime_pack_generated_date'
+const ACTIVE_SERIES_KEY = 'childtime_active_series'
 
 function todayKey() {
   const now = new Date()
@@ -24,6 +25,27 @@ function getTasks() {
 
 function saveTasks(tasks) {
   wx.setStorageSync(taskStorageKey(), tasks)
+}
+
+function getActiveSeriesId() {
+  const seriesId = wx.getStorageSync(ACTIVE_SERIES_KEY)
+  if (seriesId) return seriesId
+
+  const hasExistingProgress = Object.keys(getCollection()).length > 0 || getTasks().length > 0
+  if (hasExistingProgress) {
+    setActiveSeriesId('star_dream_bubble')
+    return 'star_dream_bubble'
+  }
+
+  return ''
+}
+
+function setActiveSeriesId(seriesId) {
+  wx.setStorageSync(ACTIVE_SERIES_KEY, seriesId)
+}
+
+function hasSelectedSeries() {
+  return Boolean(getActiveSeriesId())
 }
 
 function getCollection() {
@@ -126,6 +148,9 @@ function synthesizePack(sourceCardId) {
 module.exports = {
   getTasks,
   saveTasks,
+  getActiveSeriesId,
+  setActiveSeriesId,
+  hasSelectedSeries,
   getCollection,
   saveCollection,
   getLastPack,

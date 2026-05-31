@@ -16,6 +16,10 @@
       <view class="bag-title">{{allDone ? '能量满了' : '星梦泡泡能量袋'}}</view>
       <view class="muted">完成任务会按预估时间为能量袋充能。</view>
     </view>
+    <view wx:if="{{activeTheme}}" class="theme-chip" bindtap="goThemeSelect">
+      <view class="theme-dot" style="background: {{activeTheme.accent}};"></view>
+      <text>当前收集：{{activeTheme.name}}</text>
+    </view>
     <button wx:if="{{allDone && !openedToday}}" class="primary-btn pack-btn" bindtap="goPack">去开包</button>
     <button wx:elif="{{openedToday}}" class="secondary-btn pack-btn" bindtap="goAlbum">查看收藏</button>
   </view>

@@ -1,10 +1,12 @@
 const { cards } = require('../../utils/cards')
 const state = require('../../utils/state')
+const { getTheme } = require('../../utils/themes')
 
 Page({
   data: {
     cards: [],
-    ownedCount: 0
+    ownedCount: 0,
+    activeTheme: null
   },
 
   onShow() {
@@ -17,7 +19,8 @@ Page({
     }))
     this.setData({
       cards: viewCards,
-      ownedCount: viewCards.filter((card) => card.owned).length
+      ownedCount: viewCards.filter((card) => card.owned).length,
+      activeTheme: getTheme(state.getActiveSeriesId())
     })
   },
 
@@ -51,5 +54,9 @@ Page({
         wx.navigateTo({ url: '/pages/pack-open/pack-open?source=synthesis' })
       }
     })
+  },
+
+  goThemeSelect() {
+    wx.navigateTo({ url: '/pages/theme-select/theme-select' })
   }
 })

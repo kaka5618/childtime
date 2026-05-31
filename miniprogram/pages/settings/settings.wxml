@@ -1,5 +1,11 @@
 <view class="page settings-page">
   <view class="panel block">
+    <view class="block-title">当前收集</view>
+    <view class="muted">{{activeTheme.name || '未选择'}}</view>
+    <button class="setting-btn" bindtap="goThemeSelect">选择卡包</button>
+  </view>
+
+  <view class="panel block">
     <view class="block-title">抽卡概率</view>
     <view class="row"><text>传说 SSR</text><text>3.0%</text></view>
     <view class="row"><text>稀有 SR</text><text>12.0%</text></view>

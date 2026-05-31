@@ -4,6 +4,7 @@
     "pages/task-edit/task-edit",
     "pages/focus/focus",
     "pages/pack-open/pack-open",
+    "pages/theme-select/theme-select",
     "pages/album/album",
     "pages/card-detail/card-detail",
     "pages/settings/settings"

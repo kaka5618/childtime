@@ -1,11 +1,16 @@
 <view class="page album-page">
   <view class="album-head">
     <view>
-      <view class="eyebrow">星梦泡泡</view>
+      <view class="eyebrow">{{activeTheme.name || '星梦泡泡'}}</view>
       <view class="title">收藏本</view>
     </view>
     <view class="progress">{{ownedCount}}/50</view>
   </view>
+
+  <button class="switch-theme-btn" bindtap="goThemeSelect">
+    <view class="switch-dot" style="background: {{activeTheme.accent}};"></view>
+    <text>更换收集册</text>
+  </button>
 
   <view class="album-grid">
     <view wx:for="{{cards}}" wx:key="id" class="slot-tap" bindtap="openCard" data-id="{{item.id}}" data-owned="{{item.owned}}">

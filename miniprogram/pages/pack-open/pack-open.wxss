@@ -1,12 +1,17 @@
 .pack-page {
+  overflow: hidden;
   text-align: center;
 }
 
 .pack-stage {
+  position: relative;
   padding: 48rpx 32rpx;
+  overflow: hidden;
 }
 
 .pack-bag {
+  position: relative;
+  z-index: 2;
   display: flex;
   width: 220rpx;
   height: 260rpx;
@@ -20,6 +25,70 @@
   font-size: 88rpx;
   font-weight: 700;
   box-shadow: 0 0 36rpx rgba(245, 194, 107, 0.65);
+}
+
+.pack-mark {
+  transform: translateY(-4rpx);
+}
+
+.opening .pack-bag {
+  animation: bag-shake 760ms ease-in-out both;
+}
+
+.burst {
+  position: absolute;
+  top: 150rpx;
+  left: 50%;
+  z-index: 1;
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 245, 174, 0.95), rgba(255, 188, 109, 0.48) 48%, rgba(255, 188, 109, 0) 72%);
+  opacity: 0;
+  transform: translateX(-50%) scale(0.4);
+  pointer-events: none;
+}
+
+.opening .burst {
+  animation: burst-open 760ms ease-out both;
+}
+
+.spark {
+  position: absolute;
+  z-index: 1;
+  width: 18rpx;
+  height: 18rpx;
+  border-radius: 50%;
+  background: #fff4a8;
+  opacity: 0;
+  box-shadow: 0 0 18rpx rgba(255, 226, 122, 0.85);
+}
+
+.spark-a {
+  top: 120rpx;
+  left: 26%;
+}
+
+.spark-b {
+  top: 196rpx;
+  right: 23%;
+}
+
+.spark-c {
+  top: 288rpx;
+  left: 52%;
+}
+
+.opening .spark-a {
+  animation: spark-float-a 760ms ease-out both;
+}
+
+.opening .spark-b {
+  animation: spark-float-b 760ms ease-out 80ms both;
+}
+
+.opening .spark-c {
+  animation: spark-float-c 760ms ease-out 140ms both;
 }
 
 .pack-title,
@@ -38,4 +107,152 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 20rpx;
   margin-top: 28rpx;
+}
+
+.reveal-title {
+  animation: title-pop 360ms ease-out both;
+}
+
+.reveal-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18rpx;
+  opacity: 0;
+  transform: translateY(36rpx) rotateY(72deg) scale(0.92);
+  transform-origin: center;
+  animation: card-reveal 560ms cubic-bezier(0.18, 0.86, 0.32, 1.18) both;
+}
+
+.rare-flash {
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  left: -60%;
+  z-index: 5;
+  width: 46%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.72), transparent);
+  opacity: 0;
+  transform: rotate(14deg);
+  pointer-events: none;
+}
+
+.rarity-SR .rare-flash,
+.rarity-SSR .rare-flash {
+  animation: rare-sweep 900ms ease-out 420ms both;
+}
+
+@keyframes bag-shake {
+  0% {
+    transform: scale(1) rotate(0);
+  }
+  16% {
+    transform: scale(1.04) rotate(-5deg);
+  }
+  32% {
+    transform: scale(1.07) rotate(5deg);
+  }
+  48% {
+    transform: scale(1.09) rotate(-4deg);
+  }
+  64% {
+    transform: scale(1.14) rotate(4deg);
+  }
+  100% {
+    transform: scale(1.2) rotate(0);
+  }
+}
+
+@keyframes burst-open {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.4);
+  }
+  42% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) scale(8);
+  }
+}
+
+@keyframes spark-float-a {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.4);
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-70rpx, -62rpx) scale(1.2);
+  }
+}
+
+@keyframes spark-float-b {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.4);
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(76rpx, -54rpx) scale(1.2);
+  }
+}
+
+@keyframes spark-float-c {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.4);
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(16rpx, 82rpx) scale(1.2);
+  }
+}
+
+@keyframes title-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(16rpx) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes card-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(36rpx) rotateY(72deg) scale(0.92);
+  }
+  58% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotateY(0) scale(1);
+  }
+}
+
+@keyframes rare-sweep {
+  0% {
+    left: -60%;
+    opacity: 0;
+  }
+  24% {
+    opacity: 1;
+  }
+  100% {
+    left: 116%;
+    opacity: 0;
+  }
 }
