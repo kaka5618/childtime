@@ -31,14 +31,16 @@ Page({
       return
     }
 
-    const count = collection[card.id]
+    const plan = state.getSynthesisPlan(card.id, seriesId)
     this.setData({
       card,
-      count,
-      canSynthesize: count >= 4,
-      needForSynthesis: Math.max(0, 4 - count),
-      synthesisTitle: count >= 4 ? '可以合成新卡包' : '继续收集重复卡',
-      synthesisNote: count >= 4 ? '消耗 3 张重复卡，保留 1 张收藏卡，获得 1 个额外卡包。' : `还差 ${Math.max(0, 4 - count)} 张可合成。`
+      count: plan.count,
+      canSynthesize: plan.canSynthesize,
+      needForSynthesis: plan.needCount,
+      synthesisTitle: plan.canSynthesize ? '可以合成新卡包' : '继续收集重复卡',
+      synthesisNote: plan.canSynthesize
+        ? `消耗 ${plan.consumeCount} 张重复卡，合成后还保留 ${plan.remainingCount} 张。`
+        : `还差 ${plan.needCount} 张可合成。`
     })
   },
 
@@ -47,7 +49,7 @@ Page({
 
     wx.showModal({
       title: '合成卡包',
-      content: `消耗 3 张「${this.data.card.name}」合成 1 个新卡包，并保留 1 张收藏卡？`,
+      content: `消耗 3 张「${this.data.card.name}」合成 1 个新卡包，剩余的继续留在收藏本？`,
       confirmText: '合成',
       confirmColor: '#7BA68C',
       success: (res) => {

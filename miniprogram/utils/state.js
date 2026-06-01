@@ -208,6 +208,32 @@ function getCollectionProgress(seriesId = getActiveSeriesId()) {
   }
 }
 
+function getSynthesisPlan(sourceCardId, seriesId = getActiveSeriesId()) {
+  const collection = getSeriesCollection(seriesId)
+  const count = collection[sourceCardId] || 0
+  const needCount = Math.max(0, SYNTHESIS_REQUIRED_COUNT - count)
+  const remainingCount = count >= SYNTHESIS_REQUIRED_COUNT
+    ? count - SYNTHESIS_CONSUME_COUNT
+    : count
+
+  return {
+    count,
+    canSynthesize: count >= SYNTHESIS_REQUIRED_COUNT,
+    requiredCount: SYNTHESIS_REQUIRED_COUNT,
+    consumeCount: SYNTHESIS_CONSUME_COUNT,
+    remainingCount,
+    needCount
+  }
+}
+
+function getSynthesisReadyText(sourceCardId, seriesId = getActiveSeriesId()) {
+  const plan = getSynthesisPlan(sourceCardId, seriesId)
+  if (plan.canSynthesize) {
+    return `消耗 ${plan.consumeCount} 张，保留 ${plan.remainingCount} 张`
+  }
+  return `还差 ${plan.needCount} 张可合成`
+}
+
 function chargePercent(tasks) {
   const total = tasks.reduce((sum, task) => sum + Number(task.minutes || 0), 0)
   if (!total) return 0
@@ -331,9 +357,9 @@ function rollPack(seriesId = getActiveSeriesId()) {
 
 function synthesizePack(sourceCardId, seriesId = getActiveSeriesId()) {
   const collection = getSeriesCollection(seriesId)
-  const count = collection[sourceCardId] || 0
+  const plan = getSynthesisPlan(sourceCardId, seriesId)
 
-  if (count < SYNTHESIS_REQUIRED_COUNT) {
+  if (!plan.canSynthesize) {
     return {
       ok: false,
       message: '数量不足，拥有 4 张同卡才可合成',
@@ -341,7 +367,7 @@ function synthesizePack(sourceCardId, seriesId = getActiveSeriesId()) {
     }
   }
 
-  collection[sourceCardId] = count - SYNTHESIS_CONSUME_COUNT
+  collection[sourceCardId] = plan.remainingCount
 
   const pack = buildPack(seriesId, collection, { excludedIds: [sourceCardId] })
   const resultPack = addPackToCollection(collection, pack)
@@ -431,6 +457,8 @@ module.exports = {
   markOpenedToday,
   hasGeneratedToday,
   getCollectionProgress,
+  getSynthesisPlan,
+  getSynthesisReadyText,
   chargePercent,
   allCompleted,
   prepareDailyPack,

@@ -189,7 +189,8 @@
   pointer-events: none;
 }
 
-.new-badge {
+.new-badge,
+.duplicate-badge {
   position: absolute;
   top: 12rpx;
   left: 12rpx;
@@ -201,6 +202,11 @@
   font-size: 20rpx;
   font-weight: 900;
   box-shadow: 0 6rpx 12rpx rgba(123, 76, 0, 0.18);
+}
+
+.duplicate-badge {
+  background: rgba(255, 255, 255, 0.86);
+  color: #6b7c72;
 }
 
 .rarity-SR .rare-flash,

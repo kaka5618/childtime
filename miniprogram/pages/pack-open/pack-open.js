@@ -8,7 +8,10 @@ function getCurrentTheme() {
 Page({
   data: {
     pack: [],
+    revealCards: [],
     newCount: 0,
+    resultTitle: '',
+    resultSubtitle: '',
     revealed: false,
     claimed: false,
     opening: false,
@@ -22,6 +25,15 @@ Page({
   },
 
   openTimer: null,
+
+  buildRevealCards(pack) {
+    return pack.map((card, index) => ({
+      ...card,
+      revealDelay: `${index * 120}ms`,
+      badgeText: card.isNew ? 'NEW' : '重复',
+      badgeClass: card.isNew ? 'new-badge' : 'duplicate-badge'
+    }))
+  },
 
   onLoad(query) {
     const source = query.source || 'daily'
@@ -68,14 +80,20 @@ Page({
   },
 
   setPackData(pack, source, activeTheme) {
+    const revealCards = this.buildRevealCards(pack)
+    const newCount = pack.filter((card) => card.isNew).length
+    const duplicateCount = Math.max(0, pack.length - newCount)
     this.setData({
       pack,
+      revealCards,
       source,
       activeTheme,
       packTitle: source === 'synthesis' ? '合成卡包' : activeTheme.packTitle,
       packHint: source === 'synthesis' ? '重复卡变成了新的惊喜。' : activeTheme.packHint,
       packMark: activeTheme.shortName || '?',
-      newCount: pack.filter((card) => card.isNew).length
+      newCount,
+      resultTitle: `获得 ${pack.length} 张卡`,
+      resultSubtitle: `新卡 ${newCount} 张 · 重复 ${duplicateCount} 张`
     })
   },
 
@@ -95,5 +113,10 @@ Page({
 
   goAlbum() {
     wx.redirectTo({ url: '/pages/album/album' })
+  },
+
+  openCard(event) {
+    const { id } = event.currentTarget.dataset
+    wx.navigateTo({ url: `/pages/card-detail/card-detail?id=${id}` })
   }
 })

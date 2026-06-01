@@ -35,9 +35,7 @@ Page({
     const collectionProgress = state.getCollectionProgress(seriesId)
     const viewCards = cards.map((card) => ({
       ...card,
-      count: collection[card.id] || 0,
-      owned: Boolean(collection[card.id]),
-      canSynthesize: (collection[card.id] || 0) >= 4
+      ...this.buildCardState(card, collection, seriesId)
     }))
     const activeTheme = getTheme(seriesId)
     this.setData({
@@ -49,6 +47,16 @@ Page({
       collectionProgress
     })
     this.applyFilters()
+  },
+
+  buildCardState(card, collection, seriesId) {
+    const plan = state.getSynthesisPlan(card.id, seriesId)
+    return {
+      count: collection[card.id] || 0,
+      owned: Boolean(collection[card.id]),
+      canSynthesize: plan.canSynthesize,
+      synthesisHint: state.getSynthesisReadyText(card.id, seriesId)
+    }
   },
 
   applyFilters() {
@@ -98,11 +106,11 @@ Page({
   },
 
   synthesizeCard(event) {
-    const { id, name } = event.currentTarget.dataset
+    const { id, name, hint } = event.currentTarget.dataset
 
     wx.showModal({
       title: '合成卡包',
-      content: `消耗 3 张「${name}」合成 1 个新卡包，并保留 1 张收藏卡？`,
+      content: `${hint}。确认合成「${name}」的新卡包？`,
       confirmText: '合成',
       confirmColor: '#7BA68C',
       success: (res) => {

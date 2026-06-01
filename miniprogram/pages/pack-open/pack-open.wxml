@@ -13,12 +13,12 @@
   </view>
 
   <view wx:else>
-    <view class="result-title reveal-title">获得 {{pack.length}} 张卡</view>
-    <view class="result-subtitle">新卡 {{newCount}} 张</view>
+    <view class="result-title reveal-title">{{resultTitle}}</view>
+    <view class="result-subtitle">{{resultSubtitle}}</view>
     <view class="card-grid">
-      <view wx:for="{{pack}}" wx:key="id" class="reveal-card rarity-{{item.rarity}}" style="animation-delay: {{index * 120}}ms;">
+      <view wx:for="{{revealCards}}" wx:key="id" class="reveal-card rarity-{{item.rarity}}" style="animation-delay: {{item.revealDelay}};" bindtap="openCard" data-id="{{item.id}}">
         <view class="rare-flash"></view>
-        <view wx:if="{{item.isNew}}" class="new-badge">NEW</view>
+        <view class="{{item.badgeClass}}">{{item.badgeText}}</view>
         <card-face card="{{item}}" size="medium" />
       </view>
     </view>
