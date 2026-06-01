@@ -10,6 +10,10 @@ Page({
     activeTheme: null,
     activeThemeName: '星梦泡泡',
     activeThemeAccent: '#7BA68C',
+    rewardVisible: false,
+    rewardCards: [],
+    rewardTitle: '',
+    rewardSubtitle: '',
     emptyVisible: false,
     statusFilter: 'all',
     rarityFilter: 'ALL',
@@ -33,6 +37,8 @@ Page({
     const collection = state.getSeriesCollection(seriesId)
     const cards = getCardsBySeries(seriesId)
     const collectionProgress = state.getCollectionProgress(seriesId)
+    const recentReward = state.getRecentRewardPack()
+    const rewardCards = this.buildRewardCards(recentReward.pack)
     const viewCards = cards.map((card) => ({
       ...card,
       ...this.buildCardState(card, collection, seriesId)
@@ -44,9 +50,26 @@ Page({
       activeTheme,
       activeThemeName: activeTheme ? activeTheme.name : '星梦泡泡',
       activeThemeAccent: activeTheme ? activeTheme.accent : '#7BA68C',
-      collectionProgress
+      collectionProgress,
+      rewardVisible: rewardCards.length > 0,
+      rewardCards,
+      rewardTitle: recentReward.sourceText ? '最近获得' : '',
+      rewardSubtitle: this.getRewardSubtitle(recentReward.sourceText, recentReward.pack)
     })
     this.applyFilters()
+  },
+
+  buildRewardCards(pack) {
+    return pack.map((card) => ({
+      ...card,
+      badgeText: card.isNew ? '新卡' : '重复'
+    }))
+  },
+
+  getRewardSubtitle(sourceText, pack) {
+    if (!pack.length) return ''
+    const newCount = pack.filter((card) => card.isNew).length
+    return `${sourceText} · ${pack.length} 张 · 新卡 ${newCount} 张`
   },
 
   buildCardState(card, collection, seriesId) {
@@ -102,6 +125,11 @@ Page({
       wx.showToast({ title: '还没有获得这张卡', icon: 'none' })
       return
     }
+    wx.navigateTo({ url: `/pages/card-detail/card-detail?id=${id}` })
+  },
+
+  openRewardCard(event) {
+    const { id } = event.currentTarget.dataset
     wx.navigateTo({ url: `/pages/card-detail/card-detail?id=${id}` })
   },
 

@@ -16,6 +16,21 @@
     <text>更换收集册</text>
   </button>
 
+  <view wx:if="{{rewardVisible}}" class="reward-panel panel">
+    <view class="reward-head">
+      <view>
+        <view class="reward-title">{{rewardTitle}}</view>
+        <view class="muted">{{rewardSubtitle}}</view>
+      </view>
+    </view>
+    <view class="reward-list">
+      <view wx:for="{{rewardCards}}" wx:key="id" class="reward-card" bindtap="openRewardCard" data-id="{{item.id}}">
+        <view class="reward-badge">{{item.badgeText}}</view>
+        <card-face card="{{item}}" size="small" />
+      </view>
+    </view>
+  </view>
+
   <view class="filter-panel">
     <view class="filter-row">
       <button wx:for="{{statusFilters}}" wx:key="key" class="filter-btn {{item.activeClass}}" data-filter="{{item.key}}" bindtap="changeStatusFilter">{{item.label}}</button>

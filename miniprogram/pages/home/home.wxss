@@ -107,42 +107,6 @@
   margin-top: 28rpx;
 }
 
-.reward-panel {
-  margin-top: 24rpx;
-  padding: 26rpx;
-}
-
-.reward-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18rpx;
-}
-
-.reward-list {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14rpx;
-  margin-top: 20rpx;
-}
-
-.reward-card {
-  position: relative;
-}
-
-.reward-badge {
-  position: absolute;
-  top: 8rpx;
-  left: 8rpx;
-  z-index: 6;
-  padding: 4rpx 10rpx;
-  border-radius: 999rpx;
-  background: rgba(255, 238, 133, 0.94);
-  color: #7b4c00;
-  font-size: 18rpx;
-  font-weight: 900;
-}
-
 .theme-chip {
   display: inline-flex;
   align-items: center;
