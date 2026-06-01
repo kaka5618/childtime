@@ -1,9 +1,21 @@
 const state = require('../../utils/state')
 
+const TASK_TEMPLATES = [
+  { key: 'math', name: '数学练习', minutes: 20, activeClass: '' },
+  { key: 'reading', name: '语文阅读', minutes: 15, activeClass: '' },
+  { key: 'english', name: '英语听读', minutes: 15, activeClass: '' },
+  { key: 'review', name: '错题整理', minutes: 20, activeClass: '' },
+  { key: 'writing', name: '练字', minutes: 10, activeClass: '' },
+  { key: 'preview', name: '课前预习', minutes: 15, activeClass: '' }
+]
+
 Page({
   data: {
     taskId: '',
     isEditing: false,
+    templateVisible: true,
+    selectedTemplateKey: '',
+    taskTemplates: TASK_TEMPLATES,
     name: '',
     minutes: 20,
     completed: false,
@@ -23,6 +35,7 @@ Page({
     this.setData({
       taskId: task.id,
       isEditing: true,
+      templateVisible: false,
       name: task.name,
       minutes: Number(task.minutes),
       completed: Boolean(task.completed),
@@ -35,7 +48,31 @@ Page({
   },
 
   onMinutesInput(event) {
-    this.setData({ minutes: Number(event.detail.value) })
+    this.setData({
+      minutes: Number(event.detail.value),
+      selectedTemplateKey: '',
+      taskTemplates: this.buildTemplates('')
+    })
+  },
+
+  selectTemplate(event) {
+    const { key } = event.currentTarget.dataset
+    const template = TASK_TEMPLATES.find((item) => item.key === key)
+    if (!template) return
+
+    this.setData({
+      selectedTemplateKey: key,
+      taskTemplates: this.buildTemplates(key),
+      name: template.name,
+      minutes: template.minutes
+    })
+  },
+
+  buildTemplates(activeKey) {
+    return TASK_TEMPLATES.map((template) => ({
+      ...template,
+      activeClass: template.key === activeKey ? 'active' : ''
+    }))
   },
 
   saveTask() {

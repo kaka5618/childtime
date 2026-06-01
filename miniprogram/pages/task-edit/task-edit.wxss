@@ -2,6 +2,45 @@
   padding: 32rpx;
 }
 
+.template-panel {
+  margin-bottom: 22rpx;
+  padding: 28rpx;
+}
+
+.template-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12rpx;
+}
+
+.template-btn {
+  height: 94rpx;
+  margin: 0;
+  padding: 12rpx 14rpx;
+  border: 1rpx solid rgba(123, 166, 140, 0.24);
+  border-radius: 8px;
+  background: rgba(255, 250, 244, 0.82);
+  color: #33423a;
+  line-height: 1.2;
+  text-align: left;
+}
+
+.template-btn.active {
+  border-color: rgba(123, 166, 140, 0.74);
+  background: rgba(123, 166, 140, 0.14);
+}
+
+.template-name {
+  font-size: 25rpx;
+  font-weight: 800;
+}
+
+.template-time {
+  margin-top: 8rpx;
+  color: #748078;
+  font-size: 21rpx;
+}
+
 .field + .field {
   margin-top: 34rpx;
 }

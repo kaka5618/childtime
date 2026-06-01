@@ -1,4 +1,14 @@
 <view class="page edit-page">
+  <view wx:if="{{templateVisible}}" class="template-panel panel">
+    <view class="label">常用任务</view>
+    <view class="template-grid">
+      <button wx:for="{{taskTemplates}}" wx:key="key" class="template-btn {{item.activeClass}}" data-key="{{item.key}}" bindtap="selectTemplate">
+        <view class="template-name">{{item.name}}</view>
+        <view class="template-time">{{item.minutes}} 分钟</view>
+      </button>
+    </view>
+  </view>
+
   <view class="form panel">
     <view class="field">
       <view class="label">任务名</view>
