@@ -10,6 +10,7 @@ Page({
     voiceType: 'gentle',
     volume: 60,
     voiceOptionsClass: '',
+    debugVisible: false,
     voiceTypes: [
       { key: 'gentle', label: '温柔', activeClass: 'active' },
       { key: 'bright', label: '清亮', activeClass: '' }
@@ -82,6 +83,26 @@ Page({
     const volume = Number(event.detail.value)
     state.saveSettings({ volume })
     this.setData({ volume })
+  },
+
+  revealDebugTools() {
+    wx.showModal({
+      title: '家长验证',
+      content: '请输入 8 + 7 的答案',
+      editable: true,
+      placeholderText: '答案',
+      confirmText: '验证',
+      confirmColor: '#7BA68C',
+      success: (res) => {
+        if (!res.confirm) return
+        if (String(res.content || '').trim() !== '15') {
+          wx.showToast({ title: '验证未通过', icon: 'none' })
+          return
+        }
+        this.setData({ debugVisible: true })
+        wx.showToast({ title: '已显示调试工具', icon: 'none' })
+      }
+    })
   },
 
   addDebugTasks() {
