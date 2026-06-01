@@ -1,14 +1,26 @@
 <view class="page focus-page" wx:if="{{task}}">
-  <view class="focus-card panel {{completedCardClass}}">
+  <view class="desk-scene">
+    <view class="lamp-glow"></view>
+    <view class="pencil pencil-a"></view>
+    <view class="pencil pencil-b"></view>
+    <view class="bookmark-star">★</view>
+  </view>
+
+  <view class="focus-card {{completedCardClass}}">
+    <view class="paper-clip"></view>
     <view class="focus-label">正在专注</view>
     <view class="focus-title">{{task.name}}</view>
-    <view class="timer">{{timeText}}</view>
-    <view class="muted">{{timerHint}}</view>
+    <view class="timer-ring">
+      <view class="timer-ring-inner">
+        <view class="timer">{{timeText}}</view>
+      </view>
+    </view>
+    <view class="focus-hint">{{timerHint}}</view>
   </view>
 
   <button wx:if="{{!rewardVisible}}" class="complete-btn primary-btn" bindlongpress="completeTask">{{completeButtonText}}</button>
 
-  <view wx:if="{{rewardVisible}}" class="reward-panel panel">
+  <view wx:if="{{rewardVisible}}" class="reward-panel">
     <view class="reward-burst">
       <view class="reward-star star-a">★</view>
       <view class="reward-star star-b">★</view>
