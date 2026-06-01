@@ -1,5 +1,9 @@
 .home-page {
+  position: relative;
+  overflow: hidden;
   padding-bottom: 56rpx;
+  background:
+    linear-gradient(180deg, #fff5df 0%, #eff8ef 45%, #faf6f0 100%);
 }
 
 .topbar,
@@ -10,16 +14,71 @@
   justify-content: space-between;
 }
 
+.home-decor {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.candy-line {
+  position: absolute;
+  height: 18rpx;
+  border-radius: 999rpx;
+  opacity: 0.72;
+}
+
+.line-a {
+  top: 116rpx;
+  right: -44rpx;
+  width: 176rpx;
+  background: repeating-linear-gradient(90deg, #f29faa 0 24rpx, #fff7d9 24rpx 48rpx);
+  transform: rotate(-18deg);
+}
+
+.line-b {
+  top: 360rpx;
+  left: -54rpx;
+  width: 150rpx;
+  background: repeating-linear-gradient(90deg, #7ba68c 0 22rpx, #fff7d9 22rpx 44rpx);
+  transform: rotate(20deg);
+}
+
+.soft-star {
+  position: absolute;
+  color: #f5c26b;
+  font-size: 36rpx;
+  text-shadow: 0 8rpx 16rpx rgba(245, 194, 107, 0.28);
+}
+
+.star-a {
+  top: 170rpx;
+  left: 44rpx;
+  transform: rotate(-12deg);
+}
+
+.star-b {
+  top: 530rpx;
+  right: 48rpx;
+  color: #f29faa;
+  transform: rotate(16deg);
+}
+
 .eyebrow {
-  color: #7ba68c;
+  display: inline-flex;
+  padding: 8rpx 16rpx;
+  border-radius: 999rpx;
+  background: rgba(123, 166, 140, 0.14);
+  color: #4e7a60;
   font-size: 24rpx;
-  font-weight: 600;
+  font-weight: 800;
 }
 
 .title {
-  margin-top: 8rpx;
-  font-size: 44rpx;
-  font-weight: 700;
+  margin-top: 12rpx;
+  color: #263d31;
+  font-size: 48rpx;
+  font-weight: 900;
+  letter-spacing: 0;
 }
 
 .icon-btn,
@@ -28,24 +87,78 @@
   height: 64rpx;
   line-height: 64rpx;
   padding: 0 20rpx;
+  border: 1rpx solid rgba(123, 166, 140, 0.28);
+  background: rgba(255, 253, 247, 0.78);
+  color: #4e7a60;
   font-size: 26rpx;
+  font-weight: 800;
 }
 
 .bag-panel {
+  position: relative;
+  z-index: 1;
   margin-top: 32rpx;
-  padding: 32rpx;
+  padding: 34rpx 30rpx 30rpx;
+  border: 2rpx solid rgba(255, 255, 255, 0.72);
+  border-radius: 22rpx;
+  background:
+    linear-gradient(180deg, rgba(255, 253, 247, 0.94), rgba(255, 246, 221, 0.92));
+  box-shadow: 0 20rpx 42rpx rgba(122, 95, 51, 0.12);
   text-align: center;
+}
+
+.bag-stage {
+  position: relative;
+  width: 260rpx;
+  margin: 0 auto;
+}
+
+.bag-shadow {
+  position: absolute;
+  right: 28rpx;
+  bottom: -10rpx;
+  left: 28rpx;
+  height: 26rpx;
+  border-radius: 50%;
+  background: rgba(80, 66, 46, 0.12);
 }
 
 .bag {
   position: relative;
-  width: 220rpx;
-  height: 260rpx;
+  width: 230rpx;
+  height: 278rpx;
   margin: 0 auto;
   overflow: hidden;
-  border: 8rpx solid #7ba68c;
+  border: 10rpx solid #7ba68c;
   border-radius: 46% 46% 36% 36%;
-  background: #e9eef0;
+  background: linear-gradient(180deg, #f8fff6, #dfeee7);
+  box-shadow: inset 0 -18rpx 28rpx rgba(78, 122, 96, 0.12);
+}
+
+.bag-knot {
+  position: absolute;
+  top: -24rpx;
+  left: 50%;
+  z-index: 3;
+  width: 86rpx;
+  height: 54rpx;
+  border: 8rpx solid #7ba68c;
+  border-bottom: 0;
+  border-radius: 50% 50% 0 0;
+  background: #fffdf7;
+  transform: translateX(-50%);
+}
+
+.bag-gloss {
+  position: absolute;
+  top: 42rpx;
+  left: 42rpx;
+  z-index: 2;
+  width: 42rpx;
+  height: 112rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.42);
+  transform: rotate(16deg);
 }
 
 .bag-fill {
@@ -53,7 +166,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(180deg, #f5c26b, #f08d6b);
+  background: linear-gradient(180deg, #ffe184, #f5b0c5, #8fc9a4);
   transition: height 240ms ease;
 }
 
@@ -72,8 +185,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 44rpx;
-  font-weight: 700;
+  color: #263d31;
+  font-size: 48rpx;
+  font-weight: 900;
+  text-shadow: 0 4rpx 0 rgba(255, 255, 255, 0.55);
 }
 
 .bag-copy {
@@ -84,19 +199,20 @@
 .section-title,
 .empty-title,
 .task-name {
-  font-weight: 700;
+  font-weight: 900;
 }
 
 .bag-title {
-  font-size: 34rpx;
+  color: #263d31;
+  font-size: 36rpx;
 }
 
 .next-action {
   display: inline-flex;
   margin-top: 18rpx;
-  padding: 8rpx 18rpx;
+  padding: 10rpx 20rpx;
   border-radius: 999rpx;
-  background: rgba(245, 194, 107, 0.18);
+  background: rgba(245, 194, 107, 0.24);
   color: #8a5d13;
   font-size: 25rpx;
   font-weight: 800;
@@ -115,7 +231,7 @@
   padding: 10rpx 18rpx;
   border: 1rpx solid rgba(123, 166, 140, 0.38);
   border-radius: 999rpx;
-  background: rgba(123, 166, 140, 0.12);
+  background: rgba(255, 255, 255, 0.62);
   color: #4e7a60;
   font-size: 24rpx;
   font-weight: 700;
@@ -136,9 +252,11 @@
 }
 
 .summary-item {
-  padding: 16rpx 8rpx;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.58);
+  padding: 18rpx 8rpx;
+  border: 1rpx solid rgba(123, 166, 140, 0.12);
+  border-radius: 16rpx;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 8rpx 18rpx rgba(122, 95, 51, 0.06);
 }
 
 .summary-value {
@@ -154,35 +272,79 @@
 }
 
 .section-head {
+  position: relative;
+  z-index: 1;
   margin-top: 36rpx;
 }
 
 .section-title {
-  font-size: 32rpx;
+  color: #263d31;
+  font-size: 34rpx;
 }
 
 .empty {
+  position: relative;
+  z-index: 1;
   margin-top: 20rpx;
   padding: 28rpx;
+  border-radius: 18rpx;
+  background: rgba(255, 253, 247, 0.9);
 }
 
 .task-list {
+  position: relative;
+  z-index: 1;
   display: grid;
   gap: 18rpx;
   margin-top: 20rpx;
 }
 
 .task {
-  padding: 26rpx;
+  min-height: 104rpx;
+  padding: 22rpx;
+  border: 2rpx solid rgba(255, 255, 255, 0.72);
+  border-radius: 20rpx;
+  background: rgba(255, 253, 247, 0.92);
+  box-shadow: 0 12rpx 24rpx rgba(122, 95, 51, 0.08);
 }
 
 .task.done {
-  opacity: 0.66;
+  opacity: 0.72;
+}
+
+.task-main {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.task-icon {
+  display: flex;
+  width: 54rpx;
+  height: 54rpx;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18rpx;
+  background: rgba(245, 194, 107, 0.28);
+  color: #8a5d13;
+  font-size: 26rpx;
+  font-weight: 900;
+}
+
+.task-name {
+  max-width: 330rpx;
+  overflow: hidden;
+  color: #263d31;
+  font-size: 30rpx;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .task-status {
   color: #7ba68c;
-  font-weight: 700;
+  font-weight: 900;
 }
 
 .task-actions {
@@ -196,10 +358,12 @@
   height: 48rpx;
   margin: 0;
   padding: 0;
-  border: 1rpx solid rgba(123, 166, 140, 0.42);
+  border: 1rpx solid rgba(123, 166, 140, 0.34);
+  border-radius: 999rpx;
   background: rgba(123, 166, 140, 0.12);
   color: #4e7a60;
   font-size: 22rpx;
+  font-weight: 800;
   line-height: 48rpx;
 }
 

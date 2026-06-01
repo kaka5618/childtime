@@ -1,4 +1,11 @@
 <view class="page home-page">
+  <view class="home-decor">
+    <view class="candy-line line-a"></view>
+    <view class="candy-line line-b"></view>
+    <view class="soft-star star-a">★</view>
+    <view class="soft-star star-b">★</view>
+  </view>
+
   <view class="topbar">
     <view>
       <view class="eyebrow">今日任务</view>
@@ -8,9 +15,14 @@
   </view>
 
   <view class="bag-panel panel">
-    <view class="bag {{bagClass}}">
-      <view class="bag-fill" style="height: {{percent}}%;"></view>
-      <view class="bag-label">{{percent}}%</view>
+    <view class="bag-stage">
+      <view class="bag-shadow"></view>
+      <view class="bag {{bagClass}}">
+        <view class="bag-knot"></view>
+        <view class="bag-gloss"></view>
+        <view class="bag-fill" style="height: {{percent}}%;"></view>
+        <view class="bag-label">{{percent}}%</view>
+      </view>
     </view>
     <view class="bag-copy">
       <view class="bag-title">{{bagTitle}}</view>
@@ -51,9 +63,12 @@
 
   <view wx:else class="task-list">
     <view wx:for="{{tasks}}" wx:key="id" class="task panel {{item.taskClass}}" bindtap="goFocus" data-id="{{item.id}}">
-      <view>
+      <view class="task-main">
+        <view class="task-icon">{{item.taskIcon}}</view>
+        <view>
         <view class="task-name">{{item.name}}</view>
         <view class="muted">{{item.minutes}} 分钟</view>
+        </view>
       </view>
       <view class="task-actions">
         <view class="task-status">{{item.statusText}}</view>

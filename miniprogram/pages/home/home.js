@@ -48,6 +48,7 @@ Page({
     const percent = state.chargePercent(rawTasks)
     const tasks = rawTasks.map((task) => ({
       ...task,
+      taskIcon: task.completed ? '✓' : '✦',
       taskClass: task.completed ? 'done' : '',
       statusText: task.completed ? '已完成' : '开始',
       editButtonClass: openedToday ? 'disabled-edit' : ''
