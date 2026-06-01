@@ -3,6 +3,7 @@ const { getCardsBySeries } = require('./cards')
 const TASKS_KEY = 'childtime_tasks'
 const COLLECTION_KEY = 'childtime_collection'
 const PACK_KEY = 'childtime_last_pack'
+const PACK_META_KEY = 'childtime_last_pack_meta'
 const PACK_DATE_KEY = 'childtime_pack_date'
 const PACK_GENERATED_DATE_KEY = 'childtime_pack_generated_date'
 const ACTIVE_SERIES_KEY = 'childtime_active_series'
@@ -179,8 +180,48 @@ function getLastPack() {
   return wx.getStorageSync(PACK_KEY) || []
 }
 
-function saveLastPack(pack) {
+function getLastPackMeta() {
+  return wx.getStorageSync(PACK_META_KEY) || {}
+}
+
+function saveLastPack(pack, meta = {}) {
   wx.setStorageSync(PACK_KEY, pack)
+  wx.setStorageSync(PACK_META_KEY, {
+    date: todayKey(),
+    source: 'daily',
+    claimed: false,
+    ...meta
+  })
+}
+
+function markLastPackClaimed() {
+  wx.setStorageSync(PACK_META_KEY, {
+    ...getLastPackMeta(),
+    date: todayKey(),
+    claimed: true
+  })
+}
+
+function getRecentRewardPack() {
+  const pack = getLastPack()
+  const meta = getLastPackMeta()
+  const legacyClaimedToday = pack.length > 0 && hasOpenedToday() && !meta.date
+  const claimedToday = pack.length > 0 && meta.date === todayKey() && meta.claimed
+
+  if (!legacyClaimedToday && !claimedToday) {
+    return {
+      pack: [],
+      meta,
+      sourceText: ''
+    }
+  }
+
+  const sourceText = meta.source === 'synthesis' ? '合成卡包' : '今日卡包'
+  return {
+    pack,
+    meta,
+    sourceText
+  }
 }
 
 function hasOpenedToday() {
@@ -326,7 +367,7 @@ function prepareDailyPack(seriesId = getActiveSeriesId()) {
   const pack = buildPack(seriesId, collection)
   const previewPack = markPackPreview(collection, pack)
 
-  saveLastPack(previewPack)
+  saveLastPack(previewPack, { source: 'daily', claimed: false })
   wx.setStorageSync(PACK_GENERATED_DATE_KEY, todayKey())
   return previewPack
 }
@@ -340,6 +381,7 @@ function claimLastPack(seriesId = getActiveSeriesId()) {
     collection[card.id] = (collection[card.id] || 0) + 1
   })
   saveSeriesCollection(seriesId, collection)
+  markLastPackClaimed()
   return pack
 }
 
@@ -350,7 +392,7 @@ function rollPack(seriesId = getActiveSeriesId()) {
   const resultPack = addPackToCollection(collection, pack)
 
   saveSeriesCollection(seriesId, collection)
-  saveLastPack(resultPack)
+  saveLastPack(resultPack, { source: 'daily', claimed: true })
   wx.setStorageSync(PACK_GENERATED_DATE_KEY, todayKey())
   return resultPack
 }
@@ -372,7 +414,7 @@ function synthesizePack(sourceCardId, seriesId = getActiveSeriesId()) {
   const pack = buildPack(seriesId, collection, { excludedIds: [sourceCardId] })
   const resultPack = addPackToCollection(collection, pack)
   saveSeriesCollection(seriesId, collection)
-  saveLastPack(resultPack)
+  saveLastPack(resultPack, { source: 'synthesis', claimed: true })
 
   return {
     ok: true,
@@ -385,6 +427,7 @@ function clearTodayPackState() {
   wx.removeStorageSync(PACK_DATE_KEY)
   wx.removeStorageSync(PACK_GENERATED_DATE_KEY)
   wx.removeStorageSync(PACK_KEY)
+  wx.removeStorageSync(PACK_META_KEY)
 }
 
 function addDebugTasks() {
@@ -452,7 +495,9 @@ module.exports = {
   getSeriesCollection,
   saveSeriesCollection,
   getLastPack,
+  getLastPackMeta,
   saveLastPack,
+  getRecentRewardPack,
   hasOpenedToday,
   markOpenedToday,
   hasGeneratedToday,

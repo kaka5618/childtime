@@ -39,6 +39,22 @@
     <button wx:elif="{{showAlbumButton}}" class="secondary-btn pack-btn" bindtap="goAlbum">查看收藏</button>
   </view>
 
+  <view wx:if="{{rewardVisible}}" class="reward-panel panel">
+    <view class="reward-head">
+      <view>
+        <view class="section-title">{{rewardTitle}}</view>
+        <view class="muted">{{rewardSubtitle}}</view>
+      </view>
+      <button class="small-btn secondary-btn" bindtap="goAlbum">收藏本</button>
+    </view>
+    <view class="reward-list">
+      <view wx:for="{{rewardCards}}" wx:key="id" class="reward-card" bindtap="openRewardCard" data-id="{{item.id}}">
+        <view class="reward-badge">{{item.badgeText}}</view>
+        <card-face card="{{item}}" size="small" />
+      </view>
+    </view>
+  </view>
+
   <view class="section-head">
     <view class="section-title">任务清单</view>
     <button class="small-btn primary-btn {{addButtonClass}}" bindtap="goAddTask">添加</button>

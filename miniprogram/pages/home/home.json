@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "星梦泡泡"
+  "navigationBarTitleText": "星梦泡泡",
+  "usingComponents": {
+    "card-face": "/components/card-face/card-face"
+  }
 }

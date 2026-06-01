@@ -13,6 +13,10 @@ Page({
     showPackButton: false,
     showAlbumButton: false,
     showThemeChip: false,
+    rewardVisible: false,
+    rewardCards: [],
+    rewardTitle: '',
+    rewardSubtitle: '',
     emptyVisible: false,
     addButtonClass: '',
     todaySummary: {
@@ -44,6 +48,8 @@ Page({
       .filter((task) => task.completed)
       .reduce((sum, task) => sum + Number(task.minutes || 0), 0)
     const openedToday = state.hasOpenedToday()
+    const recentReward = state.getRecentRewardPack()
+    const rewardCards = this.buildRewardCards(recentReward.pack)
     const allDone = state.allCompleted(rawTasks)
     const percent = state.chargePercent(rawTasks)
     const tasks = rawTasks.map((task) => ({
@@ -64,6 +70,10 @@ Page({
       showPackButton: allDone && !openedToday,
       showAlbumButton: openedToday,
       showThemeChip: Boolean(activeTheme),
+      rewardVisible: rewardCards.length > 0,
+      rewardCards,
+      rewardTitle: recentReward.sourceText ? '最近奖励' : '',
+      rewardSubtitle: this.getRewardSubtitle(recentReward.sourceText, recentReward.pack),
       emptyVisible: tasks.length === 0,
       addButtonClass: openedToday ? 'disabled-btn' : '',
       todaySummary: {
@@ -75,6 +85,19 @@ Page({
       },
       nextActionText: this.getNextActionText(rawTasks, allDone, openedToday)
     })
+  },
+
+  buildRewardCards(pack) {
+    return pack.slice(0, 3).map((card) => ({
+      ...card,
+      badgeText: card.isNew ? '新卡' : '重复'
+    }))
+  },
+
+  getRewardSubtitle(sourceText, pack) {
+    if (!pack.length) return ''
+    const newCount = pack.filter((card) => card.isNew).length
+    return `${sourceText} · ${pack.length} 张 · 新卡 ${newCount} 张`
   },
 
   getNextActionText(tasks, allDone, openedToday) {
@@ -116,6 +139,11 @@ Page({
 
   goAlbum() {
     wx.navigateTo({ url: '/pages/album/album' })
+  },
+
+  openRewardCard(event) {
+    const { id } = event.currentTarget.dataset
+    wx.navigateTo({ url: `/pages/card-detail/card-detail?id=${id}` })
   },
 
   goSettings() {
