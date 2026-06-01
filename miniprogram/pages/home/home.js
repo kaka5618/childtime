@@ -98,6 +98,11 @@ Page({
       return
     }
     const { id } = event.currentTarget.dataset
+    const task = this.data.tasks.find((item) => item.id === id)
+    if (task && task.completed) {
+      wx.showToast({ title: '这项已经完成', icon: 'none' })
+      return
+    }
     wx.navigateTo({ url: `/pages/focus/focus?id=${id}` })
   },
 

@@ -3,10 +3,10 @@
     <view class="focus-label">正在专注</view>
     <view class="focus-title">{{task.name}}</view>
     <view class="timer">{{timeText}}</view>
-    <view class="muted">倒计时结束后也可以继续完成。</view>
+    <view class="muted">{{timerHint}}</view>
   </view>
 
-  <button wx:if="{{!rewardVisible}}" class="complete-btn primary-btn" bindlongpress="completeTask">长按完成</button>
+  <button wx:if="{{!rewardVisible}}" class="complete-btn primary-btn" bindlongpress="completeTask">{{completeButtonText}}</button>
 
   <view wx:if="{{rewardVisible}}" class="reward-panel panel">
     <view class="reward-burst">

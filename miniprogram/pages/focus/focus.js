@@ -11,7 +11,9 @@ Page({
     rewardVisible: false,
     rewardTitle: '',
     rewardText: '',
-    canOpenPack: false
+    canOpenPack: false,
+    timerHint: '请专注到倒计时结束。',
+    completeButtonText: '长按完成'
   },
 
   timer: null,
@@ -43,7 +45,9 @@ Page({
       const next = Math.max(0, this.data.secondsLeft - 1)
       this.setData({
         secondsLeft: next,
-        timeText: this.formatTime(next)
+        timeText: this.formatTime(next),
+        timerHint: next === 0 ? '时间到了，可以整理一下再完成。' : '请专注到倒计时结束。',
+        completeButtonText: next === 0 ? '长按确认完成' : '长按完成'
       })
       if (next === 0) this.stopTimer()
     }, 1000)
@@ -63,6 +67,23 @@ Page({
   },
 
   completeTask() {
+    if (this.data.secondsLeft > 0) {
+      wx.showModal({
+        title: '还没到时间',
+        content: '确认已经完成这项学习了吗？',
+        confirmText: '确认完成',
+        confirmColor: '#7BA68C',
+        success: (res) => {
+          if (res.confirm) this.finishTask()
+        }
+      })
+      return
+    }
+
+    this.finishTask()
+  },
+
+  finishTask() {
     if (this.data.completed) return
     const tasks = state.getTasks().map((item) => {
       if (item.id !== this.data.task.id) return item
@@ -83,7 +104,8 @@ Page({
       rewardVisible: true,
       rewardTitle: allDone ? '能量装满啦' : '完成一项',
       rewardText: allDone ? '今天的任务都完成了，可以开启卡包。' : '能量又涨了一截，继续完成下一项。',
-      canOpenPack: allDone && !state.hasOpenedToday()
+      canOpenPack: allDone && !state.hasOpenedToday(),
+      timerHint: '已完成'
     })
   },
 
