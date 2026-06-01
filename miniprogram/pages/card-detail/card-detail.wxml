@@ -2,6 +2,22 @@
   <card-face card="{{card}}" size="large" />
 
   <view class="info panel">
+    <view class="detail-title">{{card.name}}</view>
+    <view class="detail-subtitle">{{card.no}} · {{card.rarity}}</view>
+
+    <view class="status-card">
+      <view class="status-main">{{synthesisTitle}}</view>
+      <view class="status-note">{{synthesisNote}}</view>
+    </view>
+
+    <view class="info-row">
+      <text>卡名</text>
+      <text>{{card.name}}</text>
+    </view>
+    <view class="info-row">
+      <text>编号</text>
+      <text>{{card.no}}</text>
+    </view>
     <view class="info-row">
       <text>稀有度</text>
       <text>{{card.rarity}}</text>
@@ -11,4 +27,7 @@
       <text>{{count}}</text>
     </view>
   </view>
+
+  <button wx:if="{{canSynthesize}}" class="primary-btn action-btn" bindtap="synthesizeCard">合成卡包</button>
+  <button class="secondary-btn action-btn" bindtap="goAlbum">返回收藏本</button>
 </view>

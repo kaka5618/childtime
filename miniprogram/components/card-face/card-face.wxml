@@ -1,4 +1,4 @@
-<view class="card-face size-{{size}} rarity-{{card.rarity}} {{owned ? '' : 'locked'}}">
+<view class="card-face size-{{size}} rarity-{{card.rarity}} {{lockedClass}}">
   <image wx:if="{{owned}}" class="card-img" src="{{card.image}}" mode="aspectFill" />
   <view wx:else class="placeholder">{{card.no}}</view>
 
@@ -10,8 +10,8 @@
   </view>
 
   <view class="name-plate">
-    <view class="card-name">{{owned ? card.name : '未获得'}}</view>
+    <view class="card-name">{{displayName}}</view>
     <view wx:if="{{owned}}" class="card-no">{{card.no}}</view>
-    <view wx:if="{{showCount}}" class="card-count">{{count || 0}}</view>
+    <view wx:if="{{showCount}}" class="card-count">{{countText}}</view>
   </view>
 </view>

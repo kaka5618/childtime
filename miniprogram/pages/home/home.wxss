@@ -91,6 +91,17 @@
   font-size: 34rpx;
 }
 
+.next-action {
+  display: inline-flex;
+  margin-top: 18rpx;
+  padding: 8rpx 18rpx;
+  border-radius: 999rpx;
+  background: rgba(245, 194, 107, 0.18);
+  color: #8a5d13;
+  font-size: 25rpx;
+  font-weight: 800;
+}
+
 .pack-btn,
 .album-btn {
   margin-top: 28rpx;
@@ -115,6 +126,31 @@
   height: 18rpx;
   border-radius: 50%;
   box-shadow: 0 0 0 4rpx rgba(255, 255, 255, 0.72);
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12rpx;
+  margin-top: 24rpx;
+}
+
+.summary-item {
+  padding: 16rpx 8rpx;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.58);
+}
+
+.summary-value {
+  color: #23332b;
+  font-size: 28rpx;
+  font-weight: 800;
+}
+
+.summary-label {
+  margin-top: 4rpx;
+  color: #748078;
+  font-size: 21rpx;
 }
 
 .section-head {
@@ -165,4 +201,12 @@
   color: #4e7a60;
   font-size: 22rpx;
   line-height: 48rpx;
+}
+
+.disabled-btn {
+  opacity: 0.48;
+}
+
+.disabled-edit {
+  opacity: 0.48;
 }

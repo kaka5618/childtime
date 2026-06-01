@@ -4,7 +4,7 @@ const { getCard } = require('../../utils/cards')
 
 function buildThemeView(theme) {
   const previewCards = (theme.previewCardIds || [])
-    .map((id) => getCard(id))
+    .map((id) => getCard(theme.id, id))
     .filter(Boolean)
 
   return {
@@ -14,21 +14,54 @@ function buildThemeView(theme) {
   }
 }
 
+function buildPageView(themesSource, selectedId, pendingId, pendingTheme, cooldownInfo) {
+  const cooldownBlocked = Boolean(cooldownInfo && !cooldownInfo.canSwitch)
+  return {
+    themes: themesSource.map((theme) => {
+      const selected = pendingId === theme.id
+      const active = theme.status === 'active'
+      return {
+        ...theme,
+        cardClass: [
+          theme.coverClass,
+          active ? '' : 'preview',
+          selected ? 'selected' : ''
+        ].filter(Boolean).join(' '),
+        statusText: active ? (selectedId === theme.id ? '当前收集' : '可选择') : '预览'
+      }
+    }),
+    pageClass: pendingTheme ? 'has-confirm' : '',
+    confirmLabel: selectedId === pendingId ? '当前收集' : '准备收集',
+    confirmButtonText: selectedId === pendingId ? '继续收集' : '开始收集',
+    confirmButtonClass: cooldownBlocked ? 'disabled' : '',
+    cooldownVisible: cooldownBlocked
+  }
+}
+
 Page({
   data: {
     themes: themes.map(buildThemeView),
     selectedId: '',
     pendingId: '',
-    pendingTheme: null
+    pendingTheme: null,
+    cooldownInfo: null,
+    pageClass: '',
+    confirmLabel: '准备收集',
+    confirmButtonText: '开始收集',
+    confirmButtonClass: '',
+    cooldownVisible: false
   },
 
   onShow() {
     const selectedId = state.getActiveSeriesId()
     const pendingTheme = this.data.themes.find((theme) => theme.id === selectedId) || null
+    const cooldownInfo = pendingTheme ? state.getSwitchCooldownInfo(selectedId) : null
     this.setData({
       selectedId,
       pendingId: selectedId,
-      pendingTheme
+      pendingTheme,
+      cooldownInfo,
+      ...buildPageView(this.data.themes, selectedId, selectedId, pendingTheme, cooldownInfo)
     })
   },
 
@@ -41,14 +74,31 @@ Page({
     }
 
     const pendingTheme = this.data.themes.find((theme) => theme.id === id)
+    const cooldownInfo = state.getSwitchCooldownInfo(id)
     this.setData({
       pendingId: id,
-      pendingTheme
+      pendingTheme,
+      cooldownInfo,
+      ...buildPageView(this.data.themes, this.data.selectedId, id, pendingTheme, cooldownInfo)
     })
   },
 
   confirmTheme() {
     if (!this.data.pendingId) return
+
+    const cooldownInfo = state.getSwitchCooldownInfo(this.data.pendingId)
+    if (!cooldownInfo.canSwitch) {
+      wx.showToast({
+        title: `${cooldownInfo.remainingDays} 天后可更换`,
+        icon: 'none'
+      })
+      this.setData({
+        cooldownInfo,
+        ...buildPageView(this.data.themes, this.data.selectedId, this.data.pendingId, this.data.pendingTheme, cooldownInfo)
+      })
+      return
+    }
+
     state.setActiveSeriesId(this.data.pendingId)
     wx.redirectTo({ url: '/pages/home/home' })
   }

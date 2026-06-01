@@ -1,10 +1,17 @@
 const state = require('../../utils/state')
+const audio = require('../../utils/audio')
 
 Page({
   data: {
     task: null,
     secondsLeft: 0,
-    timeText: '00:00'
+    timeText: '00:00',
+    completed: false,
+    completedCardClass: '',
+    rewardVisible: false,
+    rewardTitle: '',
+    rewardText: '',
+    canOpenPack: false
   },
 
   timer: null,
@@ -23,6 +30,7 @@ Page({
       timeText: this.formatTime(secondsLeft)
     })
     this.startTimer()
+    audio.playVoice('taskStart')
   },
 
   onUnload() {
@@ -55,6 +63,7 @@ Page({
   },
 
   completeTask() {
+    if (this.data.completed) return
     const tasks = state.getTasks().map((item) => {
       if (item.id !== this.data.task.id) return item
       return {
@@ -64,7 +73,25 @@ Page({
       }
     })
     state.saveTasks(tasks)
-    wx.showToast({ title: '已完成', icon: 'success' })
-    setTimeout(() => wx.navigateBack(), 450)
+    this.stopTimer()
+
+    const allDone = state.allCompleted(tasks)
+    audio.playVoice(allDone ? 'allComplete' : 'taskComplete')
+    this.setData({
+      completed: true,
+      completedCardClass: 'completed-card',
+      rewardVisible: true,
+      rewardTitle: allDone ? '能量装满啦' : '完成一项',
+      rewardText: allDone ? '今天的任务都完成了，可以开启卡包。' : '能量又涨了一截，继续完成下一项。',
+      canOpenPack: allDone && !state.hasOpenedToday()
+    })
+  },
+
+  goHome() {
+    wx.navigateBack()
+  },
+
+  goPack() {
+    wx.redirectTo({ url: '/pages/pack-open/pack-open' })
   }
 })

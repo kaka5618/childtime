@@ -1,8 +1,29 @@
 <view class="page settings-page">
   <view class="panel block">
     <view class="block-title">当前收集</view>
-    <view class="muted">{{activeTheme.name || '未选择'}}</view>
+    <view class="muted">{{activeThemeName}}</view>
+    <view wx:if="{{nextSwitchDate}}" class="setting-note">每 15 天可更换一次收集主题。下次可更换：{{nextSwitchDate}}</view>
     <button class="setting-btn" bindtap="goThemeSelect">选择卡包</button>
+  </view>
+
+  <view class="panel block">
+    <view class="setting-row">
+      <view>
+        <view class="block-title compact">语音提醒</view>
+        <view class="muted">任务开始、完成和全部完成时使用。</view>
+      </view>
+      <switch checked="{{voiceEnabled}}" color="#7BA68C" bindchange="toggleVoice" />
+    </view>
+
+    <view class="voice-options {{voiceOptionsClass}}">
+      <view class="option-label">音色</view>
+      <view class="voice-type-row">
+        <button wx:for="{{voiceTypes}}" wx:key="key" class="voice-type {{item.activeClass}}" data-type="{{item.key}}" bindtap="changeVoiceType">{{item.label}}</button>
+      </view>
+
+      <view class="option-label volume-label">音量 {{volume}}%</view>
+      <slider min="0" max="100" step="5" value="{{volume}}" activeColor="#7BA68C" block-color="#7BA68C" bindchange="changeVolume" />
+    </view>
   </view>
 
   <view class="panel block">
@@ -15,11 +36,24 @@
 
   <view class="panel block">
     <view class="block-title">保底规则</view>
-    <view class="muted">当前主题未集齐时，每日基础包至少包含 1 张未拥有卡。MVP 版本先使用本地存储模拟收藏进度。</view>
+    <view class="muted">每个卡包随机包含 1-5 张卡。当前主题未集齐时，每日基础包至少包含 1 张未拥有卡。MVP 版本先使用本地存储模拟收藏进度。</view>
   </view>
 
   <view class="panel block">
     <view class="block-title">合成规则</view>
-    <view class="muted">同一张卡拥有 4 张或以上时，可以在收藏本中消耗 4 张合成 1 个额外卡包。合成包不占用每日基础开包机会。</view>
+    <view class="muted">同一张卡拥有 4 张或以上时，可以在收藏本中消耗 3 张重复卡合成 1 个额外卡包，并至少保留 1 张收藏卡。合成包不占用每日基础开包机会。</view>
+  </view>
+
+  <view class="panel block debug-block">
+    <view class="block-title">调试工具</view>
+    <view class="muted">MVP 本地验收使用，上线前隐藏。</view>
+    <view class="debug-grid">
+      <button class="debug-btn" bindtap="addDebugTasks">加测试任务</button>
+      <button class="debug-btn" bindtap="completeDebugTasks">完成任务</button>
+      <button class="debug-btn" bindtap="resetDebugPack">重置开包</button>
+      <button class="debug-btn" bindtap="addDebugDuplicates">加重复卡</button>
+      <button class="debug-btn danger" bindtap="clearDebugTasks">清空任务</button>
+      <button class="debug-btn danger" bindtap="clearDebugCollection">清空收藏</button>
+    </view>
   </view>
 </view>

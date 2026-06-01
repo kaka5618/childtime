@@ -7,6 +7,9 @@ const themes = [
     description: '软乎乎的泡泡精灵，收集星光和糖果色的梦。',
     accent: '#7BA68C',
     coverClass: 'bubble-cover',
+    packClass: 'bubble-pack',
+    packTitle: '星梦泡泡卡包',
+    packHint: '今天的能量已经装满。',
     previewCardIds: ['bubble_n_001', 'bubble_r_021', 'bubble_sr_037']
   },
   {
@@ -17,6 +20,9 @@ const themes = [
     description: '远古巨兽和化石探险，像纪录片一样展开。',
     accent: '#9A7A4F',
     coverClass: 'dino-cover',
+    packClass: 'dino-pack',
+    packTitle: '恐龙纪元卡包',
+    packHint: '化石卡包正在等待开启。',
     previewCardIds: []
   },
   {
@@ -27,6 +33,9 @@ const themes = [
     description: '探索型机甲和星际基地，偏硬朗科幻感。',
     accent: '#5F86B8',
     coverClass: 'mecha-cover',
+    packClass: 'mecha-pack',
+    packTitle: '深空机甲卡包',
+    packHint: '星际舱门准备开启。',
     previewCardIds: []
   },
   {
@@ -37,6 +46,9 @@ const themes = [
     description: '住在花瓣里的小花灵，水彩童话气质。',
     accent: '#D58AA5',
     coverClass: 'garden-cover',
+    packClass: 'garden-pack',
+    packTitle: '花园蜜语卡包',
+    packHint: '花瓣卡包正在轻轻发光。',
     previewCardIds: []
   }
 ]

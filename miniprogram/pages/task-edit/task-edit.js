@@ -6,7 +6,8 @@ Page({
     isEditing: false,
     name: '',
     minutes: 20,
-    completed: false
+    completed: false,
+    saveButtonText: '保存任务'
   },
 
   onLoad(query) {
@@ -24,7 +25,8 @@ Page({
       isEditing: true,
       name: task.name,
       minutes: Number(task.minutes),
-      completed: Boolean(task.completed)
+      completed: Boolean(task.completed),
+      saveButtonText: '保存修改'
     })
   },
 

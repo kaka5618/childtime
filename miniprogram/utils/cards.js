@@ -40,12 +40,24 @@ function buildCard(number) {
 }
 
 const cards = Array.from({ length: 50 }, (_, index) => buildCard(index + 1))
+const seriesCards = {
+  star_dream_bubble: cards
+}
 
-function getCard(id) {
-  return cards.find((card) => card.id === id)
+function getCardsBySeries(seriesId) {
+  return seriesCards[seriesId] || []
+}
+
+function getCard(seriesId, cardId) {
+  if (!cardId) {
+    return cards.find((card) => card.id === seriesId)
+  }
+  return getCardsBySeries(seriesId).find((card) => card.id === cardId)
 }
 
 module.exports = {
   cards,
+  seriesCards,
+  getCardsBySeries,
   getCard
 }

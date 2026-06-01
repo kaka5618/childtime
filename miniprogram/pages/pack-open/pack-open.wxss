@@ -28,7 +28,53 @@
 }
 
 .pack-mark {
+  max-width: 150rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 48rpx;
   transform: translateY(-4rpx);
+}
+
+.bubble-pack .pack-bag {
+  border-color: #f5c26b;
+  background: linear-gradient(180deg, #fff4bc, #f7c0d4);
+  color: #7b4c00;
+}
+
+.dino-pack .pack-bag {
+  border-color: #9a7a4f;
+  background: linear-gradient(180deg, #f4dfb1, #b89362);
+  color: #4e3518;
+}
+
+.mecha-pack .pack-bag {
+  border-color: #5f86b8;
+  background: linear-gradient(180deg, #edf4fb, #93b5dc);
+  color: #243d62;
+}
+
+.garden-pack .pack-bag {
+  border-color: #d58aa5;
+  background: linear-gradient(180deg, #ffe4ee, #c8e7bd);
+  color: #7b3e5b;
+}
+
+.bubble-pack .spark,
+.bubble-pack .burst {
+  background-color: #fff4a8;
+}
+
+.dino-pack .spark {
+  background: #ffe1a4;
+}
+
+.mecha-pack .spark {
+  background: #bfe3ff;
+}
+
+.garden-pack .spark {
+  background: #ffd3e2;
 }
 
 .opening .pack-bag {
@@ -98,6 +144,13 @@
   font-weight: 700;
 }
 
+.result-subtitle {
+  margin-top: 10rpx;
+  color: #7ba68c;
+  font-size: 26rpx;
+  font-weight: 700;
+}
+
 .open-btn {
   margin-top: 32rpx;
 }
@@ -134,6 +187,20 @@
   opacity: 0;
   transform: rotate(14deg);
   pointer-events: none;
+}
+
+.new-badge {
+  position: absolute;
+  top: 12rpx;
+  left: 12rpx;
+  z-index: 6;
+  padding: 6rpx 12rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 238, 133, 0.94);
+  color: #7b4c00;
+  font-size: 20rpx;
+  font-weight: 900;
+  box-shadow: 0 6rpx 12rpx rgba(123, 76, 0, 0.18);
 }
 
 .rarity-SR .rare-flash,

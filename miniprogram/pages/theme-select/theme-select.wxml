@@ -1,11 +1,11 @@
-<view class="page theme-page {{pendingTheme ? 'has-confirm' : ''}}">
+<view class="page theme-page {{pageClass}}">
   <view class="theme-head">
     <view class="eyebrow">收集主题</view>
     <view class="title">选择你的卡包</view>
   </view>
 
   <view class="theme-list">
-    <view wx:for="{{themes}}" wx:key="id" class="theme-card {{item.coverClass}} {{item.status === 'active' ? '' : 'preview'}} {{pendingId === item.id ? 'selected' : ''}}" bindtap="selectTheme" data-id="{{item.id}}" data-status="{{item.status}}" data-name="{{item.name}}">
+    <view wx:for="{{themes}}" wx:key="id" class="theme-card {{item.cardClass}}" bindtap="selectTheme" data-id="{{item.id}}" data-status="{{item.status}}" data-name="{{item.name}}">
       <view class="cover-stage">
         <view wx:if="{{item.hasPreviewCards}}" class="bubble-stack">
           <view wx:for="{{item.previewCards}}" wx:for-item="card" wx:for-index="cardIndex" wx:key="id" class="preview-card card-{{cardIndex}}">
@@ -20,7 +20,7 @@
           <view class="symbol-line"></view>
         </view>
         <view class="cover-gloss"></view>
-        <view class="theme-status">{{item.status === 'active' ? (selectedId === item.id ? '当前收集' : '可选择') : '预览'}}</view>
+        <view class="theme-status">{{item.statusText}}</view>
       </view>
       <view class="theme-main">
         <view class="theme-name">{{item.name}}</view>
@@ -31,9 +31,10 @@
 
   <view wx:if="{{pendingTheme}}" class="confirm-bar">
     <view class="confirm-copy">
-      <view class="confirm-label">{{selectedId === pendingId ? '当前收集' : '准备收集'}}</view>
+      <view class="confirm-label">{{confirmLabel}}</view>
       <view class="confirm-name">{{pendingTheme.name}}</view>
+      <view wx:if="{{cooldownVisible}}" class="cooldown-line">{{cooldownInfo.remainingDays}} 天后可更换 · {{cooldownInfo.nextSwitchDate}}</view>
     </view>
-    <button class="confirm-btn" bindtap="confirmTheme">{{selectedId === pendingId ? '继续收集' : '开始收集'}}</button>
+    <button class="confirm-btn {{confirmButtonClass}}" bindtap="confirmTheme">{{confirmButtonText}}</button>
   </view>
 </view>

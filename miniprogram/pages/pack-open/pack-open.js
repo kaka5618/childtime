@@ -1,17 +1,31 @@
 const state = require('../../utils/state')
+const { getTheme, getActiveTheme } = require('../../utils/themes')
+
+function getCurrentTheme() {
+  return getTheme(state.getActiveSeriesId()) || getActiveTheme()
+}
 
 Page({
   data: {
     pack: [],
+    newCount: 0,
     revealed: false,
+    claimed: false,
     opening: false,
-    source: 'daily'
+    source: 'daily',
+    activeTheme: null,
+    openingClass: '',
+    packTitle: '',
+    packHint: '',
+    packMark: '?',
+    openButtonText: '打开卡包'
   },
 
   openTimer: null,
 
   onLoad(query) {
     const source = query.source || 'daily'
+    const activeTheme = getCurrentTheme()
 
     if (source === 'synthesis') {
       const pack = state.getLastPack()
@@ -20,7 +34,7 @@ Page({
         wx.navigateBack()
         return
       }
-      this.setData({ pack, source })
+      this.setPackData(pack, source, activeTheme)
       return
     }
 
@@ -29,8 +43,8 @@ Page({
       wx.navigateBack()
       return
     }
-    const pack = state.hasGeneratedToday() ? state.getLastPack() : state.rollPack()
-    this.setData({ pack, source })
+    const pack = state.hasGeneratedToday() ? state.getLastPack() : state.prepareDailyPack()
+    this.setPackData(pack, source, activeTheme)
   },
 
   onUnload() {
@@ -43,20 +57,40 @@ Page({
   beginOpen() {
     if (this.data.opening) return
 
-    this.setData({ opening: true })
+    this.setData({
+      opening: true,
+      openingClass: 'opening',
+      openButtonText: '打开中'
+    })
     this.openTimer = setTimeout(() => {
       this.reveal()
     }, 900)
   },
 
-  reveal() {
+  setPackData(pack, source, activeTheme) {
     this.setData({
-      revealed: true,
-      opening: false
+      pack,
+      source,
+      activeTheme,
+      packTitle: source === 'synthesis' ? '合成卡包' : activeTheme.packTitle,
+      packHint: source === 'synthesis' ? '重复卡变成了新的惊喜。' : activeTheme.packHint,
+      packMark: activeTheme.shortName || '?',
+      newCount: pack.filter((card) => card.isNew).length
     })
-    if (this.data.source === 'daily') {
+  },
+
+  reveal() {
+    if (this.data.source === 'daily' && !this.data.claimed && !state.hasOpenedToday()) {
+      state.claimLastPack()
       state.markOpenedToday()
     }
+    this.setData({
+      revealed: true,
+      opening: false,
+      claimed: true,
+      openingClass: '',
+      openButtonText: '打开卡包'
+    })
   },
 
   goAlbum() {

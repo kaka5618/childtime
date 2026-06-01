@@ -8,7 +8,25 @@
 }
 
 .focus-card {
+  position: relative;
+  overflow: hidden;
   padding: 56rpx 30rpx;
+}
+
+.focus-card::after {
+  position: absolute;
+  right: -68rpx;
+  bottom: -84rpx;
+  width: 190rpx;
+  height: 190rpx;
+  border-radius: 50%;
+  background: rgba(245, 194, 107, 0.18);
+  content: "";
+}
+
+.completed-card {
+  border-color: rgba(123, 166, 140, 0.24);
+  background: linear-gradient(180deg, #fffaf4 0%, #f2fbf5 100%);
 }
 
 .focus-label {
@@ -31,4 +49,82 @@
 
 .complete-btn {
   margin-top: 48rpx;
+}
+
+.reward-panel {
+  margin-top: 28rpx;
+  padding: 38rpx 30rpx 34rpx;
+  animation: reward-in 260ms ease-out both;
+}
+
+.reward-burst {
+  position: relative;
+  width: 150rpx;
+  height: 150rpx;
+  margin: 0 auto;
+}
+
+.reward-core {
+  position: absolute;
+  top: 28rpx;
+  left: 28rpx;
+  width: 94rpx;
+  height: 94rpx;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #f8d783, #7ba68c);
+  box-shadow: 0 14rpx 30rpx rgba(123, 166, 140, 0.28);
+  color: #fff;
+  font-size: 56rpx;
+  font-weight: 800;
+  line-height: 94rpx;
+}
+
+.reward-star {
+  position: absolute;
+  color: #f5c26b;
+  font-size: 34rpx;
+  line-height: 1;
+  text-shadow: 0 5rpx 12rpx rgba(245, 194, 107, 0.28);
+}
+
+.star-a {
+  top: 6rpx;
+  left: 28rpx;
+}
+
+.star-b {
+  top: 30rpx;
+  right: 12rpx;
+  color: #7ba68c;
+}
+
+.star-c {
+  bottom: 14rpx;
+  left: 12rpx;
+  color: #f29faa;
+}
+
+.reward-title {
+  margin-top: 12rpx;
+  font-size: 38rpx;
+  font-weight: 800;
+}
+
+.reward-text {
+  margin-top: 12rpx;
+  color: #748078;
+  font-size: 26rpx;
+  line-height: 1.5;
+}
+
+@keyframes reward-in {
+  from {
+    opacity: 0;
+    transform: translateY(20rpx) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
