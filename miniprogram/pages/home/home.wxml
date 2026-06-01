@@ -7,21 +7,36 @@
   </view>
 
   <view class="topbar">
-    <view>
-      <view class="eyebrow">今日任务</view>
-      <view class="title">把能量袋装满</view>
+    <view class="kid-card">
+      <view class="kid-avatar">小</view>
+      <view>
+        <view class="kid-name">早上好，小朋友</view>
+        <view class="kid-note">今天也认真完成计划</view>
+      </view>
     </view>
     <button class="icon-btn" bindtap="goSettings">设置</button>
   </view>
 
   <view class="bag-panel panel">
-    <view class="bag-stage">
-      <view class="bag-shadow"></view>
-      <view class="bag {{bagClass}}">
-        <view class="bag-knot"></view>
-        <view class="bag-gloss"></view>
-        <view class="bag-fill" style="height: {{percent}}%;"></view>
-        <view class="bag-label">{{percent}}%</view>
+    <view class="hero-label">能量收集</view>
+    <view class="hero-title">把能量袋装满</view>
+    <view class="energy-scene">
+      <view class="scene-cloud cloud-a"></view>
+      <view class="scene-cloud cloud-b"></view>
+      <view class="scene-hill hill-a"></view>
+      <view class="scene-hill hill-b"></view>
+      <view class="scene-house">
+        <view class="house-roof"></view>
+        <view class="house-body"></view>
+      </view>
+      <view class="bag-stage">
+        <view class="bag-shadow"></view>
+        <view class="bag {{bagClass}}">
+          <view class="bag-knot"></view>
+          <view class="bag-gloss"></view>
+          <view class="bag-fill" style="height: {{percent}}%;"></view>
+          <view class="bag-label">{{percent}}%</view>
+        </view>
       </view>
     </view>
     <view class="bag-copy">
@@ -78,4 +93,10 @@
   </view>
 
   <button class="album-btn secondary-btn" bindtap="goAlbum">收藏本</button>
+
+  <view class="bottom-dock">
+    <button class="dock-btn active">计划</button>
+    <button class="dock-btn" bindtap="goAlbum">收藏</button>
+    <button class="dock-btn" bindtap="goSettings">家长</button>
+  </view>
 </view>
