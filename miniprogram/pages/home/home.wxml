@@ -1,9 +1,7 @@
 <view class="page home-page">
-  <image class="home-bg-img" src="/assets/ui/home-village-bg.png" mode="aspectFill" />
+  <image class="scene-bg-img" src="/assets/ui/home-hero-scene.png" mode="aspectFill" />
 
   <view class="hero-section">
-    <image class="hero-bg-img" src="/assets/ui/home-hero-scene.png" mode="aspectFill" />
-
     <view class="topbar">
       <view class="kid-card">
         <image class="kid-avatar-img" src="/assets/ui/home-avatar-badge.png" mode="aspectFill" />
@@ -76,8 +74,8 @@
   </view>
 
   <view class="bottom-dock">
-    <button class="dock-btn active">计划</button>
-    <button class="dock-btn" bindtap="goAlbum">收藏</button>
-    <button class="dock-btn" bindtap="goSettings">设置</button>
+    <view class="dock-btn active">计划</view>
+    <view class="dock-btn" bindtap="goAlbum">收藏</view>
+    <view class="dock-btn" bindtap="goSettings">设置</view>
   </view>
 </view>
