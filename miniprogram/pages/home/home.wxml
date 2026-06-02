@@ -61,7 +61,7 @@
   <view wx:else class="task-list">
     <view wx:for="{{tasks}}" wx:key="id" class="task panel {{item.taskClass}}" bindtap="goFocus" data-id="{{item.id}}">
       <view class="task-main">
-        <view class="task-icon">{{item.taskIcon}}</view>
+        <image class="task-icon-img" src="{{item.taskIconPath}}" mode="aspectFill" />
         <view>
         <view class="task-name">{{item.name}}</view>
         <view class="muted">{{item.minutes}} 分钟</view>

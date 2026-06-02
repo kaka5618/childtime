@@ -1,6 +1,14 @@
 const state = require('../../utils/state')
 const { getTheme } = require('../../utils/themes')
 
+function getTaskIconPath(name) {
+  const text = String(name || '')
+  if (text.includes('阅读') || text.includes('语文')) return '/assets/ui/icon-reading.png'
+  if (text.includes('英语') || text.toLowerCase().includes('english')) return '/assets/ui/icon-english.png'
+  if (text.includes('练字') || text.includes('写') || text.includes('字')) return '/assets/ui/icon-writing.png'
+  return '/assets/ui/icon-math.png'
+}
+
 Page({
   data: {
     tasks: [],
@@ -49,7 +57,7 @@ Page({
     const percent = state.chargePercent(rawTasks)
     const tasks = rawTasks.map((task) => ({
       ...task,
-      taskIcon: task.completed ? '✓' : '✦',
+      taskIconPath: getTaskIconPath(task.name),
       taskClass: task.completed ? 'done' : '',
       statusText: task.completed ? '已完成' : '开始',
       editButtonClass: openedToday ? 'disabled-edit' : ''
