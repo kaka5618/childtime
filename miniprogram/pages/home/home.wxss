@@ -259,15 +259,14 @@
 }
 
 .task-list {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 12rpx;
+  display: block;
+  max-height: 388rpx;
   margin-top: 16rpx;
   padding: 0 4rpx;
   box-sizing: border-box;
   width: 100%;
   min-width: 0;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .task {
@@ -285,6 +284,10 @@
   background: rgba(255, 253, 247, 0.94);
   box-shadow: 0 8rpx 18rpx rgba(122, 95, 51, 0.08);
   overflow: hidden;
+}
+
+.task + .task {
+  margin-top: 12rpx;
 }
 
 .task.done {

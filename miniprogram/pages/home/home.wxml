@@ -41,7 +41,7 @@
       <view class="muted">添加今晚要完成的作业，能量袋就会开始等待充能。</view>
     </view>
 
-    <view wx:else class="task-list">
+    <scroll-view wx:else class="task-list" scroll-y="true" enable-flex="true" show-scrollbar="false">
       <view wx:for="{{tasks}}" wx:key="id" class="task {{item.taskClass}}" bindtap="goFocus" data-id="{{item.id}}">
         <view class="task-main">
           <image class="task-icon-img" src="{{item.taskIconPath}}" mode="aspectFill" />
@@ -55,7 +55,7 @@
           <view class="edit-btn {{item.editButtonClass}}" catchtap="goEditTask" data-id="{{item.id}}">编辑</view>
         </view>
       </view>
-    </view>
+    </scroll-view>
 
     <button wx:if="{{showPackButton}}" class="focus-now-btn" bindtap="goPack">
       <view class="focus-btn-star">★</view>
