@@ -22,6 +22,9 @@ Page({
     showAlbumButton: false,
     showThemeChip: false,
     emptyVisible: false,
+    showFocusButton: false,
+    focusButtonText: '去专注',
+    nextTaskId: '',
     addButtonClass: '',
     energyProgressText: '0 / 0 分钟',
     todaySummary: {
@@ -55,11 +58,12 @@ Page({
     const openedToday = state.hasOpenedToday()
     const allDone = state.allCompleted(rawTasks)
     const percent = state.chargePercent(rawTasks)
+    const nextTask = rawTasks.find((task) => !task.completed)
     const tasks = rawTasks.map((task) => ({
       ...task,
       taskIconPath: getTaskIconPath(task.name),
       taskClass: task.completed ? 'done' : '',
-      statusText: task.completed ? '已完成' : '开始',
+      statusText: task.completed ? `${task.minutes} / ${task.minutes} 分钟` : `0 / ${task.minutes} 分钟`,
       editButtonClass: openedToday ? 'disabled-edit' : ''
     }))
     this.setData({
@@ -75,6 +79,9 @@ Page({
       showAlbumButton: openedToday,
       showThemeChip: Boolean(activeTheme),
       emptyVisible: tasks.length === 0,
+      showFocusButton: Boolean(nextTask) && !openedToday,
+      focusButtonText: nextTask ? '去专注' : '任务完成',
+      nextTaskId: nextTask ? nextTask.id : '',
       addButtonClass: openedToday ? 'disabled-btn' : '',
       todaySummary: {
         completedTasks,
@@ -128,6 +135,14 @@ Page({
 
   goPack() {
     wx.navigateTo({ url: '/pages/pack-open/pack-open' })
+  },
+
+  goNextTask() {
+    if (!this.data.nextTaskId) {
+      wx.showToast({ title: '先添加任务', icon: 'none' })
+      return
+    }
+    wx.navigateTo({ url: `/pages/focus/focus?id=${this.data.nextTaskId}` })
   },
 
   goAlbum() {

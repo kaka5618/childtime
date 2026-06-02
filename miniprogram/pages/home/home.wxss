@@ -324,14 +324,21 @@
 }
 
 .task-status {
-  color: #7ba68c;
+  min-width: 142rpx;
+  padding: 8rpx 14rpx;
+  border: 1rpx solid rgba(245, 194, 107, 0.36);
+  border-radius: 999rpx;
+  background: rgba(255, 248, 225, 0.82);
+  color: #8a5d13;
+  font-size: 21rpx;
   font-weight: 900;
+  text-align: center;
 }
 
 .task-actions {
   display: flex;
   align-items: center;
-  gap: 14rpx;
+  gap: 10rpx;
 }
 
 .edit-btn {
@@ -354,6 +361,39 @@
 
 .disabled-edit {
   opacity: 0.48;
+}
+
+.focus-now-btn {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 420rpx;
+  height: 86rpx;
+  margin: 28rpx auto 0;
+  align-items: center;
+  justify-content: center;
+  gap: 16rpx;
+  border: 4rpx solid rgba(255, 255, 255, 0.82);
+  border-radius: 999rpx;
+  background: linear-gradient(180deg, #ffd85f, #ffb52f);
+  color: #7b4c00;
+  font-size: 38rpx;
+  font-weight: 900;
+  line-height: 86rpx;
+  box-shadow: 0 14rpx 26rpx rgba(194, 126, 24, 0.22);
+}
+
+.focus-btn-star {
+  display: flex;
+  width: 50rpx;
+  height: 50rpx;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #fff5bf;
+  color: #f4b200;
+  font-size: 30rpx;
+  line-height: 50rpx;
 }
 
 .bottom-dock {

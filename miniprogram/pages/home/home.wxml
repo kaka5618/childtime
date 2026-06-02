@@ -74,6 +74,11 @@
     </view>
   </view>
 
+  <button wx:if="{{showFocusButton}}" class="focus-now-btn" bindtap="goNextTask">
+    <view class="focus-btn-star">★</view>
+    <text>{{focusButtonText}}</text>
+  </button>
+
   <button class="album-btn secondary-btn" bindtap="goAlbum">收藏本</button>
 
   <view class="bottom-dock">
