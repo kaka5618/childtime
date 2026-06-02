@@ -15,6 +15,7 @@ Page({
     showThemeChip: false,
     emptyVisible: false,
     addButtonClass: '',
+    energyProgressText: '0 / 0 分钟',
     todaySummary: {
       completedTasks: 0,
       totalTasks: 0,
@@ -74,6 +75,7 @@ Page({
         totalMinutes,
         packText: openedToday ? '已获得' : '未获得'
       },
+      energyProgressText: `${completedMinutes} / ${totalMinutes} 分钟`,
       nextActionText: this.getNextActionText(rawTasks, allDone, openedToday)
     })
   },

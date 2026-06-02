@@ -1,14 +1,7 @@
 <view class="page home-page">
-  <view class="home-decor">
-    <view class="candy-line line-a"></view>
-    <view class="candy-line line-b"></view>
-    <view class="soft-star star-a">★</view>
-    <view class="soft-star star-b">★</view>
-  </view>
-
   <view class="topbar">
     <view class="kid-card">
-      <view class="kid-avatar">小</view>
+      <image class="kid-avatar-img" src="/assets/ui/home-avatar-badge.png" mode="aspectFill" />
       <view>
         <view class="kid-name">早上好，小朋友</view>
         <view class="kid-note">今天也认真完成计划</view>
@@ -21,22 +14,11 @@
     <view class="hero-label">能量收集</view>
     <view class="hero-title">把能量袋装满</view>
     <view class="energy-scene">
-      <view class="scene-cloud cloud-a"></view>
-      <view class="scene-cloud cloud-b"></view>
-      <view class="scene-hill hill-a"></view>
-      <view class="scene-hill hill-b"></view>
-      <view class="scene-house">
-        <view class="house-roof"></view>
-        <view class="house-body"></view>
-      </view>
-      <view class="bag-stage">
-        <view class="bag-shadow"></view>
-        <view class="bag {{bagClass}}">
-          <view class="bag-knot"></view>
-          <view class="bag-gloss"></view>
-          <view class="bag-fill" style="height: {{percent}}%;"></view>
-          <view class="bag-label">{{percent}}%</view>
-        </view>
+      <image class="energy-scene-img" src="/assets/ui/home-hero-scene.png" mode="aspectFill" />
+      <view class="energy-label">{{energyProgressText}}</view>
+      <view class="energy-tag">
+        <view class="energy-tag-title">今日目标</view>
+        <view class="energy-tag-text">{{todaySummary.totalMinutes}} 分钟</view>
       </view>
     </view>
     <view class="bag-copy">
