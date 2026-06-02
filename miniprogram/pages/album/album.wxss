@@ -13,7 +13,7 @@
 
 .book-shell {
   position: relative;
-  height: 1332rpx;
+  height: 1510rpx;
   padding: 36rpx 26rpx 0 70rpx;
   overflow: hidden;
   border: 0;
@@ -25,11 +25,12 @@
 .scrapbook-bg-img {
   position: absolute;
   top: 0;
-  left: 0;
+  left: 50%;
   z-index: 0;
-  width: 100%;
+  width: 106%;
   height: auto;
   pointer-events: none;
+  transform: translateX(-50%);
 }
 
 .book-ring {
@@ -395,7 +396,7 @@
 
 .album-grid {
   display: block;
-  height: 470rpx;
+  height: 680rpx;
   margin-top: 14rpx;
   padding: 14rpx;
   border: 0;
@@ -429,7 +430,7 @@
 }
 
 .slot-tap .size-small {
-  height: 244rpx;
+  height: 198rpx;
 }
 
 .slot-tap .placeholder,
@@ -469,7 +470,7 @@
 .scrapbook-tabs {
   position: absolute;
   right: 54rpx;
-  bottom: 28rpx;
+  bottom: 30rpx;
   left: 98rpx;
   z-index: 20;
   display: grid;
