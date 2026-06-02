@@ -7,7 +7,7 @@
 
 .scene-bg-img {
   position: absolute;
-  top: -330rpx;
+  top: -120rpx;
   right: 0;
   left: 0;
   z-index: 0;

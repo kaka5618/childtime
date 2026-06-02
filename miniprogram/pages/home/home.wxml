@@ -1,5 +1,5 @@
 <view class="page home-page">
-  <image class="scene-bg-img" src="/assets/ui/home-hero-scene.png" mode="aspectFill" />
+  <image class="scene-bg-img" src="/assets/ui/home-scene-bg-extended.jpg" mode="aspectFill" />
 
   <view class="hero-section">
     <view class="topbar">
