@@ -1,4 +1,6 @@
 <view class="page home-page">
+  <image class="home-bg-img" src="/assets/ui/home-village-bg.png" mode="aspectFill" />
+
   <view class="hero-section">
     <image class="hero-bg-img" src="/assets/ui/home-hero-scene.png" mode="aspectFill" />
 
@@ -10,7 +12,6 @@
           <view class="kid-note">今天也认真完成计划</view>
         </view>
       </view>
-      <button class="icon-btn" bindtap="goSettings">设置</button>
     </view>
 
     <view class="energy-title-pill">能量袋</view>
@@ -77,6 +78,6 @@
   <view class="bottom-dock">
     <button class="dock-btn active">计划</button>
     <button class="dock-btn" bindtap="goAlbum">收藏</button>
-    <button class="dock-btn" bindtap="goSettings">家长</button>
+    <button class="dock-btn" bindtap="goSettings">设置</button>
   </view>
 </view>
