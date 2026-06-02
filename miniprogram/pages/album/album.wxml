@@ -1,6 +1,6 @@
 <view class="page album-page">
   <view class="book-shell">
-    <image class="scrapbook-bg-img" src="/assets/ui/album-scrapbook-bg.jpg" mode="aspectFill" />
+    <image class="scrapbook-bg-img" src="/assets/ui/album-scrapbook-bg.jpg" mode="widthFix" />
     <view class="book-ring ring-a"></view>
     <view class="book-ring ring-b"></view>
     <view class="book-ring ring-c"></view>
@@ -58,12 +58,12 @@
       <view class="muted">换一个筛选条件试试。</view>
     </view>
 
-    <view class="album-grid">
+    <scroll-view class="album-grid" scroll-y="true" show-scrollbar="false">
       <view wx:for="{{filteredCards}}" wx:key="id" class="slot-tap" bindtap="openCard" data-id="{{item.id}}" data-owned="{{item.owned}}">
         <card-face card="{{item}}" owned="{{item.owned}}" count="{{item.count}}" size="small" show-count />
         <view wx:if="{{item.canSynthesize}}" class="synthesize-btn" catchtap="synthesizeCard" data-id="{{item.id}}" data-name="{{item.name}}" data-hint="{{item.synthesisHint}}">合成</view>
       </view>
-    </view>
+    </scroll-view>
 
     <view class="scrapbook-tabs">
       <view class="tab-page active">卡片</view>
