@@ -262,10 +262,13 @@
   display: grid;
   gap: 12rpx;
   margin-top: 16rpx;
+  padding: 0 4rpx;
 }
 
 .task {
+  box-sizing: border-box;
   display: flex;
+  width: 100%;
   min-height: 88rpx;
   align-items: center;
   justify-content: space-between;
@@ -283,6 +286,7 @@
 .task-main {
   display: flex;
   min-width: 0;
+  flex: 1 1 auto;
   align-items: center;
   gap: 16rpx;
 }
@@ -297,7 +301,7 @@
 }
 
 .task-name {
-  max-width: 270rpx;
+  max-width: 230rpx;
   overflow: hidden;
   color: #563418;
   font-size: 28rpx;
@@ -308,8 +312,8 @@
 }
 
 .task-status {
-  min-width: 138rpx;
-  padding: 8rpx 12rpx;
+  width: 132rpx;
+  padding: 8rpx 8rpx;
   border: 1rpx solid rgba(245, 194, 107, 0.34);
   border-radius: 999rpx;
   background: rgba(255, 248, 225, 0.82);
@@ -321,12 +325,13 @@
 
 .task-actions {
   display: flex;
+  flex: none;
   align-items: center;
   gap: 8rpx;
 }
 
 .edit-btn {
-  width: 74rpx;
+  width: 68rpx;
   height: 48rpx;
   margin: 0;
   padding: 0;
