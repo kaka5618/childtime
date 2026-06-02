@@ -471,7 +471,7 @@
   position: absolute;
   right: 92rpx;
   left: 118rpx;
-  top: 1188rpx;
+  top: 1238rpx;
   z-index: 20;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
