@@ -6,6 +6,11 @@
   font-family: "Comic Sans MS", "PingFang SC", "Microsoft YaHei", sans-serif;
 }
 
+.album-page view,
+.album-page text {
+  font-weight: 900;
+}
+
 .book-shell {
   position: relative;
   height: 1332rpx;
@@ -111,7 +116,9 @@
   font-size: 24rpx;
   font-weight: 900;
   text-overflow: ellipsis;
-  text-shadow: 0 2rpx 0 rgba(255, 255, 255, 0.72);
+  text-shadow:
+    0 2rpx 0 rgba(255, 255, 255, 0.92),
+    0 5rpx 8rpx rgba(112, 82, 44, 0.16);
   white-space: nowrap;
 }
 
@@ -129,6 +136,7 @@
   color: #8a6a42;
   font-size: 22rpx;
   font-weight: 900;
+  text-shadow: 0 2rpx 0 rgba(255, 255, 255, 0.86);
 }
 
 .switch-dot {
@@ -186,6 +194,7 @@
   color: #8a6a42;
   font-size: 23rpx;
   font-weight: 900;
+  text-shadow: 0 2rpx 0 rgba(255, 255, 255, 0.8);
 }
 
 .progress {
@@ -194,6 +203,9 @@
   font-size: 42rpx;
   font-weight: 900;
   line-height: 1;
+  text-shadow:
+    0 3rpx 0 rgba(255, 255, 255, 0.94),
+    0 6rpx 9rpx rgba(91, 126, 85, 0.18);
 }
 
 .progress-hint {
@@ -202,6 +214,7 @@
   font-size: 20rpx;
   font-weight: 800;
   line-height: 1.25;
+  text-shadow: 0 2rpx 0 rgba(255, 255, 255, 0.78);
 }
 
 .progress-track {
@@ -248,6 +261,7 @@
   font-size: 22rpx;
   font-weight: 900;
   text-align: center;
+  text-shadow: 0 2rpx 0 rgba(255, 255, 255, 0.78);
 }
 
 .reward-panel {
@@ -337,9 +351,10 @@
   border: 2rpx solid rgba(123, 166, 140, 0.25);
   border-radius: 999rpx;
   background: rgba(255, 255, 255, 0.86);
-  color: #5d705f;
-  font-size: 23rpx;
+  color: #435c4d;
+  font-size: 24rpx;
   font-weight: 900;
+  text-shadow: 0 2rpx 0 rgba(255, 255, 255, 0.86);
   vertical-align: top;
 }
 
@@ -379,9 +394,7 @@
 }
 
 .album-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14rpx;
+  display: block;
   height: 470rpx;
   margin-top: 14rpx;
   padding: 14rpx;
@@ -390,6 +403,15 @@
   background: rgba(255, 253, 244, 0.24);
   box-sizing: border-box;
   overflow-x: hidden;
+}
+
+.album-grid-inner {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14rpx;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
 }
 
 .slot-tap {
@@ -408,6 +430,22 @@
 
 .slot-tap .size-small {
   height: 244rpx;
+}
+
+.slot-tap .placeholder,
+.slot-tap .card-name,
+.slot-tap .card-count,
+.slot-tap .card-no,
+.slot-tap .rarity-text {
+  font-weight: 900;
+  text-shadow:
+    0 2rpx 0 rgba(255, 255, 255, 0.92),
+    0 5rpx 8rpx rgba(91, 126, 85, 0.18);
+}
+
+.slot-tap .placeholder {
+  color: #8f9f93;
+  font-size: 31rpx;
 }
 
 .synthesize-btn {
