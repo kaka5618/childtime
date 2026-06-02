@@ -10,6 +10,12 @@ Page({
     activeTheme: null,
     activeThemeName: '星梦泡泡',
     activeThemeAccent: '#7BA68C',
+    collectionProgress: {
+      owned: 0,
+      total: 0,
+      percent: 0
+    },
+    collectionRemaining: 0,
     rewardVisible: false,
     rewardCards: [],
     rewardTitle: '',
@@ -19,16 +25,16 @@ Page({
     rarityFilter: 'ALL',
     statusFilters: [
       { key: 'all', label: '全部', activeClass: 'active' },
-      { key: 'owned', label: '已获得' },
+      { key: 'owned', label: '已收集' },
       { key: 'missing', label: '未获得' },
       { key: 'synthesis', label: '可合成' }
     ],
     rarityFilters: [
-      { key: 'ALL', label: 'ALL', activeClass: 'active' },
-      { key: 'N', label: 'N' },
-      { key: 'R', label: 'R' },
-      { key: 'SR', label: 'SR' },
-      { key: 'SSR', label: 'SSR' }
+      { key: 'ALL', label: '全部', activeClass: 'active' },
+      { key: 'N', label: '普通' },
+      { key: 'R', label: '稀有' },
+      { key: 'SR', label: '超稀有' },
+      { key: 'SSR', label: '传说' }
     ]
   },
 
@@ -51,6 +57,7 @@ Page({
       activeThemeName: activeTheme ? activeTheme.name : '星梦泡泡',
       activeThemeAccent: activeTheme ? activeTheme.accent : '#7BA68C',
       collectionProgress,
+      collectionRemaining: Math.max(0, collectionProgress.total - collectionProgress.owned),
       rewardVisible: rewardCards.length > 0,
       rewardCards,
       rewardTitle: recentReward.sourceText ? '最近获得' : '',
@@ -158,5 +165,14 @@ Page({
 
   goThemeSelect() {
     wx.navigateTo({ url: '/pages/theme-select/theme-select' })
+  },
+
+  goBack() {
+    const pages = getCurrentPages()
+    if (pages.length > 1) {
+      wx.navigateBack()
+      return
+    }
+    wx.redirectTo({ url: '/pages/home/home' })
   }
 })

@@ -1,54 +1,73 @@
 <view class="page album-page">
-  <view class="album-head">
-    <view>
-      <view class="eyebrow">{{activeThemeName}}</view>
-      <view class="title">收藏本</view>
-    </view>
-    <view class="progress">{{collectionProgress.owned}}/{{collectionProgress.total}}</view>
-  </view>
+  <view class="book-shell">
+    <view class="book-ring ring-a"></view>
+    <view class="book-ring ring-b"></view>
+    <view class="book-ring ring-c"></view>
 
-  <view class="progress-bar">
-    <view class="progress-fill" style="width: {{collectionProgress.percent}}%;"></view>
-  </view>
-
-  <button class="switch-theme-btn" bindtap="goThemeSelect">
-    <view class="switch-dot" style="background: {{activeThemeAccent}};"></view>
-    <text>更换收集册</text>
-  </button>
-
-  <view wx:if="{{rewardVisible}}" class="reward-panel panel">
-    <view class="reward-head">
-      <view>
-        <view class="reward-title">{{rewardTitle}}</view>
-        <view class="muted">{{rewardSubtitle}}</view>
+    <view class="hero-paper">
+      <view class="tape tape-left"></view>
+      <view class="tape tape-right"></view>
+      <view class="hero-top">
+        <view class="back-sticker" bindtap="goBack">‹</view>
+        <view class="theme-pill">{{activeThemeName}}</view>
+        <view class="switch-theme-btn" bindtap="goThemeSelect">
+          <view class="switch-dot" style="background: {{activeThemeAccent}};"></view>
+          <text>更换主题</text>
+        </view>
+      </view>
+      <view class="title-row">
+        <view class="title-cloud">收藏本</view>
+      </view>
+      <view class="progress-card">
+        <view>
+          <view class="progress-label">收集进度</view>
+          <view class="progress">{{collectionProgress.owned}}/{{collectionProgress.total}}</view>
+          <view class="progress-hint">再收集 {{collectionRemaining}} 张即可集满。</view>
+        </view>
+        <view class="progress-track">
+          <view class="progress-fill" style="width: {{collectionProgress.percent}}%;"></view>
+          <view class="progress-star">★</view>
+        </view>
+        <view class="reward-sticker">全册奖励</view>
       </view>
     </view>
-    <view class="reward-list">
-      <view wx:for="{{rewardCards}}" wx:key="id" class="reward-card" bindtap="openRewardCard" data-id="{{item.id}}">
-        <view class="reward-badge">{{item.badgeText}}</view>
-        <card-face card="{{item}}" size="small" />
+
+    <view wx:if="{{rewardVisible}}" class="reward-panel">
+      <view class="section-sticker">最近获得</view>
+      <view class="reward-subtitle">{{rewardSubtitle}}</view>
+      <scroll-view class="reward-list" scroll-x="true" show-scrollbar="false">
+        <view wx:for="{{rewardCards}}" wx:key="id" class="reward-card" bindtap="openRewardCard" data-id="{{item.id}}">
+          <view class="reward-badge">{{item.badgeText}}</view>
+          <card-face card="{{item}}" size="small" />
+        </view>
+      </scroll-view>
+    </view>
+
+    <view class="filter-panel">
+      <scroll-view class="filter-scroll" scroll-x="true" show-scrollbar="false">
+        <view wx:for="{{statusFilters}}" wx:key="key" class="filter-btn {{item.activeClass}}" data-filter="{{item.key}}" bindtap="changeStatusFilter">{{item.label}}</view>
+      </scroll-view>
+      <view class="filter-row rarity-row">
+        <view wx:for="{{rarityFilters}}" wx:key="key" class="filter-btn rarity-btn {{item.activeClass}}" data-rarity="{{item.key}}" bindtap="changeRarityFilter">{{item.label}}</view>
       </view>
     </view>
-  </view>
 
-  <view class="filter-panel">
-    <view class="filter-row">
-      <button wx:for="{{statusFilters}}" wx:key="key" class="filter-btn {{item.activeClass}}" data-filter="{{item.key}}" bindtap="changeStatusFilter">{{item.label}}</button>
+    <view wx:if="{{emptyVisible}}" class="empty">
+      <view class="empty-title">没有符合条件的卡</view>
+      <view class="muted">换一个筛选条件试试。</view>
     </view>
-    <view class="filter-row rarity-row">
-      <button wx:for="{{rarityFilters}}" wx:key="key" class="filter-btn rarity-btn {{item.activeClass}}" data-rarity="{{item.key}}" bindtap="changeRarityFilter">{{item.label}}</button>
+
+    <view class="album-grid">
+      <view wx:for="{{filteredCards}}" wx:key="id" class="slot-tap" bindtap="openCard" data-id="{{item.id}}" data-owned="{{item.owned}}">
+        <card-face card="{{item}}" owned="{{item.owned}}" count="{{item.count}}" size="small" show-count />
+        <view wx:if="{{item.canSynthesize}}" class="synthesize-btn" catchtap="synthesizeCard" data-id="{{item.id}}" data-name="{{item.name}}" data-hint="{{item.synthesisHint}}">合成</view>
+      </view>
     </view>
-  </view>
 
-  <view wx:if="{{emptyVisible}}" class="empty panel">
-    <view class="empty-title">没有符合条件的卡</view>
-    <view class="muted">换一个筛选条件试试。</view>
-  </view>
-
-  <view class="album-grid">
-    <view wx:for="{{filteredCards}}" wx:key="id" class="slot-tap" bindtap="openCard" data-id="{{item.id}}" data-owned="{{item.owned}}">
-      <card-face card="{{item}}" owned="{{item.owned}}" count="{{item.count}}" size="small" show-count />
-      <button wx:if="{{item.canSynthesize}}" class="synthesize-btn" catchtap="synthesizeCard" data-id="{{item.id}}" data-name="{{item.name}}" data-hint="{{item.synthesisHint}}">合成</button>
+    <view class="scrapbook-tabs">
+      <view class="tab-page active">卡片</view>
+      <view class="tab-page" data-filter="synthesis" bindtap="changeStatusFilter">合成</view>
+      <view class="tab-page" bindtap="goThemeSelect">主题</view>
     </view>
   </view>
 </view>
