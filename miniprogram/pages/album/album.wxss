@@ -1,9 +1,7 @@
 .album-page {
   min-height: 100vh;
-  padding: 26rpx 22rpx 34rpx;
-  background:
-    radial-gradient(circle at 12% 8%, rgba(255, 238, 196, 0.92), rgba(255, 238, 196, 0) 24%),
-    linear-gradient(180deg, #f8d59d 0%, #f5e4bd 34%, #d7e7b7 100%);
+  padding: 18rpx 16rpx 30rpx;
+  background: #d7c09b;
   color: #4a2f17;
   font-family: "Comic Sans MS", "PingFang SC", "Microsoft YaHei", sans-serif;
 }
@@ -11,27 +9,28 @@
 .book-shell {
   position: relative;
   min-height: calc(100vh - 60rpx);
-  padding: 28rpx 18rpx 124rpx;
+  padding: 36rpx 26rpx 138rpx 70rpx;
   overflow: hidden;
-  border: 4rpx solid rgba(104, 142, 103, 0.2);
+  border: 0;
   border-radius: 34rpx;
-  background:
-    linear-gradient(90deg, rgba(107, 156, 119, 0.9) 0, rgba(107, 156, 119, 0.9) 48rpx, rgba(255, 244, 217, 0.96) 48rpx),
-    linear-gradient(180deg, #fff4d7, #fff8e7);
-  box-shadow:
-    0 18rpx 36rpx rgba(82, 67, 45, 0.2),
-    inset 0 0 0 4rpx rgba(255, 255, 255, 0.55);
+  background: transparent;
+  box-shadow: 0 18rpx 36rpx rgba(54, 42, 30, 0.24);
+}
+
+.scrapbook-bg-img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
 .book-ring {
-  position: absolute;
-  left: 16rpx;
-  z-index: 4;
-  width: 42rpx;
-  height: 12rpx;
-  border-radius: 999rpx;
-  background: rgba(218, 177, 101, 0.92);
-  box-shadow: inset 0 0 0 2rpx rgba(123, 91, 45, 0.16);
+  display: none;
 }
 
 .ring-a {
@@ -53,26 +52,19 @@
 .album-grid {
   position: relative;
   z-index: 2;
-  margin-left: 34rpx;
+  margin-left: 0;
 }
 
 .hero-paper {
-  padding: 24rpx 24rpx 22rpx;
-  border: 3rpx dashed rgba(188, 158, 101, 0.38);
-  border-radius: 26rpx;
-  background:
-    linear-gradient(180deg, rgba(255, 247, 222, 0.96), rgba(255, 252, 238, 0.92));
-  box-shadow: 0 10rpx 24rpx rgba(139, 107, 66, 0.16);
+  padding: 18rpx 20rpx 14rpx;
+  border: 0;
+  border-radius: 24rpx;
+  background: transparent;
+  box-shadow: none;
 }
 
 .tape {
-  position: absolute;
-  z-index: 3;
-  width: 96rpx;
-  height: 34rpx;
-  border-radius: 6rpx;
-  background: rgba(248, 178, 166, 0.86);
-  box-shadow: 0 4rpx 10rpx rgba(126, 80, 61, 0.14);
+  display: none;
 }
 
 .tape-left {
@@ -151,14 +143,14 @@
 .title-row {
   display: flex;
   justify-content: center;
-  margin-top: 8rpx;
+  margin-top: 4rpx;
 }
 
 .title-cloud {
   position: relative;
   padding: 4rpx 34rpx 10rpx;
   color: #5c9961;
-  font-size: 76rpx;
+  font-size: 82rpx;
   font-weight: 900;
   letter-spacing: 0;
   line-height: 1;
@@ -185,11 +177,11 @@
   grid-template-columns: 166rpx 1fr 112rpx;
   gap: 16rpx;
   align-items: center;
-  margin-top: 18rpx;
-  padding: 18rpx;
-  border: 2rpx solid rgba(213, 179, 119, 0.34);
+  margin-top: 16rpx;
+  padding: 14rpx 16rpx;
+  border: 0;
   border-radius: 22rpx;
-  background: rgba(255, 252, 244, 0.9);
+  background: rgba(255, 252, 244, 0.28);
 }
 
 .progress-label {
@@ -261,12 +253,12 @@
 }
 
 .reward-panel {
-  margin-top: 22rpx;
-  padding: 20rpx 18rpx 22rpx;
-  border: 3rpx solid rgba(255, 255, 255, 0.7);
+  margin-top: 18rpx;
+  padding: 16rpx 16rpx 18rpx;
+  border: 0;
   border-radius: 24rpx;
-  background: rgba(255, 253, 244, 0.92);
-  box-shadow: 0 10rpx 22rpx rgba(106, 86, 52, 0.14);
+  background: rgba(255, 253, 244, 0.18);
+  box-shadow: none;
 }
 
 .section-sticker {
@@ -316,10 +308,10 @@
 }
 
 .filter-panel {
-  margin-top: 20rpx;
-  padding: 16rpx;
+  margin-top: 18rpx;
+  padding: 12rpx 14rpx;
   border-radius: 26rpx;
-  background: rgba(255, 253, 244, 0.86);
+  background: rgba(255, 253, 244, 0.36);
 }
 
 .filter-scroll {
@@ -391,12 +383,12 @@
 .album-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16rpx;
-  margin-top: 20rpx;
-  padding: 18rpx;
-  border: 3rpx dashed rgba(188, 158, 101, 0.22);
+  gap: 14rpx;
+  margin-top: 18rpx;
+  padding: 14rpx;
+  border: 0;
   border-radius: 26rpx;
-  background: rgba(255, 253, 244, 0.9);
+  background: rgba(255, 253, 244, 0.24);
 }
 
 .slot-tap {
@@ -429,9 +421,9 @@
 
 .scrapbook-tabs {
   position: fixed;
-  right: 44rpx;
+  right: 70rpx;
   bottom: 20rpx;
-  left: 44rpx;
+  left: 86rpx;
   z-index: 20;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
