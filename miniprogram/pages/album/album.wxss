@@ -470,8 +470,8 @@
 .scrapbook-tabs {
   position: absolute;
   right: 92rpx;
-  bottom: 116rpx;
   left: 118rpx;
+  top: 1188rpx;
   z-index: 20;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
