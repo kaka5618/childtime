@@ -1,26 +1,28 @@
 <view class="page home-page">
-  <view class="topbar">
-    <view class="kid-card">
-      <image class="kid-avatar-img" src="/assets/ui/home-avatar-badge.png" mode="aspectFill" />
-      <view>
-        <view class="kid-name">早上好，小朋友</view>
-        <view class="kid-note">今天也认真完成计划</view>
+  <view class="hero-section">
+    <image class="hero-bg-img" src="/assets/ui/home-hero-scene.png" mode="aspectFill" />
+
+    <view class="topbar">
+      <view class="kid-card">
+        <image class="kid-avatar-img" src="/assets/ui/home-avatar-badge.png" mode="aspectFill" />
+        <view>
+          <view class="kid-name">早上好，小朋友</view>
+          <view class="kid-note">今天也认真完成计划</view>
+        </view>
       </view>
+      <button class="icon-btn" bindtap="goSettings">设置</button>
     </view>
-    <button class="icon-btn" bindtap="goSettings">设置</button>
+
+    <view class="energy-title-pill">能量袋</view>
+    <view class="energy-label">{{energyProgressText}}</view>
+    <view class="energy-tag">
+      <view class="energy-tag-title">今日目标</view>
+      <view class="energy-tag-text">{{todaySummary.totalMinutes}} 分钟</view>
+    </view>
   </view>
 
-  <view class="bag-panel panel">
-    <view class="hero-label">能量收集</view>
-    <view class="hero-title">把能量袋装满</view>
-    <view class="energy-scene">
-      <image class="energy-scene-img" src="/assets/ui/home-hero-scene.png" mode="aspectFill" />
-      <view class="energy-label">{{energyProgressText}}</view>
-      <view class="energy-tag">
-        <view class="energy-tag-title">今日目标</view>
-        <view class="energy-tag-text">{{todaySummary.totalMinutes}} 分钟</view>
-      </view>
-    </view>
+  <view class="plan-panel">
+    <view class="plan-tab">今日计划</view>
     <view class="bag-copy">
       <view class="bag-title">{{bagTitle}}</view>
       <view class="muted">完成任务会按预估时间为能量袋充能。</view>
@@ -30,56 +32,47 @@
       <view class="theme-dot" style="background: {{activeTheme.accent}};"></view>
       <text>当前收集：{{activeTheme.name}} · {{collectionProgress.owned}}/{{collectionProgress.total}}</text>
     </view>
-    <view class="summary-grid">
-      <view class="summary-item">
-        <view class="summary-value">{{todaySummary.completedTasks}}/{{todaySummary.totalTasks}}</view>
-        <view class="summary-label">任务</view>
-      </view>
-      <view class="summary-item">
-        <view class="summary-value">{{todaySummary.completedMinutes}}/{{todaySummary.totalMinutes}}</view>
-        <view class="summary-label">分钟</view>
-      </view>
-      <view class="summary-item">
-        <view class="summary-value">{{todaySummary.packText}}</view>
-        <view class="summary-label">今日开包</view>
-      </view>
+    <view class="section-head">
+      <view class="section-title">任务清单</view>
+      <button class="small-btn primary-btn {{addButtonClass}}" bindtap="goAddTask">添加</button>
     </view>
-    <button wx:if="{{showPackButton}}" class="primary-btn pack-btn" bindtap="goPack">去开包</button>
-    <button wx:elif="{{showAlbumButton}}" class="secondary-btn pack-btn" bindtap="goAlbum">查看收藏</button>
-  </view>
 
-  <view class="section-head">
-    <view class="section-title">任务清单</view>
-    <button class="small-btn primary-btn {{addButtonClass}}" bindtap="goAddTask">添加</button>
-  </view>
+    <view wx:if="{{emptyVisible}}" class="empty">
+      <view class="empty-title">还没有任务</view>
+      <view class="muted">添加今晚要完成的作业，能量袋就会开始等待充能。</view>
+    </view>
 
-  <view wx:if="{{emptyVisible}}" class="empty panel">
-    <view class="empty-title">还没有任务</view>
-    <view class="muted">添加今晚要完成的作业，能量袋就会开始等待充能。</view>
-  </view>
-
-  <view wx:else class="task-list">
-    <view wx:for="{{tasks}}" wx:key="id" class="task panel {{item.taskClass}}" bindtap="goFocus" data-id="{{item.id}}">
-      <view class="task-main">
-        <image class="task-icon-img" src="{{item.taskIconPath}}" mode="aspectFill" />
-        <view>
-        <view class="task-name">{{item.name}}</view>
-        <view class="muted">{{item.minutes}} 分钟</view>
+    <view wx:else class="task-list">
+      <view wx:for="{{tasks}}" wx:key="id" class="task {{item.taskClass}}" bindtap="goFocus" data-id="{{item.id}}">
+        <view class="task-main">
+          <image class="task-icon-img" src="{{item.taskIconPath}}" mode="aspectFill" />
+          <view>
+            <view class="task-name">{{item.name}}</view>
+            <view class="muted">{{item.minutes}} 分钟</view>
+          </view>
+        </view>
+        <view class="task-actions">
+          <view class="task-status">{{item.statusText}}</view>
+          <button class="edit-btn {{item.editButtonClass}}" catchtap="goEditTask" data-id="{{item.id}}">编辑</button>
         </view>
       </view>
-      <view class="task-actions">
-        <view class="task-status">{{item.statusText}}</view>
-        <button class="edit-btn {{item.editButtonClass}}" catchtap="goEditTask" data-id="{{item.id}}">编辑</button>
-      </view>
     </view>
+
+    <button wx:if="{{showPackButton}}" class="focus-now-btn" bindtap="goPack">
+      <view class="focus-btn-star">★</view>
+      <text>去开包</text>
+    </button>
+
+    <button wx:elif="{{showFocusButton}}" class="focus-now-btn" bindtap="goNextTask">
+      <view class="focus-btn-star">★</view>
+      <text>{{focusButtonText}}</text>
+    </button>
+
+    <button wx:elif="{{showAlbumButton}}" class="focus-now-btn secondary-action" bindtap="goAlbum">
+      <view class="focus-btn-star">★</view>
+      <text>查看收藏</text>
+    </button>
   </view>
-
-  <button wx:if="{{showFocusButton}}" class="focus-now-btn" bindtap="goNextTask">
-    <view class="focus-btn-star">★</view>
-    <text>{{focusButtonText}}</text>
-  </button>
-
-  <button class="album-btn secondary-btn" bindtap="goAlbum">收藏本</button>
 
   <view class="bottom-dock">
     <button class="dock-btn active">计划</button>
