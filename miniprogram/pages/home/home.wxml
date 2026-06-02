@@ -52,7 +52,7 @@
         </view>
         <view class="task-actions">
           <view class="task-status">{{item.statusText}}</view>
-          <button class="edit-btn {{item.editButtonClass}}" catchtap="goEditTask" data-id="{{item.id}}">编辑</button>
+          <view class="edit-btn {{item.editButtonClass}}" catchtap="goEditTask" data-id="{{item.id}}">编辑</view>
         </view>
       </view>
     </view>
