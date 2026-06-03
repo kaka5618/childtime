@@ -9,23 +9,36 @@
       <view class="muted">{{packHint}}</view>
     </view>
 
-    <view class="pack-table">
+    <view class="treasure-stage">
       <view class="burst"></view>
+      <view class="chest-light light-core"></view>
+      <view class="gold-rays">
+        <view class="gold-ray ray-a"></view>
+        <view class="gold-ray ray-b"></view>
+        <view class="gold-ray ray-c"></view>
+        <view class="gold-ray ray-d"></view>
+        <view class="gold-ray ray-e"></view>
+      </view>
       <view class="spark spark-a">★</view>
       <view class="spark spark-b">✦</view>
       <view class="spark spark-c">★</view>
       <view class="spark spark-d">✦</view>
-      <view class="pack-bag">
-        <view class="bag-lid"></view>
-        <view class="bag-rope"></view>
-        <view class="bag-tag">{{packMark}}</view>
-        <view class="pack-mark">★</view>
-        <view class="bag-shine"></view>
+      <view class="treasure-chest">
+        <view class="chest-lid">
+          <view class="lid-ridge"></view>
+          <view class="lid-gem">★</view>
+        </view>
+        <view class="chest-base">
+          <view class="chest-band"></view>
+          <view class="chest-tag">{{packMark}}</view>
+          <view class="chest-lock">★</view>
+          <view class="chest-shine"></view>
+        </view>
       </view>
       <view class="table-shadow"></view>
     </view>
 
-    <view class="open-note">轻轻打开，看看今天收到了什么卡片</view>
+    <view class="open-note">轻轻打开宝箱，等待金光里的惊喜</view>
     <button class="open-btn open-main-btn" disabled="{{opening}}" bindtap="beginOpen">
       <view class="btn-star">★</view>
       <text>{{openButtonText}}</text>

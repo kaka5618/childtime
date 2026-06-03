@@ -72,11 +72,11 @@ Page({
     this.setData({
       opening: true,
       openingClass: 'opening',
-      openButtonText: '打开中'
+      openButtonText: '宝箱开启中'
     })
     this.openTimer = setTimeout(() => {
       this.reveal()
-    }, 900)
+    }, 3000)
   },
 
   setPackData(pack, source, activeTheme) {
