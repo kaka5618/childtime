@@ -1,21 +1,24 @@
-<view class="page detail-page" wx:if="{{card}}">
+<view class="page detail-page {{detailClass}}" wx:if="{{card}}">
   <view class="detail-bg-glow glow-a"></view>
   <view class="detail-bg-glow glow-b"></view>
+  <view class="detail-paper tape-a"></view>
+  <view class="detail-paper tape-b"></view>
 
   <view class="detail-top">
     <view class="back-btn" bindtap="goAlbum">‹</view>
     <view class="top-copy">
-      <view class="detail-kicker">实体卡详情</view>
+      <view class="detail-kicker">{{obtainHint}}</view>
       <view class="detail-title">{{card.name}}</view>
     </view>
   </view>
 
   <view class="card-stage">
+    <view class="rare-halo"></view>
     <view class="stage-spark spark-a">★</view>
     <view class="stage-spark spark-b">✦</view>
     <view class="stage-spark spark-c">★</view>
     <view class="card-stand">
-      <card-face card="{{card}}" size="large" />
+      <card-face card="{{card}}" size="large" owned="{{owned}}"></card-face>
     </view>
   </view>
 
@@ -36,16 +39,31 @@
     </view>
 
     <view class="status-card">
-      <view class="status-badge">合成状态</view>
+      <view class="status-badge">{{statusBadge}}</view>
       <view class="status-main">{{synthesisTitle}}</view>
       <view class="status-note">{{synthesisNote}}</view>
+      <view wx:if="{{owned}}" class="synthesis-progress">
+        <view class="progress-card active-card">收藏 x{{count}}</view>
+        <view class="progress-arrow">→</view>
+        <view class="progress-card">消耗 x{{consumeCount}}</view>
+        <view class="progress-arrow">→</view>
+        <view class="progress-card keep-card">保留 x{{remainingAfterSynthesis}}</view>
+      </view>
+      <view wx:if="{{canSynthesize}}" class="magic-box">
+        <view class="magic-light"></view>
+        <view class="magic-lid"></view>
+        <view class="magic-body">
+          <view class="magic-star">★</view>
+        </view>
+        <view class="magic-copy">重复卡放进魔法盒，变成新卡包</view>
+      </view>
     </view>
   </view>
 
   <view class="action-bar">
     <button wx:if="{{canSynthesize}}" class="action-btn synthesize-action" bindtap="synthesizeCard">
       <view class="btn-star">★</view>
-      <text>合成卡包</text>
+      <text>放进魔法盒</text>
     </button>
     <button class="action-btn back-action" bindtap="goAlbum">
       <text>返回收藏本</text>
