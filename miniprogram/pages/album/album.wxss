@@ -471,17 +471,18 @@
   position: absolute;
   right: 92rpx;
   left: 118rpx;
-  top: 1254rpx;
+  top: 1238rpx;
   z-index: 20;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 28rpx;
+  height: 118rpx;
   pointer-events: auto;
 }
 
 .tab-page {
   display: flex;
-  height: 76rpx;
+  height: 100%;
   align-items: center;
   justify-content: center;
   border: 0;
