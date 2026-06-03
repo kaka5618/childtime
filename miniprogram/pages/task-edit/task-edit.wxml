@@ -1,6 +1,18 @@
 <view class="page edit-page">
-  <view wx:if="{{templateVisible}}" class="template-panel panel">
-    <view class="label">常用任务</view>
+  <view class="edit-glow glow-a"></view>
+  <view class="edit-glow glow-b"></view>
+
+  <view class="edit-header">
+    <view class="header-pill">今日计划</view>
+    <view class="edit-title">{{saveButtonText}}</view>
+    <view class="edit-subtitle">选择一个小任务，给能量袋充一点星光。</view>
+  </view>
+
+  <view wx:if="{{templateVisible}}" class="template-panel">
+    <view class="panel-title">
+      <view class="title-star">★</view>
+      <text>常用任务</text>
+    </view>
     <view class="template-grid">
       <button wx:for="{{taskTemplates}}" wx:key="key" class="template-btn {{item.activeClass}}" data-key="{{item.key}}" bindtap="selectTemplate">
         <view class="template-name">{{item.name}}</view>
@@ -9,7 +21,7 @@
     </view>
   </view>
 
-  <view class="form panel">
+  <view class="form">
     <view class="field">
       <view class="label">任务名</view>
       <input class="input" maxlength="20" value="{{name}}" placeholder="例如：数学练习" bindinput="onNameInput" />
@@ -24,6 +36,9 @@
     </view>
   </view>
 
-  <button class="primary-btn save-btn" bindtap="saveTask">{{saveButtonText}}</button>
+  <button class="save-btn" bindtap="saveTask">
+    <view class="btn-star">★</view>
+    <text>{{saveButtonText}}</text>
+  </button>
   <button wx:if="{{isEditing}}" class="delete-btn" bindtap="deleteTask">删除任务</button>
 </view>
