@@ -13,7 +13,11 @@
     </view>
 
     <view class="energy-title-pill">能量袋</view>
-    <view class="energy-label">{{energyProgressText}}</view>
+    <view class="energy-label">
+      <view class="energy-spark spark-one">★</view>
+      <view class="energy-spark spark-two">✦</view>
+      <text>{{energyProgressText}}</text>
+    </view>
     <view class="energy-tag">
       <view class="energy-tag-title">今日目标</view>
       <view class="energy-tag-text">{{todaySummary.totalMinutes}} 分钟</view>
