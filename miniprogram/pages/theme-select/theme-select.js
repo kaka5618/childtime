@@ -14,6 +14,7 @@ function buildThemeView(theme) {
     ...theme,
     previewCards,
     hasPreviewCards: previewCards.length > 0,
+    hasCoverSymbol: previewCards.length === 0,
     ownedCount: progress.owned,
     totalCount: progress.total,
     progressText: progress.total ? `${progress.owned}/${progress.total}` : '预览',
