@@ -287,8 +287,8 @@
 
 .account-actions {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14rpx;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12rpx;
   margin-top: 20rpx;
 }
 
@@ -305,12 +305,29 @@
   line-height: 70rpx;
 }
 
+.account-btn[disabled] {
+  opacity: 0.68;
+}
+
 .account-btn.primary {
   background: linear-gradient(180deg, #dff4c3, #b9e596);
   box-shadow:
     0 7rpx 0 rgba(91, 131, 85, 0.42),
     inset 0 4rpx 0 rgba(255, 255, 255, 0.52);
   color: #2f6b49;
+}
+
+.account-btn.sync {
+  background: linear-gradient(180deg, #fff0bd, #ffd372);
+  box-shadow:
+    0 7rpx 0 rgba(177, 124, 40, 0.34),
+    inset 0 4rpx 0 rgba(255, 255, 255, 0.55);
+  color: #7a5620;
+}
+
+.setting-note.strong {
+  color: #3f7352;
+  font-weight: 700;
 }
 
 .backup-block {

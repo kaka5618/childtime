@@ -13,6 +13,7 @@ const CHILD_NAME_KEY = 'childtime_child_name'
 const CHILD_PROFILE_KEY = 'childtime_child_profile'
 const BACKUP_KEY = 'childtime_local_backup'
 const ACCOUNT_KEY = 'childtime_account_status'
+const SYNC_STATUS_KEY = 'childtime_cloud_sync_status'
 const SWITCH_COOLDOWN_DAYS = 15
 const DEFAULT_SETTINGS = {
   voiceEnabled: true,
@@ -171,6 +172,34 @@ function saveWechatLoginReady() {
 
 function clearAccountStatus() {
   wx.removeStorageSync(ACCOUNT_KEY)
+}
+
+function getCloudSyncStatus() {
+  return {
+    lastResult: 'idle',
+    lastSyncAt: '',
+    lastError: '',
+    updatedAt: '',
+    ...(wx.getStorageSync(SYNC_STATUS_KEY) || {})
+  }
+}
+
+function saveCloudSyncStatus(status) {
+  const nextStatus = {
+    ...getCloudSyncStatus(),
+    ...status,
+    updatedAt: new Date().toISOString()
+  }
+  wx.setStorageSync(SYNC_STATUS_KEY, nextStatus)
+
+  if (Object.prototype.hasOwnProperty.call(status, 'cloudLinked')) {
+    wx.setStorageSync(ACCOUNT_KEY, {
+      ...getAccountStatus(),
+      cloudLinked: Boolean(status.cloudLinked)
+    })
+  }
+
+  return nextStatus
 }
 
 function getActiveSeriesId() {
@@ -586,7 +615,31 @@ function buildLocalBackup() {
       settings: getSettings(),
       childProfile: getChildProfile(),
       childName: getChildName(),
-      accountStatus: getAccountStatus()
+      accountStatus: getAccountStatus(),
+      cloudSyncStatus: getCloudSyncStatus()
+    }
+  }
+}
+
+function buildCloudSyncPayload() {
+  const backup = buildLocalBackup()
+  return {
+    schemaVersion: 1,
+    generatedAt: backup.createdAt,
+    generatedDate: backup.createdDate,
+    data: {
+      tasksByDate: backup.data.tasksByDate,
+      collection: backup.data.collection,
+      packState: {
+        lastPack: backup.data.lastPack,
+        lastPackMeta: backup.data.lastPackMeta,
+        packDate: backup.data.packDate,
+        packGeneratedDate: backup.data.packGeneratedDate
+      },
+      activeSeriesId: backup.data.activeSeriesId,
+      lastSwitchDate: backup.data.lastSwitchDate,
+      settings: backup.data.settings,
+      childProfile: backup.data.childProfile
     }
   }
 }
@@ -646,6 +699,8 @@ function restoreLocalBackup() {
   saveChildProfile(backup.data.childProfile || { name: backup.data.childName || '' })
   if (backup.data.accountStatus) wx.setStorageSync(ACCOUNT_KEY, backup.data.accountStatus)
   else wx.removeStorageSync(ACCOUNT_KEY)
+  if (backup.data.cloudSyncStatus) wx.setStorageSync(SYNC_STATUS_KEY, backup.data.cloudSyncStatus)
+  else wx.removeStorageSync(SYNC_STATUS_KEY)
 
   return {
     ok: true,
@@ -669,6 +724,8 @@ module.exports = {
   getAccountStatus,
   saveWechatLoginReady,
   clearAccountStatus,
+  getCloudSyncStatus,
+  saveCloudSyncStatus,
   getActiveSeriesId,
   setActiveSeriesId,
   hasSelectedSeries,
@@ -701,6 +758,7 @@ module.exports = {
   addDebugDuplicates,
   clearTodayPackState,
   clearActiveSeriesCollection,
+  buildCloudSyncPayload,
   saveLocalBackup,
   getLocalBackupInfo,
   restoreLocalBackup,

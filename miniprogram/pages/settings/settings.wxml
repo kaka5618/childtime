@@ -69,8 +69,10 @@
     </view>
     <view class="account-actions">
       <button class="account-btn primary" bindtap="connectWechatAccount">微信登录</button>
+      <button class="account-btn sync" disabled="{{syncBusy}}" bindtap="syncCloudData">{{syncButtonText}}</button>
       <button class="account-btn" bindtap="disconnectWechatAccount">解除状态</button>
     </view>
+    <view class="setting-note strong">{{syncSummary}}</view>
     <view class="setting-note">当前先完成小程序端登录入口；接入云开发后，可用微信身份同步孩子档案、任务和收藏。</view>
   </view>
 

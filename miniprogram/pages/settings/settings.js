@@ -21,6 +21,9 @@ Page({
     accountSummary: '未连接微信账号',
     accountBadgeText: '本机数据',
     accountConnected: false,
+    syncSummary: '还没有同步记录',
+    syncButtonText: '同步云端',
+    syncBusy: false,
     backupExists: false,
     backupSummary: '还没有本地备份',
     debugVisible: false,
@@ -42,6 +45,7 @@ Page({
       const childName = profile.name || '小朋友'
       const backupInfo = state.getLocalBackupInfo()
       const accountStatus = state.getAccountStatus()
+      const syncStatus = state.getCloudSyncStatus()
       this.setData({
         activeTheme,
         activeThemeName: activeTheme ? activeTheme.name : '未选择',
@@ -58,8 +62,11 @@ Page({
         voiceOptionsClass: settings.voiceEnabled ? '' : 'disabled',
         voiceTypes: this.buildVoiceTypes(settings.voiceType),
         accountSummary: this.buildAccountSummary(accountStatus),
-        accountBadgeText: accountStatus.loginReady ? '待接入云端' : '本机数据',
+        accountBadgeText: this.buildAccountBadgeText(accountStatus),
         accountConnected: accountStatus.loginReady,
+        syncSummary: this.buildSyncSummary(syncStatus),
+        syncButtonText: '同步云端',
+        syncBusy: false,
         backupExists: backupInfo.exists,
         backupSummary: this.buildBackupSummary(backupInfo)
       })
@@ -84,6 +91,9 @@ Page({
         accountSummary: '未连接微信账号',
         accountBadgeText: '本机数据',
         accountConnected: false,
+        syncSummary: '还没有同步记录',
+        syncButtonText: '同步云端',
+        syncBusy: false,
         backupExists: false,
         backupSummary: '还没有本地备份'
       })
@@ -125,6 +135,30 @@ Page({
     if (!accountStatus.loginReady) return '当前数据只保存在本机。'
     if (accountStatus.cloudLinked) return '已连接微信账号并开启云端同步。'
     return '已完成微信登录准备，等待接入云端同步。'
+  },
+
+  buildAccountBadgeText(accountStatus) {
+    if (accountStatus.cloudLinked) return '已同步'
+    if (accountStatus.loginReady) return '待接入云端'
+    return '本机数据'
+  },
+
+  buildSyncSummary(syncStatus) {
+    if (!syncStatus || syncStatus.lastResult === 'idle') return '还没有同步记录'
+    if (syncStatus.lastResult === 'success') return `上次同步成功 ${this.formatTimeText(syncStatus.lastSyncAt)}`
+    if (syncStatus.lastResult === 'unconfigured') return '云端还未配置，本机数据没有上传。'
+    return syncStatus.lastError ? `同步失败：${syncStatus.lastError}` : '同步失败，请稍后重试。'
+  },
+
+  formatTimeText(value) {
+    if (!value) return ''
+    const date = new Date(value)
+    if (Number.isNaN(date.getTime())) return ''
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    const hour = String(date.getHours()).padStart(2, '0')
+    const minute = String(date.getMinutes()).padStart(2, '0')
+    return `${month}-${day} ${hour}:${minute}`
   },
 
   goThemeSelect() {
@@ -196,7 +230,7 @@ Page({
         const accountStatus = state.saveWechatLoginReady()
         this.setData({
           accountSummary: this.buildAccountSummary(accountStatus),
-          accountBadgeText: '待接入云端',
+          accountBadgeText: this.buildAccountBadgeText(accountStatus),
           accountConnected: true
         })
         wx.showToast({ title: '已准备登录', icon: 'success' })
@@ -216,14 +250,112 @@ Page({
       success: (res) => {
         if (!res.confirm) return
         state.clearAccountStatus()
+        const syncStatus = state.saveCloudSyncStatus({
+          cloudLinked: false,
+          lastResult: 'idle',
+          lastSyncAt: '',
+          lastError: ''
+        })
         this.setData({
           accountSummary: '当前数据只保存在本机。',
           accountBadgeText: '本机数据',
-          accountConnected: false
+          accountConnected: false,
+          syncSummary: this.buildSyncSummary(syncStatus)
         })
         wx.showToast({ title: '已解除', icon: 'success' })
       }
     })
+  },
+
+  syncCloudData() {
+    if (this.data.syncBusy) return
+
+    const accountStatus = state.getAccountStatus()
+    if (!accountStatus.loginReady) {
+      wx.showToast({ title: '先完成微信登录', icon: 'none' })
+      return
+    }
+
+    if (!this.isCloudSyncConfigured()) {
+      const syncStatus = state.saveCloudSyncStatus({
+        cloudLinked: false,
+        lastResult: 'unconfigured',
+        lastSyncAt: '',
+        lastError: '未配置云开发'
+      })
+      this.setData({
+        accountSummary: this.buildAccountSummary(state.getAccountStatus()),
+        accountBadgeText: this.buildAccountBadgeText(state.getAccountStatus()),
+        syncSummary: this.buildSyncSummary(syncStatus)
+      })
+      wx.showModal({
+        title: '云端未配置',
+        content: '需要先接入云开发，并创建 syncUserData 云函数。当前本机数据不会上传。',
+        showCancel: false,
+        confirmText: '知道了'
+      })
+      return
+    }
+
+    this.setData({
+      syncBusy: true,
+      syncButtonText: '同步中'
+    })
+    wx.showLoading({ title: '同步中' })
+
+    const app = getApp()
+    wx.cloud.callFunction({
+      name: app.globalData.cloudSyncFunction || 'syncUserData',
+      data: {
+        payload: state.buildCloudSyncPayload()
+      },
+      success: () => {
+        const syncStatus = state.saveCloudSyncStatus({
+          cloudLinked: true,
+          lastResult: 'success',
+          lastSyncAt: new Date().toISOString(),
+          lastError: ''
+        })
+        const nextAccountStatus = state.getAccountStatus()
+        this.setData({
+          accountSummary: this.buildAccountSummary(nextAccountStatus),
+          accountBadgeText: this.buildAccountBadgeText(nextAccountStatus),
+          syncSummary: this.buildSyncSummary(syncStatus)
+        })
+        wx.showToast({ title: '已同步', icon: 'success' })
+      },
+      fail: (error) => {
+        const syncStatus = state.saveCloudSyncStatus({
+          cloudLinked: false,
+          lastResult: 'failed',
+          lastError: error && error.errMsg ? error.errMsg : '云函数调用失败'
+        })
+        const nextAccountStatus = state.getAccountStatus()
+        this.setData({
+          accountSummary: this.buildAccountSummary(nextAccountStatus),
+          accountBadgeText: this.buildAccountBadgeText(nextAccountStatus),
+          syncSummary: this.buildSyncSummary(syncStatus)
+        })
+        wx.showToast({ title: '同步失败', icon: 'none' })
+      },
+      complete: () => {
+        wx.hideLoading()
+        this.setData({
+          syncBusy: false,
+          syncButtonText: '同步云端'
+        })
+      }
+    })
+  },
+
+  isCloudSyncConfigured() {
+    const app = getApp()
+    return Boolean(
+      app.globalData &&
+      app.globalData.cloudSyncEnabled &&
+      wx.cloud &&
+      wx.cloud.callFunction
+    )
   },
 
   createLocalBackup() {
