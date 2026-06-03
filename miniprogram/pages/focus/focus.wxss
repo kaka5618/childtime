@@ -68,7 +68,7 @@
   z-index: 1;
   min-height: 820rpx;
   margin-top: -18rpx;
-  padding: 82rpx 42rpx 42rpx;
+  padding: 104rpx 42rpx 42rpx;
   border: 3rpx solid rgba(255, 239, 201, 0.88);
   border-radius: 34rpx;
   background:
@@ -128,8 +128,8 @@
 
 .bookmark-star {
   position: absolute;
-  top: 30rpx;
-  right: 118rpx;
+  top: 20rpx;
+  left: 50%;
   width: 58rpx;
   height: 78rpx;
   border-radius: 0 0 14rpx 14rpx;
@@ -139,6 +139,8 @@
   font-size: 34rpx;
   font-weight: 900;
   line-height: 52rpx;
+  text-align: center;
+  transform: translateX(-50%);
 }
 
 .bookmark-star::after {
@@ -167,6 +169,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  min-width: 260rpx;
   padding: 9rpx 30rpx;
   border-radius: 999rpx;
   background: rgba(130, 174, 116, 0.15);
@@ -187,12 +190,14 @@
 .focus-title {
   position: relative;
   display: inline-block;
-  margin-top: 24rpx;
+  max-width: 520rpx;
+  margin-top: 26rpx;
   color: #6a4121;
-  font-size: 50rpx;
+  font-size: 48rpx;
   font-weight: 900;
   letter-spacing: 0;
   line-height: 1.18;
+  text-align: center;
   text-shadow:
     0 3rpx 0 #fff4d4,
     0 8rpx 14rpx rgba(128, 76, 36, 0.16);
@@ -200,14 +205,16 @@
 
 .focus-title::after {
   position: absolute;
-  right: 8rpx;
+  right: 50%;
   bottom: -13rpx;
-  left: 8rpx;
+  left: auto;
+  width: 260rpx;
   height: 8rpx;
   border-radius: 999rpx;
   background: #f6cc62;
   box-shadow: 0 5rpx 0 rgba(255, 240, 188, 0.8);
   content: "";
+  transform: translateX(50%);
 }
 
 .timer-ring {
