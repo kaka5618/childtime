@@ -1,33 +1,54 @@
 <view class="page detail-page" wx:if="{{card}}">
-  <card-face card="{{card}}" size="large" />
+  <view class="detail-bg-glow glow-a"></view>
+  <view class="detail-bg-glow glow-b"></view>
 
-  <view class="info panel">
-    <view class="detail-title">{{card.name}}</view>
-    <view class="detail-subtitle">{{card.no}} · {{card.rarity}}</view>
-
-    <view class="status-card">
-      <view class="status-main">{{synthesisTitle}}</view>
-      <view class="status-note">{{synthesisNote}}</view>
-    </view>
-
-    <view class="info-row">
-      <text>卡名</text>
-      <text>{{card.name}}</text>
-    </view>
-    <view class="info-row">
-      <text>编号</text>
-      <text>{{card.no}}</text>
-    </view>
-    <view class="info-row">
-      <text>稀有度</text>
-      <text>{{card.rarity}}</text>
-    </view>
-    <view class="info-row">
-      <text>拥有数量</text>
-      <text>{{count}}</text>
+  <view class="detail-top">
+    <view class="back-btn" bindtap="goAlbum">‹</view>
+    <view class="top-copy">
+      <view class="detail-kicker">实体卡详情</view>
+      <view class="detail-title">{{card.name}}</view>
     </view>
   </view>
 
-  <button wx:if="{{canSynthesize}}" class="primary-btn action-btn" bindtap="synthesizeCard">合成卡包</button>
-  <button class="secondary-btn action-btn" bindtap="goAlbum">返回收藏本</button>
+  <view class="card-stage">
+    <view class="stage-spark spark-a">★</view>
+    <view class="stage-spark spark-b">✦</view>
+    <view class="stage-spark spark-c">★</view>
+    <view class="card-stand">
+      <card-face card="{{card}}" size="large" />
+    </view>
+  </view>
+
+  <view class="info-sheet">
+    <view class="quick-stats">
+      <view class="stat-chip">
+        <view class="stat-label">编号</view>
+        <view class="stat-value">{{card.no}}</view>
+      </view>
+      <view class="stat-chip rarity-chip">
+        <view class="stat-label">稀有度</view>
+        <view class="stat-value">{{card.rarity}}</view>
+      </view>
+      <view class="stat-chip">
+        <view class="stat-label">数量</view>
+        <view class="stat-value">x{{count}}</view>
+      </view>
+    </view>
+
+    <view class="status-card">
+      <view class="status-badge">合成状态</view>
+      <view class="status-main">{{synthesisTitle}}</view>
+      <view class="status-note">{{synthesisNote}}</view>
+    </view>
+  </view>
+
+  <view class="action-bar">
+    <button wx:if="{{canSynthesize}}" class="action-btn synthesize-action" bindtap="synthesizeCard">
+      <view class="btn-star">★</view>
+      <text>合成卡包</text>
+    </button>
+    <button class="action-btn back-action" bindtap="goAlbum">
+      <text>返回收藏本</text>
+    </button>
+  </view>
 </view>
