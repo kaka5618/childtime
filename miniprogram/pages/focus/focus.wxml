@@ -1,35 +1,47 @@
 <view class="page focus-page" wx:if="{{task}}">
-  <view class="desk-scene">
-    <view class="lamp-glow"></view>
-    <view class="pencil pencil-a"></view>
-    <view class="pencil pencil-b"></view>
-    <view class="bookmark-star">★</view>
+  <image class="focus-bg-img" src="/assets/ui/focus-desk-bg.jpg" mode="aspectFill" />
+
+  <view class="focus-hero">
+    <view class="back-btn" bindtap="goHome">‹</view>
+    <view class="hero-title">星梦泡泡</view>
+    <view class="hero-subtitle">认真学习，星星会为你发光</view>
   </view>
 
   <view class="focus-card {{completedCardClass}}">
-    <view class="paper-clip"></view>
+    <view class="notebook-ring ring-one"></view>
+    <view class="notebook-ring ring-two"></view>
+    <view class="notebook-ring ring-three"></view>
+    <view class="bookmark-star">★</view>
     <view class="focus-label">正在专注</view>
     <view class="focus-title">{{task.name}}</view>
     <view class="timer-ring">
       <view class="timer-ring-inner">
+        <view class="timer-icon">◷</view>
         <view class="timer">{{timeText}}</view>
+        <view class="timer-unit">分钟 · 秒</view>
       </view>
     </view>
-    <view class="focus-hint">{{timerHint}}</view>
-  </view>
-
-  <button wx:if="{{!rewardVisible}}" class="complete-btn primary-btn" bindlongpress="completeTask">{{completeButtonText}}</button>
-
-  <view wx:if="{{rewardVisible}}" class="reward-panel">
-    <view class="reward-burst">
-      <view class="reward-star star-a">★</view>
-      <view class="reward-star star-b">★</view>
-      <view class="reward-star star-c">★</view>
-      <view class="reward-core">✓</view>
+    <view class="focus-hint">
+      <view class="hint-dot"></view>
+      <text>{{timerHint}}</text>
     </view>
-    <view class="reward-title">{{rewardTitle}}</view>
-    <view class="reward-text">{{rewardText}}</view>
-    <button wx:if="{{canOpenPack}}" class="complete-btn primary-btn" bindtap="goPack">去开包</button>
-    <button wx:else class="complete-btn secondary-btn" bindtap="goHome">返回任务</button>
+
+    <button wx:if="{{!rewardVisible}}" class="complete-btn" bindlongpress="completeTask">
+      <view class="tap-icon">☝</view>
+      <text>{{completeButtonText}}</text>
+    </button>
+
+    <view wx:if="{{rewardVisible}}" class="reward-panel">
+      <view class="reward-burst">
+        <view class="reward-star star-a">★</view>
+        <view class="reward-star star-b">★</view>
+        <view class="reward-star star-c">★</view>
+        <view class="reward-core">✓</view>
+      </view>
+      <view class="reward-title">{{rewardTitle}}</view>
+      <view class="reward-text">{{rewardText}}</view>
+      <button wx:if="{{canOpenPack}}" class="complete-btn reward-action" bindtap="goPack">去开包</button>
+      <button wx:else class="complete-btn reward-action secondary-action" bindtap="goHome">返回任务</button>
+    </view>
   </view>
 </view>
