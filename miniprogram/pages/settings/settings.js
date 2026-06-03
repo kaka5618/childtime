@@ -6,6 +6,8 @@ Page({
     activeTheme: null,
     activeThemeName: '未选择',
     childName: '小朋友',
+    nameEditorVisible: false,
+    nameDraft: '',
     nextSwitchDate: '',
     voiceEnabled: true,
     voiceType: 'gentle',
@@ -43,6 +45,8 @@ Page({
         activeTheme: null,
         activeThemeName: '未选择',
         childName: '小朋友',
+        nameEditorVisible: false,
+        nameDraft: '',
         nextSwitchDate: '',
         voiceEnabled: true,
         voiceType: 'gentle',
@@ -66,24 +70,35 @@ Page({
   },
 
   editChildName() {
-    wx.showModal({
-      title: '孩子名字',
-      content: '首页会按这个名字打招呼。',
-      editable: true,
-      placeholderText: '例如：小星星',
-      confirmText: '保存',
-      confirmColor: '#7BA68C',
-      success: (res) => {
-        if (!res.confirm) return
-        const childName = state.saveChildName(res.content)
-        if (!childName) {
-          wx.showToast({ title: '名字不能为空', icon: 'none' })
-          return
-        }
-        this.setData({ childName })
-        wx.showToast({ title: '已保存', icon: 'success' })
-      }
+    this.setData({
+      nameEditorVisible: true,
+      nameDraft: this.data.childName === '小朋友' ? '' : this.data.childName
     })
+  },
+
+  closeNameEditor() {
+    this.setData({
+      nameEditorVisible: false,
+      nameDraft: ''
+    })
+  },
+
+  onNameDraftInput(event) {
+    this.setData({ nameDraft: event.detail.value })
+  },
+
+  saveNameEditor() {
+    const childName = state.saveChildName(this.data.nameDraft)
+    if (!childName) {
+      wx.showToast({ title: '请输入名字', icon: 'none' })
+      return
+    }
+    this.setData({
+      childName,
+      nameEditorVisible: false,
+      nameDraft: ''
+    })
+    wx.showToast({ title: '已保存', icon: 'success' })
   },
 
   toggleVoice(event) {

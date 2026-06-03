@@ -38,6 +38,8 @@ Page({
     greetingText: '你好，小朋友',
     greetingNote: '今天也认真完成计划',
     childName: '',
+    namePromptVisible: false,
+    nameDraft: '',
     energyProgressText: '0 / 0 分钟',
     todaySummary: {
       completedTasks: 0,
@@ -115,25 +117,27 @@ Page({
 
   promptForChildName() {
     if (state.getChildName()) return
-
-    wx.showModal({
-      title: '怎么称呼你？',
-      content: '输入孩子的名字，首页会用名字打招呼。',
-      editable: true,
-      placeholderText: '例如：小星星',
-      confirmText: '保存',
-      confirmColor: '#7BA68C',
-      success: (res) => {
-        if (!res.confirm) return
-        const childName = state.saveChildName(res.content)
-        if (!childName) {
-          wx.showToast({ title: '名字不能为空', icon: 'none' })
-          this.promptForChildName()
-          return
-        }
-        this.refresh()
-      }
+    this.setData({
+      namePromptVisible: true,
+      nameDraft: ''
     })
+  },
+
+  onNameDraftInput(event) {
+    this.setData({ nameDraft: event.detail.value })
+  },
+
+  saveNamePrompt() {
+    const childName = state.saveChildName(this.data.nameDraft)
+    if (!childName) {
+      wx.showToast({ title: '请输入名字', icon: 'none' })
+      return
+    }
+    this.setData({
+      namePromptVisible: false,
+      nameDraft: ''
+    })
+    this.refresh()
   },
 
   getGreetingNote(tasks, allDone, openedToday) {

@@ -78,4 +78,13 @@
     <view class="dock-btn" bindtap="goAlbum">收藏</view>
     <view class="dock-btn" bindtap="goSettings">设置</view>
   </view>
+
+  <view wx:if="{{namePromptVisible}}" class="name-modal-mask">
+    <view class="name-modal">
+      <view class="name-modal-star">★</view>
+      <view class="name-modal-title">怎么称呼你？</view>
+      <input class="name-modal-input" maxlength="8" value="{{nameDraft}}" placeholder="例如：小星星" bindinput="onNameDraftInput" focus />
+      <button class="name-modal-btn" bindtap="saveNamePrompt">保存</button>
+    </view>
+  </view>
 </view>
