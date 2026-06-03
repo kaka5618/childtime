@@ -12,6 +12,7 @@ const SETTINGS_KEY = 'childtime_settings'
 const CHILD_NAME_KEY = 'childtime_child_name'
 const CHILD_PROFILE_KEY = 'childtime_child_profile'
 const BACKUP_KEY = 'childtime_local_backup'
+const ACCOUNT_KEY = 'childtime_account_status'
 const SWITCH_COOLDOWN_DAYS = 15
 const DEFAULT_SETTINGS = {
   voiceEnabled: true,
@@ -145,6 +146,31 @@ function getChildName() {
 
 function saveChildName(name) {
   return saveChildProfile({ name }).name
+}
+
+function getAccountStatus() {
+  return {
+    provider: '',
+    loginReady: false,
+    cloudLinked: false,
+    loginAt: '',
+    ...(wx.getStorageSync(ACCOUNT_KEY) || {})
+  }
+}
+
+function saveWechatLoginReady() {
+  const account = {
+    provider: 'wechat',
+    loginReady: true,
+    cloudLinked: false,
+    loginAt: new Date().toISOString()
+  }
+  wx.setStorageSync(ACCOUNT_KEY, account)
+  return account
+}
+
+function clearAccountStatus() {
+  wx.removeStorageSync(ACCOUNT_KEY)
 }
 
 function getActiveSeriesId() {
@@ -559,7 +585,8 @@ function buildLocalBackup() {
       lastSwitchDate: wx.getStorageSync(LAST_SWITCH_DATE_KEY) || '',
       settings: getSettings(),
       childProfile: getChildProfile(),
-      childName: getChildName()
+      childName: getChildName(),
+      accountStatus: getAccountStatus()
     }
   }
 }
@@ -617,6 +644,8 @@ function restoreLocalBackup() {
   else wx.removeStorageSync(LAST_SWITCH_DATE_KEY)
   wx.setStorageSync(SETTINGS_KEY, backup.data.settings || DEFAULT_SETTINGS)
   saveChildProfile(backup.data.childProfile || { name: backup.data.childName || '' })
+  if (backup.data.accountStatus) wx.setStorageSync(ACCOUNT_KEY, backup.data.accountStatus)
+  else wx.removeStorageSync(ACCOUNT_KEY)
 
   return {
     ok: true,
@@ -637,6 +666,9 @@ module.exports = {
   saveChildProfile,
   getChildName,
   saveChildName,
+  getAccountStatus,
+  saveWechatLoginReady,
+  clearAccountStatus,
   getActiveSeriesId,
   setActiveSeriesId,
   hasSelectedSeries,

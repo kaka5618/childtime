@@ -18,6 +18,9 @@ Page({
     voiceType: 'gentle',
     volume: 60,
     voiceOptionsClass: '',
+    accountSummary: '未连接微信账号',
+    accountBadgeText: '本机数据',
+    accountConnected: false,
     backupExists: false,
     backupSummary: '还没有本地备份',
     debugVisible: false,
@@ -38,6 +41,7 @@ Page({
       const profile = state.getChildProfile()
       const childName = profile.name || '小朋友'
       const backupInfo = state.getLocalBackupInfo()
+      const accountStatus = state.getAccountStatus()
       this.setData({
         activeTheme,
         activeThemeName: activeTheme ? activeTheme.name : '未选择',
@@ -53,6 +57,9 @@ Page({
         volume: settings.volume,
         voiceOptionsClass: settings.voiceEnabled ? '' : 'disabled',
         voiceTypes: this.buildVoiceTypes(settings.voiceType),
+        accountSummary: this.buildAccountSummary(accountStatus),
+        accountBadgeText: accountStatus.loginReady ? '待接入云端' : '本机数据',
+        accountConnected: accountStatus.loginReady,
         backupExists: backupInfo.exists,
         backupSummary: this.buildBackupSummary(backupInfo)
       })
@@ -74,6 +81,9 @@ Page({
         volume: 60,
         voiceOptionsClass: '',
         voiceTypes: this.buildVoiceTypes('gentle'),
+        accountSummary: '未连接微信账号',
+        accountBadgeText: '本机数据',
+        accountConnected: false,
         backupExists: false,
         backupSummary: '还没有本地备份'
       })
@@ -109,6 +119,12 @@ Page({
   buildBackupSummary(info) {
     if (!info.exists) return '还没有本地备份'
     return `备份日期 ${info.createdDate} · 任务 ${info.taskDayCount} 天 · 收藏 ${info.collectionSeriesCount} 套`
+  },
+
+  buildAccountSummary(accountStatus) {
+    if (!accountStatus.loginReady) return '当前数据只保存在本机。'
+    if (accountStatus.cloudLinked) return '已连接微信账号并开启云端同步。'
+    return '已完成微信登录准备，等待接入云端同步。'
   },
 
   goThemeSelect() {
@@ -168,6 +184,46 @@ Page({
   changeDailyTarget(event) {
     const profile = state.saveChildProfile({ dailyTargetMinutes: Number(event.detail.value) })
     this.setData({ dailyTargetMinutes: profile.dailyTargetMinutes })
+  },
+
+  connectWechatAccount() {
+    wx.login({
+      success: (res) => {
+        if (!res.code) {
+          wx.showToast({ title: '微信登录失败', icon: 'none' })
+          return
+        }
+        const accountStatus = state.saveWechatLoginReady()
+        this.setData({
+          accountSummary: this.buildAccountSummary(accountStatus),
+          accountBadgeText: '待接入云端',
+          accountConnected: true
+        })
+        wx.showToast({ title: '已准备登录', icon: 'success' })
+      },
+      fail: () => {
+        wx.showToast({ title: '微信登录失败', icon: 'none' })
+      }
+    })
+  },
+
+  disconnectWechatAccount() {
+    wx.showModal({
+      title: '解除微信状态',
+      content: '只清除本机上的微信登录准备状态，不会删除孩子档案、任务或收藏。',
+      confirmText: '解除',
+      confirmColor: '#C85A54',
+      success: (res) => {
+        if (!res.confirm) return
+        state.clearAccountStatus()
+        this.setData({
+          accountSummary: '当前数据只保存在本机。',
+          accountBadgeText: '本机数据',
+          accountConnected: false
+        })
+        wx.showToast({ title: '已解除', icon: 'success' })
+      }
+    })
   },
 
   createLocalBackup() {

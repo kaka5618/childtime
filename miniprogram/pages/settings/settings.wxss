@@ -114,6 +114,7 @@
 .setting-btn::after,
 .voice-type::after,
 .debug-btn::after,
+.account-btn::after,
 .backup-btn::after,
 .avatar-option::after,
 .grade-option::after {
@@ -259,6 +260,57 @@
 
 .volume-label {
   margin-top: 24rpx;
+}
+
+.account-block {
+  border-color: rgba(112, 164, 142, 0.3);
+}
+
+.account-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 18rpx;
+  align-items: start;
+}
+
+.account-badge {
+  min-width: 116rpx;
+  padding: 10rpx 16rpx;
+  border: 3rpx solid rgba(255, 255, 255, 0.78);
+  border-radius: 999rpx;
+  background: #eef8e4;
+  color: #4f7d58;
+  font-size: 21rpx;
+  line-height: 1;
+  text-align: center;
+}
+
+.account-actions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14rpx;
+  margin-top: 20rpx;
+}
+
+.account-btn {
+  height: 70rpx;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.84);
+  box-shadow: inset 0 0 0 3rpx rgba(123, 166, 140, 0.18);
+  color: #4e6356;
+  font-size: 24rpx;
+  line-height: 70rpx;
+}
+
+.account-btn.primary {
+  background: linear-gradient(180deg, #dff4c3, #b9e596);
+  box-shadow:
+    0 7rpx 0 rgba(91, 131, 85, 0.42),
+    inset 0 4rpx 0 rgba(255, 255, 255, 0.52);
+  color: #2f6b49;
 }
 
 .backup-block {
