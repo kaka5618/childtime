@@ -268,9 +268,10 @@
 }
 
 .section-head {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 240rpx 1fr;
+  gap: 12rpx;
   align-items: center;
-  justify-content: space-between;
   margin-top: 24rpx;
 }
 
@@ -281,7 +282,13 @@
 }
 
 .small-btn {
-  min-width: 220rpx;
+  width: 240rpx;
+  min-width: 0;
+  height: 70rpx;
+  border-width: 3rpx;
+  box-shadow: 0 8rpx 14rpx rgba(82, 117, 83, 0.14);
+  font-size: 30rpx;
+  line-height: 70rpx;
 }
 
 .empty {
