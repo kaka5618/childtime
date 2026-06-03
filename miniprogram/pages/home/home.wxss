@@ -34,28 +34,29 @@
 
 .ambient-cloud {
   position: absolute;
-  width: 118rpx;
-  height: 42rpx;
+  width: 176rpx;
+  height: 88rpx;
   border-radius: 999rpx;
-  background: rgba(255, 255, 255, 0.78);
-  box-shadow:
-    34rpx -10rpx 0 8rpx rgba(255, 255, 255, 0.72),
-    68rpx 0 0 0 rgba(255, 255, 255, 0.64);
+  background:
+    radial-gradient(circle at 24% 62%, rgba(255, 255, 255, 0.94) 0 28rpx, transparent 30rpx),
+    radial-gradient(circle at 44% 42%, rgba(255, 255, 255, 0.98) 0 38rpx, transparent 40rpx),
+    radial-gradient(circle at 68% 58%, rgba(255, 255, 255, 0.9) 0 30rpx, transparent 32rpx),
+    radial-gradient(ellipse at 50% 68%, rgba(255, 255, 255, 0.82) 0 82rpx, transparent 84rpx);
 }
 
 .cloud-a {
-  top: 154rpx;
-  left: -120rpx;
-  opacity: 0.82;
-  animation: cloud-drift-a 16s linear infinite;
+  top: 126rpx;
+  left: -190rpx;
+  opacity: 0.62;
+  animation: cloud-drift-a 22s linear infinite;
 }
 
 .cloud-b {
-  top: 272rpx;
-  right: -160rpx;
-  opacity: 0.56;
-  transform: scale(0.72);
-  animation: cloud-drift-b 20s linear infinite;
+  top: 242rpx;
+  right: -220rpx;
+  opacity: 0.46;
+  transform: scale(0.78);
+  animation: cloud-drift-b 26s linear infinite;
 }
 
 .energy-wave {
@@ -403,7 +404,7 @@
 
 .section-head {
   display: grid;
-  grid-template-columns: 1fr 240rpx 1fr;
+  grid-template-columns: 1fr 300rpx 1fr;
   gap: 12rpx;
   align-items: center;
   margin-top: 24rpx;
@@ -416,13 +417,18 @@
 }
 
 .small-btn {
-  width: 240rpx;
+  display: flex;
+  width: 300rpx;
   min-width: 0;
-  height: 70rpx;
+  height: 76rpx;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
   border-width: 3rpx;
-  box-shadow: 0 8rpx 14rpx rgba(82, 117, 83, 0.14);
-  font-size: 30rpx;
-  line-height: 70rpx;
+  box-shadow: 0 10rpx 18rpx rgba(82, 117, 83, 0.18);
+  font-size: 36rpx;
+  line-height: 1;
+  text-shadow: 0 2rpx 0 rgba(255, 255, 255, 0.82);
 }
 
 .empty {
@@ -656,11 +662,11 @@
 
 @keyframes cloud-drift-b {
   0% {
-    transform: translateX(0) scale(0.72);
+    transform: translateX(0) scale(0.78);
   }
 
   100% {
-    transform: translateX(-940rpx) scale(0.72);
+    transform: translateX(-940rpx) scale(0.78);
   }
 }
 
