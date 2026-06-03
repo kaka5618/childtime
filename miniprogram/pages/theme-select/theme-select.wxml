@@ -25,7 +25,9 @@
           <view wx:if="{{item.hasPreviewCards}}" class="bubble-stack">
             <view class="preview-shadow"></view>
             <view wx:for="{{item.previewCards}}" wx:for-item="card" wx:for-index="cardIndex" wx:key="id" class="preview-card card-{{cardIndex}}">
-              <card-face card="{{card}}" size="small"></card-face>
+              <image class="preview-card-img" src="{{card.image}}" mode="aspectFill"></image>
+              <view class="preview-rarity">{{card.rarity}}</view>
+              <view class="preview-name">{{card.name}}</view>
             </view>
           </view>
           <view wx:if="{{item.hasCoverSymbol}}" class="cover-symbol">
