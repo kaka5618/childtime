@@ -39,7 +39,7 @@
       <scroll-view class="reward-list" scroll-x="true" show-scrollbar="false">
         <view wx:for="{{rewardCards}}" wx:key="id" class="reward-card" bindtap="openRewardCard" data-id="{{item.id}}">
           <view class="reward-badge">{{item.badgeText}}</view>
-          <card-face card="{{item}}" size="small" />
+          <card-face card="{{item}}" size="small"></card-face>
         </view>
       </scroll-view>
     </view>
@@ -61,7 +61,7 @@
     <scroll-view class="album-grid" scroll-y="true" show-scrollbar="false">
       <view class="album-grid-inner">
         <view wx:for="{{filteredCards}}" wx:key="id" class="slot-tap" bindtap="openCard" data-id="{{item.id}}" data-owned="{{item.owned}}">
-          <card-face card="{{item}}" owned="{{item.owned}}" count="{{item.count}}" size="small" show-count />
+          <card-face card="{{item}}" owned="{{item.owned}}" count="{{item.count}}" size="small" show-count></card-face>
           <view wx:if="{{item.canSynthesize}}" class="synthesize-btn" catchtap="synthesizeCard" data-id="{{item.id}}" data-name="{{item.name}}" data-hint="{{item.synthesisHint}}">合成</view>
         </view>
       </view>

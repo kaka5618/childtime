@@ -62,7 +62,7 @@
           <view class="prize-aura"></view>
           <view class="rare-flash"></view>
           <view class="{{item.badgeClass}}">{{item.badgeText}}</view>
-          <card-face card="{{item}}" size="medium" />
+          <card-face card="{{item}}" size="medium"></card-face>
           <view class="reward-note">{{item.rewardText}}</view>
         </view>
       </view>
