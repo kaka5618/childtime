@@ -29,9 +29,11 @@ Page({
   buildRevealCards(pack) {
     return pack.map((card, index) => ({
       ...card,
-      revealDelay: `${index * 120}ms`,
+      revealDelay: `${index * 220}ms`,
       badgeText: card.isNew ? '新卡' : '重复',
-      badgeClass: card.isNew ? 'new-badge' : 'duplicate-badge'
+      badgeClass: card.isNew ? 'new-badge' : 'duplicate-badge',
+      rewardText: card.isNew ? '加入收藏本' : '可用于合成',
+      rareClass: card.rarity === 'SSR' || card.rarity === 'SR' ? 'rare-prize' : 'normal-prize'
     }))
   },
 

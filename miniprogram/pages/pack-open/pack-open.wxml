@@ -55,11 +55,15 @@
     <view class="result-board">
       <view class="board-tape tape-left"></view>
       <view class="board-tape tape-right"></view>
+      <view class="reward-spark spark-left">★</view>
+      <view class="reward-spark spark-right">✦</view>
       <view class="card-grid">
-        <view wx:for="{{revealCards}}" wx:key="id" class="reveal-card rarity-{{item.rarity}}" style="animation-delay: {{item.revealDelay}};" bindtap="openCard" data-id="{{item.id}}">
+        <view wx:for="{{revealCards}}" wx:key="id" class="reveal-card rarity-{{item.rarity}} {{item.rareClass}}" style="--reveal-delay: {{item.revealDelay}}; animation-delay: {{item.revealDelay}};" bindtap="openCard" data-id="{{item.id}}">
+          <view class="prize-aura"></view>
           <view class="rare-flash"></view>
           <view class="{{item.badgeClass}}">{{item.badgeText}}</view>
           <card-face card="{{item}}" size="medium" />
+          <view class="reward-note">{{item.rewardText}}</view>
         </view>
       </view>
     </view>
