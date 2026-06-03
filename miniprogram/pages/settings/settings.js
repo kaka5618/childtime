@@ -6,6 +6,11 @@ Page({
     activeTheme: null,
     activeThemeName: '未选择',
     childName: '小朋友',
+    avatarEmoji: '⭐',
+    gradeLabel: '小学低年级',
+    dailyTargetMinutes: 45,
+    avatarOptions: [],
+    gradeOptions: [],
     nameEditorVisible: false,
     nameDraft: '',
     nextSwitchDate: '',
@@ -28,11 +33,17 @@ Page({
     try {
       const settings = state.getSettings()
       const activeTheme = getTheme(state.getActiveSeriesId())
-      const childName = state.getChildName() || '小朋友'
+      const profile = state.getChildProfile()
+      const childName = profile.name || '小朋友'
       this.setData({
         activeTheme,
         activeThemeName: activeTheme ? activeTheme.name : '未选择',
         childName,
+        avatarEmoji: profile.avatarEmoji,
+        gradeLabel: profile.gradeLabel,
+        dailyTargetMinutes: profile.dailyTargetMinutes,
+        avatarOptions: this.buildAvatarOptions(profile.avatarKey),
+        gradeOptions: this.buildGradeOptions(profile.gradeKey),
         nextSwitchDate: state.getNextSwitchDate(),
         voiceEnabled: settings.voiceEnabled,
         voiceType: settings.voiceType,
@@ -45,6 +56,11 @@ Page({
         activeTheme: null,
         activeThemeName: '未选择',
         childName: '小朋友',
+        avatarEmoji: '⭐',
+        gradeLabel: '小学低年级',
+        dailyTargetMinutes: 45,
+        avatarOptions: this.buildAvatarOptions('star'),
+        gradeOptions: this.buildGradeOptions('lower'),
         nameEditorVisible: false,
         nameDraft: '',
         nextSwitchDate: '',
@@ -62,6 +78,24 @@ Page({
     return [
       { key: 'gentle', label: '温柔', activeClass: activeType === 'gentle' ? 'active' : '' },
       { key: 'bright', label: '清亮', activeClass: activeType === 'bright' ? 'active' : '' }
+    ]
+  },
+
+  buildAvatarOptions(activeKey) {
+    return [
+      { key: 'star', emoji: '⭐', label: '星星', activeClass: activeKey === 'star' ? 'active' : '' },
+      { key: 'bear', emoji: '🧸', label: '小熊', activeClass: activeKey === 'bear' ? 'active' : '' },
+      { key: 'flower', emoji: '🌸', label: '小花', activeClass: activeKey === 'flower' ? 'active' : '' },
+      { key: 'rocket', emoji: '🚀', label: '火箭', activeClass: activeKey === 'rocket' ? 'active' : '' }
+    ]
+  },
+
+  buildGradeOptions(activeKey) {
+    return [
+      { key: 'preschool', label: '幼儿园', activeClass: activeKey === 'preschool' ? 'active' : '' },
+      { key: 'lower', label: '小学低年级', activeClass: activeKey === 'lower' ? 'active' : '' },
+      { key: 'middle', label: '小学中年级', activeClass: activeKey === 'middle' ? 'active' : '' },
+      { key: 'upper', label: '小学高年级', activeClass: activeKey === 'upper' ? 'active' : '' }
     ]
   },
 
@@ -88,17 +122,40 @@ Page({
   },
 
   saveNameEditor() {
-    const childName = state.saveChildName(this.data.nameDraft)
-    if (!childName) {
+    const profile = state.saveChildProfile({ name: this.data.nameDraft })
+    if (!profile.name) {
       wx.showToast({ title: '请输入名字', icon: 'none' })
       return
     }
     this.setData({
-      childName,
+      childName: profile.name,
       nameEditorVisible: false,
       nameDraft: ''
     })
     wx.showToast({ title: '已保存', icon: 'success' })
+  },
+
+  selectAvatar(event) {
+    const { key, emoji } = event.currentTarget.dataset
+    const profile = state.saveChildProfile({ avatarKey: key, avatarEmoji: emoji })
+    this.setData({
+      avatarEmoji: profile.avatarEmoji,
+      avatarOptions: this.buildAvatarOptions(profile.avatarKey)
+    })
+  },
+
+  selectGrade(event) {
+    const { key, label } = event.currentTarget.dataset
+    const profile = state.saveChildProfile({ gradeKey: key, gradeLabel: label })
+    this.setData({
+      gradeLabel: profile.gradeLabel,
+      gradeOptions: this.buildGradeOptions(profile.gradeKey)
+    })
+  },
+
+  changeDailyTarget(event) {
+    const profile = state.saveChildProfile({ dailyTargetMinutes: Number(event.detail.value) })
+    this.setData({ dailyTargetMinutes: profile.dailyTargetMinutes })
   },
 
   toggleVoice(event) {

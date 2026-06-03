@@ -27,7 +27,10 @@
 
     <view class="topbar">
       <view class="kid-card">
-        <image class="kid-avatar-img" src="/assets/ui/home-avatar-badge.png" mode="aspectFill" />
+        <view class="kid-avatar-wrap">
+          <image class="kid-avatar-img" src="/assets/ui/home-avatar-badge.png" mode="aspectFill" />
+          <view class="kid-avatar-emoji">{{avatarEmoji}}</view>
+        </view>
         <view>
           <view class="kid-name">{{greetingText}}</view>
           <view class="kid-note">{{greetingNote}}</view>
@@ -43,7 +46,7 @@
     </view>
     <view class="energy-tag">
       <view class="energy-tag-title">今日目标</view>
-      <view class="energy-tag-text">{{todaySummary.totalMinutes}} 分钟</view>
+      <view class="energy-tag-text">{{dailyTargetMinutes}} 分钟</view>
     </view>
   </view>
 

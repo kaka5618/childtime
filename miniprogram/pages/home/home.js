@@ -38,6 +38,8 @@ Page({
     greetingText: '你好，小朋友',
     greetingNote: '今天也认真完成计划',
     childName: '',
+    avatarEmoji: '⭐',
+    dailyTargetMinutes: 45,
     namePromptVisible: false,
     nameDraft: '',
     energyProgressText: '0 / 0 分钟',
@@ -74,7 +76,8 @@ Page({
     const allDone = state.allCompleted(rawTasks)
     const percent = state.chargePercent(rawTasks)
     const nextTask = rawTasks.find((task) => !task.completed)
-    const childName = state.getChildName()
+    const profile = state.getChildProfile()
+    const childName = profile.name
     const displayName = childName || '小朋友'
     const tasks = rawTasks.map((task) => ({
       ...task,
@@ -101,6 +104,8 @@ Page({
       nextTaskId: nextTask ? nextTask.id : '',
       addButtonClass: openedToday ? 'disabled-btn' : '',
       childName,
+      avatarEmoji: profile.avatarEmoji,
+      dailyTargetMinutes: profile.dailyTargetMinutes,
       greetingText: `${getTimeGreeting()}，${displayName}`,
       greetingNote: this.getGreetingNote(rawTasks, allDone, openedToday),
       todaySummary: {
@@ -116,7 +121,7 @@ Page({
   },
 
   promptForChildName() {
-    if (state.getChildName()) return
+    if (state.getChildProfile().name) return
     this.setData({
       namePromptVisible: true,
       nameDraft: ''
@@ -128,8 +133,8 @@ Page({
   },
 
   saveNamePrompt() {
-    const childName = state.saveChildName(this.data.nameDraft)
-    if (!childName) {
+    const profile = state.saveChildProfile({ name: this.data.nameDraft })
+    if (!profile.name) {
       wx.showToast({ title: '请输入名字', icon: 'none' })
       return
     }

@@ -1,8 +1,35 @@
 <view class="page settings-page">
-  <view class="panel block">
-    <view class="block-title">孩子名字</view>
-    <view class="muted">当前称呼：{{childName}}</view>
+  <view class="panel block profile-block">
+    <view class="profile-head">
+      <view class="profile-avatar">{{avatarEmoji}}</view>
+      <view class="profile-copy">
+        <view class="block-title compact">孩子档案</view>
+        <view class="muted">{{childName}} · {{gradeLabel}} · 目标 {{dailyTargetMinutes}} 分钟</view>
+      </view>
+    </view>
     <button class="setting-btn" bindtap="editChildName">修改名字</button>
+
+    <view class="profile-section">
+      <view class="option-label">头像贴纸</view>
+      <view class="avatar-grid">
+        <button wx:for="{{avatarOptions}}" wx:key="key" class="avatar-option {{item.activeClass}}" data-key="{{item.key}}" data-emoji="{{item.emoji}}" bindtap="selectAvatar">
+          <view class="avatar-emoji">{{item.emoji}}</view>
+          <view class="avatar-label">{{item.label}}</view>
+        </button>
+      </view>
+    </view>
+
+    <view class="profile-section">
+      <view class="option-label">年龄段</view>
+      <view class="grade-grid">
+        <button wx:for="{{gradeOptions}}" wx:key="key" class="grade-option {{item.activeClass}}" data-key="{{item.key}}" data-label="{{item.label}}" bindtap="selectGrade">{{item.label}}</button>
+      </view>
+    </view>
+
+    <view class="profile-section">
+      <view class="option-label">每日目标 {{dailyTargetMinutes}} 分钟</view>
+      <slider min="15" max="120" step="5" value="{{dailyTargetMinutes}}" activeColor="#7BA68C" block-color="#7BA68C" bindchange="changeDailyTarget" />
+    </view>
   </view>
 
   <view class="panel block">

@@ -10,11 +10,20 @@ const ACTIVE_SERIES_KEY = 'childtime_active_series'
 const LAST_SWITCH_DATE_KEY = 'childtime_last_switch_date'
 const SETTINGS_KEY = 'childtime_settings'
 const CHILD_NAME_KEY = 'childtime_child_name'
+const CHILD_PROFILE_KEY = 'childtime_child_profile'
 const SWITCH_COOLDOWN_DAYS = 15
 const DEFAULT_SETTINGS = {
   voiceEnabled: true,
   voiceType: 'gentle',
   volume: 60
+}
+const DEFAULT_CHILD_PROFILE = {
+  name: '',
+  avatarKey: 'star',
+  avatarEmoji: '⭐',
+  gradeKey: 'lower',
+  gradeLabel: '小学低年级',
+  dailyTargetMinutes: 45
 }
 const PACK_SIZE_WEIGHTS = [
   { size: 1, weight: 10 },
@@ -94,14 +103,42 @@ function normalizeChildName(name) {
   return String(name || '').trim().slice(0, 8)
 }
 
+function normalizeDailyTarget(minutes) {
+  const value = Number(minutes || DEFAULT_CHILD_PROFILE.dailyTargetMinutes)
+  return Math.min(120, Math.max(15, Math.round(value / 5) * 5))
+}
+
+function getChildProfile() {
+  const storedProfile = wx.getStorageSync(CHILD_PROFILE_KEY) || {}
+  const legacyName = normalizeChildName(wx.getStorageSync(CHILD_NAME_KEY))
+  return {
+    ...DEFAULT_CHILD_PROFILE,
+    ...storedProfile,
+    name: normalizeChildName(storedProfile.name || legacyName),
+    dailyTargetMinutes: normalizeDailyTarget(storedProfile.dailyTargetMinutes)
+  }
+}
+
+function saveChildProfile(profile) {
+  const nextProfile = {
+    ...getChildProfile(),
+    ...profile
+  }
+  nextProfile.name = normalizeChildName(nextProfile.name)
+  nextProfile.dailyTargetMinutes = normalizeDailyTarget(nextProfile.dailyTargetMinutes)
+  wx.setStorageSync(CHILD_PROFILE_KEY, nextProfile)
+  if (nextProfile.name) {
+    wx.setStorageSync(CHILD_NAME_KEY, nextProfile.name)
+  }
+  return nextProfile
+}
+
 function getChildName() {
-  return normalizeChildName(wx.getStorageSync(CHILD_NAME_KEY))
+  return getChildProfile().name
 }
 
 function saveChildName(name) {
-  const childName = normalizeChildName(name)
-  wx.setStorageSync(CHILD_NAME_KEY, childName)
-  return childName
+  return saveChildProfile({ name }).name
 }
 
 function getActiveSeriesId() {
@@ -499,6 +536,8 @@ module.exports = {
   saveTasks,
   getSettings,
   saveSettings,
+  getChildProfile,
+  saveChildProfile,
   getChildName,
   saveChildName,
   getActiveSeriesId,

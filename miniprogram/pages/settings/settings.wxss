@@ -113,8 +113,93 @@
 
 .setting-btn::after,
 .voice-type::after,
-.debug-btn::after {
+.debug-btn::after,
+.avatar-option::after,
+.grade-option::after {
   border: 0;
+}
+
+.profile-head {
+  display: grid;
+  grid-template-columns: 92rpx 1fr;
+  gap: 18rpx;
+  align-items: center;
+}
+
+.profile-avatar {
+  display: flex;
+  width: 88rpx;
+  height: 88rpx;
+  align-items: center;
+  justify-content: center;
+  border: 4rpx solid rgba(255, 255, 255, 0.88);
+  border-radius: 50%;
+  background: #fff4cf;
+  box-shadow: 0 8rpx 14rpx rgba(112, 82, 44, 0.14);
+  font-size: 46rpx;
+  line-height: 1;
+}
+
+.profile-copy {
+  min-width: 0;
+}
+
+.profile-section {
+  margin-top: 24rpx;
+}
+
+.avatar-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12rpx;
+  margin-top: 14rpx;
+}
+
+.avatar-option {
+  height: 112rpx;
+  margin: 0;
+  padding: 8rpx 0 10rpx;
+  border: 3rpx solid rgba(123, 166, 140, 0.2);
+  border-radius: 22rpx;
+  background: rgba(255, 255, 255, 0.78);
+  color: #5d4934;
+}
+
+.avatar-option.active,
+.grade-option.active {
+  border-color: rgba(123, 166, 140, 0.66);
+  background: linear-gradient(180deg, #dff4c3, #b9e596);
+  color: #2f6b49;
+  box-shadow: 0 8rpx 12rpx rgba(75, 105, 66, 0.12);
+}
+
+.avatar-emoji {
+  font-size: 42rpx;
+  line-height: 52rpx;
+}
+
+.avatar-label {
+  font-size: 20rpx;
+  line-height: 24rpx;
+}
+
+.grade-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12rpx;
+  margin-top: 14rpx;
+}
+
+.grade-option {
+  height: 64rpx;
+  margin: 0;
+  padding: 0;
+  border: 3rpx solid rgba(123, 166, 140, 0.2);
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.82);
+  color: #4e6356;
+  font-size: 23rpx;
+  line-height: 64rpx;
 }
 
 .setting-note {

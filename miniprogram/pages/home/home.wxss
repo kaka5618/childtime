@@ -180,13 +180,36 @@
   box-shadow: 0 10rpx 24rpx rgba(80, 66, 46, 0.16);
 }
 
-.kid-avatar-img {
+.kid-avatar-wrap {
+  position: relative;
   width: 76rpx;
   height: 76rpx;
   flex: none;
+}
+
+.kid-avatar-img {
+  width: 76rpx;
+  height: 76rpx;
   border: 4rpx solid rgba(255, 255, 255, 0.88);
   border-radius: 50%;
   background: #fff8e9;
+}
+
+.kid-avatar-emoji {
+  position: absolute;
+  right: -6rpx;
+  bottom: -4rpx;
+  display: flex;
+  width: 36rpx;
+  height: 36rpx;
+  align-items: center;
+  justify-content: center;
+  border: 2rpx solid rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  background: #fff4cf;
+  font-size: 22rpx;
+  line-height: 1;
+  box-shadow: 0 4rpx 8rpx rgba(80, 66, 46, 0.14);
 }
 
 .kid-name {
