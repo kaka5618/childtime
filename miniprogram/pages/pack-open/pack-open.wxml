@@ -1,27 +1,59 @@
 <view class="page pack-page">
-  <view wx:if="{{!revealed}}" class="pack-stage panel {{activeTheme.packClass}} {{openingClass}}">
-    <view class="burst"></view>
-    <view class="spark spark-a"></view>
-    <view class="spark spark-b"></view>
-    <view class="spark spark-c"></view>
-    <view class="pack-bag">
-      <view class="pack-mark">{{packMark}}</view>
+  <view class="page-glow glow-a"></view>
+  <view class="page-glow glow-b"></view>
+
+  <view wx:if="{{!revealed}}" class="pack-stage {{activeTheme.packClass}} {{openingClass}}">
+    <view class="top-copy">
+      <view class="eyebrow">今日奖励</view>
+      <view class="pack-title">{{packTitle}}</view>
+      <view class="muted">{{packHint}}</view>
     </view>
-    <view class="pack-title">{{packTitle}}</view>
-    <view class="muted">{{packHint}}</view>
-    <button class="primary-btn open-btn" disabled="{{opening}}" bindtap="beginOpen">{{openButtonText}}</button>
+
+    <view class="pack-table">
+      <view class="burst"></view>
+      <view class="spark spark-a">★</view>
+      <view class="spark spark-b">✦</view>
+      <view class="spark spark-c">★</view>
+      <view class="spark spark-d">✦</view>
+      <view class="pack-bag">
+        <view class="bag-lid"></view>
+        <view class="bag-rope"></view>
+        <view class="bag-tag">{{packMark}}</view>
+        <view class="pack-mark">★</view>
+        <view class="bag-shine"></view>
+      </view>
+      <view class="table-shadow"></view>
+    </view>
+
+    <view class="open-note">轻轻打开，看看今天收到了什么卡片</view>
+    <button class="open-btn open-main-btn" disabled="{{opening}}" bindtap="beginOpen">
+      <view class="btn-star">★</view>
+      <text>{{openButtonText}}</text>
+    </button>
   </view>
 
-  <view wx:else>
-    <view class="result-title reveal-title">{{resultTitle}}</view>
-    <view class="result-subtitle">{{resultSubtitle}}</view>
-    <view class="card-grid">
-      <view wx:for="{{revealCards}}" wx:key="id" class="reveal-card rarity-{{item.rarity}}" style="animation-delay: {{item.revealDelay}};" bindtap="openCard" data-id="{{item.id}}">
-        <view class="rare-flash"></view>
-        <view class="{{item.badgeClass}}">{{item.badgeText}}</view>
-        <card-face card="{{item}}" size="medium" />
+  <view wx:else class="result-stage">
+    <view class="result-header">
+      <view class="eyebrow">开包完成</view>
+      <view class="result-title reveal-title">{{resultTitle}}</view>
+      <view class="result-subtitle">{{resultSubtitle}}</view>
+    </view>
+
+    <view class="result-board">
+      <view class="board-tape tape-left"></view>
+      <view class="board-tape tape-right"></view>
+      <view class="card-grid">
+        <view wx:for="{{revealCards}}" wx:key="id" class="reveal-card rarity-{{item.rarity}}" style="animation-delay: {{item.revealDelay}};" bindtap="openCard" data-id="{{item.id}}">
+          <view class="rare-flash"></view>
+          <view class="{{item.badgeClass}}">{{item.badgeText}}</view>
+          <card-face card="{{item}}" size="medium" />
+        </view>
       </view>
     </view>
-    <button class="secondary-btn open-btn" bindtap="goAlbum">放进收藏本</button>
+
+    <button class="open-btn album-btn" bindtap="goAlbum">
+      <view class="btn-star">★</view>
+      <text>放进收藏本</text>
+    </button>
   </view>
 </view>

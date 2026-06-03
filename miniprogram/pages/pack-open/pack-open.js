@@ -30,7 +30,7 @@ Page({
     return pack.map((card, index) => ({
       ...card,
       revealDelay: `${index * 120}ms`,
-      badgeText: card.isNew ? 'NEW' : '重复',
+      badgeText: card.isNew ? '新卡' : '重复',
       badgeClass: card.isNew ? 'new-badge' : 'duplicate-badge'
     }))
   },
