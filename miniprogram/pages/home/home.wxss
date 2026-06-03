@@ -55,19 +55,27 @@
 }
 
 .kid-name {
+  max-width: 300rpx;
+  overflow: hidden;
   color: #4a2a13;
   font-size: 30rpx;
   font-weight: 900;
   line-height: 1.15;
+  text-overflow: ellipsis;
   text-shadow: 0 2rpx 0 rgba(255, 245, 213, 0.8);
+  white-space: nowrap;
 }
 
 .kid-note {
+  max-width: 300rpx;
+  overflow: hidden;
   margin-top: 4rpx;
   color: #8a6d58;
   font-size: 22rpx;
   font-weight: 800;
   line-height: 1.15;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .icon-btn,

@@ -6,8 +6,8 @@
       <view class="kid-card">
         <image class="kid-avatar-img" src="/assets/ui/home-avatar-badge.png" mode="aspectFill" />
         <view>
-          <view class="kid-name">早上好，小朋友</view>
-          <view class="kid-note">今天也认真完成计划</view>
+          <view class="kid-name">{{greetingText}}</view>
+          <view class="kid-note">{{greetingNote}}</view>
         </view>
       </view>
     </view>

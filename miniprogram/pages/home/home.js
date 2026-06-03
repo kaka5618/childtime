@@ -9,6 +9,15 @@ function getTaskIconPath(name) {
   return '/assets/ui/icon-math.png'
 }
 
+function getTimeGreeting() {
+  const hour = new Date().getHours()
+  if (hour >= 5 && hour < 11) return '早上好'
+  if (hour >= 11 && hour < 14) return '中午好'
+  if (hour >= 14 && hour < 18) return '下午好'
+  if (hour >= 18 && hour < 23) return '晚上好'
+  return '夜深了'
+}
+
 Page({
   data: {
     tasks: [],
@@ -26,6 +35,9 @@ Page({
     focusButtonText: '去专注',
     nextTaskId: '',
     addButtonClass: '',
+    greetingText: '你好，小朋友',
+    greetingNote: '今天也认真完成计划',
+    childName: '',
     energyProgressText: '0 / 0 分钟',
     todaySummary: {
       completedTasks: 0,
@@ -43,6 +55,7 @@ Page({
       return
     }
     this.refresh()
+    this.promptForChildName()
   },
 
   refresh() {
@@ -59,6 +72,8 @@ Page({
     const allDone = state.allCompleted(rawTasks)
     const percent = state.chargePercent(rawTasks)
     const nextTask = rawTasks.find((task) => !task.completed)
+    const childName = state.getChildName()
+    const displayName = childName || '小朋友'
     const tasks = rawTasks.map((task) => ({
       ...task,
       taskIconPath: getTaskIconPath(task.name),
@@ -83,6 +98,9 @@ Page({
       focusButtonText: nextTask ? '去专注' : '任务完成',
       nextTaskId: nextTask ? nextTask.id : '',
       addButtonClass: openedToday ? 'disabled-btn' : '',
+      childName,
+      greetingText: `${getTimeGreeting()}，${displayName}`,
+      greetingNote: this.getGreetingNote(rawTasks, allDone, openedToday),
       todaySummary: {
         completedTasks,
         totalTasks: rawTasks.length,
@@ -93,6 +111,36 @@ Page({
       energyProgressText: `${completedMinutes} / ${totalMinutes} 分钟`,
       nextActionText: this.getNextActionText(rawTasks, allDone, openedToday)
     })
+  },
+
+  promptForChildName() {
+    if (state.getChildName()) return
+
+    wx.showModal({
+      title: '怎么称呼你？',
+      content: '输入孩子的名字，首页会用名字打招呼。',
+      editable: true,
+      placeholderText: '例如：小星星',
+      confirmText: '保存',
+      confirmColor: '#7BA68C',
+      success: (res) => {
+        if (!res.confirm) return
+        const childName = state.saveChildName(res.content)
+        if (!childName) {
+          wx.showToast({ title: '名字不能为空', icon: 'none' })
+          this.promptForChildName()
+          return
+        }
+        this.refresh()
+      }
+    })
+  },
+
+  getGreetingNote(tasks, allDone, openedToday) {
+    if (openedToday) return '今天的星星已经收好啦'
+    if (!tasks.length) return '先添加今天的小任务吧'
+    if (allDone) return '任务完成啦，可以开包'
+    return '今天也认真完成计划'
   },
 
   getNextActionText(tasks, allDone, openedToday) {

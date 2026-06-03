@@ -5,6 +5,7 @@ Page({
   data: {
     activeTheme: null,
     activeThemeName: '未选择',
+    childName: '小朋友',
     nextSwitchDate: '',
     voiceEnabled: true,
     voiceType: 'gentle',
@@ -25,9 +26,11 @@ Page({
     try {
       const settings = state.getSettings()
       const activeTheme = getTheme(state.getActiveSeriesId())
+      const childName = state.getChildName() || '小朋友'
       this.setData({
         activeTheme,
         activeThemeName: activeTheme ? activeTheme.name : '未选择',
+        childName,
         nextSwitchDate: state.getNextSwitchDate(),
         voiceEnabled: settings.voiceEnabled,
         voiceType: settings.voiceType,
@@ -39,6 +42,7 @@ Page({
       this.setData({
         activeTheme: null,
         activeThemeName: '未选择',
+        childName: '小朋友',
         nextSwitchDate: '',
         voiceEnabled: true,
         voiceType: 'gentle',
@@ -59,6 +63,27 @@ Page({
 
   goThemeSelect() {
     wx.navigateTo({ url: '/pages/theme-select/theme-select' })
+  },
+
+  editChildName() {
+    wx.showModal({
+      title: '孩子名字',
+      content: '首页会按这个名字打招呼。',
+      editable: true,
+      placeholderText: '例如：小星星',
+      confirmText: '保存',
+      confirmColor: '#7BA68C',
+      success: (res) => {
+        if (!res.confirm) return
+        const childName = state.saveChildName(res.content)
+        if (!childName) {
+          wx.showToast({ title: '名字不能为空', icon: 'none' })
+          return
+        }
+        this.setData({ childName })
+        wx.showToast({ title: '已保存', icon: 'success' })
+      }
+    })
   },
 
   toggleVoice(event) {

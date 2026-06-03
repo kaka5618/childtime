@@ -9,6 +9,7 @@ const PACK_GENERATED_DATE_KEY = 'childtime_pack_generated_date'
 const ACTIVE_SERIES_KEY = 'childtime_active_series'
 const LAST_SWITCH_DATE_KEY = 'childtime_last_switch_date'
 const SETTINGS_KEY = 'childtime_settings'
+const CHILD_NAME_KEY = 'childtime_child_name'
 const SWITCH_COOLDOWN_DAYS = 15
 const DEFAULT_SETTINGS = {
   voiceEnabled: true,
@@ -87,6 +88,20 @@ function saveSettings(settings) {
     ...getSettings(),
     ...settings
   })
+}
+
+function normalizeChildName(name) {
+  return String(name || '').trim().slice(0, 8)
+}
+
+function getChildName() {
+  return normalizeChildName(wx.getStorageSync(CHILD_NAME_KEY))
+}
+
+function saveChildName(name) {
+  const childName = normalizeChildName(name)
+  wx.setStorageSync(CHILD_NAME_KEY, childName)
+  return childName
 }
 
 function getActiveSeriesId() {
@@ -484,6 +499,8 @@ module.exports = {
   saveTasks,
   getSettings,
   saveSettings,
+  getChildName,
+  saveChildName,
   getActiveSeriesId,
   setActiveSeriesId,
   hasSelectedSeries,

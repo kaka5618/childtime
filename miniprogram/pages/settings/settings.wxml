@@ -1,5 +1,11 @@
 <view class="page settings-page">
   <view class="panel block">
+    <view class="block-title">孩子名字</view>
+    <view class="muted">当前称呼：{{childName}}</view>
+    <button class="setting-btn" bindtap="editChildName">修改名字</button>
+  </view>
+
+  <view class="panel block">
     <view class="block-title">当前收集</view>
     <view class="muted">{{activeThemeName}}</view>
     <view wx:if="{{nextSwitchDate}}" class="setting-note">每 15 天可更换一次收集主题。下次可更换：{{nextSwitchDate}}</view>
