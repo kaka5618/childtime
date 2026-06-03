@@ -1,16 +1,25 @@
 const state = require('../../utils/state')
 const { themes } = require('../../utils/themes')
-const { getCard } = require('../../utils/cards')
+const { getCard, getCardsBySeries } = require('../../utils/cards')
 
 function buildThemeView(theme) {
   const previewCards = (theme.previewCardIds || [])
     .map((id) => getCard(theme.id, id))
     .filter(Boolean)
+  const progress = state.getCollectionProgress(theme.id)
+  const cards = getCardsBySeries(theme.id)
+  const rarityList = cards.length ? ['N', 'R', 'SR', 'SSR'] : ['即将开放']
 
   return {
     ...theme,
     previewCards,
-    hasPreviewCards: previewCards.length > 0
+    hasPreviewCards: previewCards.length > 0,
+    ownedCount: progress.owned,
+    totalCount: progress.total,
+    progressText: progress.total ? `${progress.owned}/${progress.total}` : '预览',
+    progressWidth: `${Math.max(8, progress.percent)}%`,
+    rarityText: rarityList.join(' · '),
+    packNote: theme.status === 'active' ? '今日能量满后可开启' : '更多卡片正在制作'
   }
 }
 
@@ -27,7 +36,7 @@ function buildPageView(themesSource, selectedId, pendingId, pendingTheme, cooldo
           active ? '' : 'preview',
           selected ? 'selected' : ''
         ].filter(Boolean).join(' '),
-        statusText: active ? (selectedId === theme.id ? '当前收集' : '可选择') : '预览'
+        statusText: active ? (selectedId === theme.id ? '当前收集' : '可选择') : '即将开放'
       }
     }),
     pageClass: pendingTheme ? 'has-confirm' : '',
@@ -53,15 +62,17 @@ Page({
   },
 
   onShow() {
+    const themeViews = themes.map(buildThemeView)
     const selectedId = state.getActiveSeriesId()
-    const pendingTheme = this.data.themes.find((theme) => theme.id === selectedId) || null
+    const pendingTheme = themeViews.find((theme) => theme.id === selectedId) || null
     const cooldownInfo = pendingTheme ? state.getSwitchCooldownInfo(selectedId) : null
     this.setData({
+      themes: themeViews,
       selectedId,
       pendingId: selectedId,
       pendingTheme,
       cooldownInfo,
-      ...buildPageView(this.data.themes, selectedId, selectedId, pendingTheme, cooldownInfo)
+      ...buildPageView(themeViews, selectedId, selectedId, pendingTheme, cooldownInfo)
     })
   },
 

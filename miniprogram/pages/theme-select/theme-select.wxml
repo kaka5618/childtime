@@ -1,47 +1,73 @@
 <view class="page theme-page {{pageClass}}">
   <view class="theme-glow glow-a"></view>
   <view class="theme-glow glow-b"></view>
+  <view class="paper-chip chip-a"></view>
+  <view class="paper-chip chip-b"></view>
 
   <view class="theme-head">
     <view class="eyebrow">收集主题</view>
     <view class="title">选择你的卡包</view>
-    <view class="subtitle">每个主题都是一本不同的收藏册。</view>
+    <view class="subtitle">选好今天要收集的卡包，能量满了就可以开宝箱。</view>
   </view>
 
   <view class="theme-list">
     <view wx:for="{{themes}}" wx:key="id" class="theme-card {{item.cardClass}}" bindtap="selectTheme" data-id="{{item.id}}" data-status="{{item.status}}" data-name="{{item.name}}">
-      <view class="theme-pin">★</view>
-      <view class="cover-stage">
-        <view wx:if="{{item.hasPreviewCards}}" class="bubble-stack">
-          <view wx:for="{{item.previewCards}}" wx:for-item="card" wx:for-index="cardIndex" wx:key="id" class="preview-card card-{{cardIndex}}">
-            <card-face card="{{card}}" size="small" />
+      <view class="pack-ribbon">{{item.statusText}}</view>
+      <view class="pack-box">
+        <view class="box-lid">
+          <view class="lid-star">★</view>
+          <view class="pack-short">{{item.shortName}}</view>
+        </view>
+        <view class="box-face">
+          <view class="box-shine"></view>
+          <view class="pack-title-line">{{item.name}}</view>
+          <view class="rarity-strip">{{item.rarityText}}</view>
+          <view wx:if="{{item.hasPreviewCards}}" class="bubble-stack">
+            <view class="preview-shadow"></view>
+            <view wx:for="{{item.previewCards}}" wx:for-item="card" wx:for-index="cardIndex" wx:key="id" class="preview-card card-{{cardIndex}}">
+              <card-face card="{{card}}" size="small" />
+            </view>
+          </view>
+          <view wx:else class="cover-symbol">
+            <view class="cover-orbit orbit-a"></view>
+            <view class="cover-orbit orbit-b"></view>
+            <view class="cover-gem"></view>
+            <view class="symbol-main">{{item.shortName}}</view>
+            <view class="symbol-line"></view>
           </view>
         </view>
-        <view wx:else class="cover-symbol">
-          <view class="cover-orbit orbit-a"></view>
-          <view class="cover-orbit orbit-b"></view>
-          <view class="cover-gem"></view>
-          <view class="symbol-main">{{item.shortName}}</view>
-          <view class="symbol-line"></view>
+        <view class="box-bottom">
+          <view class="progress-copy">
+            <view class="progress-label">收集进度</view>
+            <view class="progress-count">{{item.progressText}}</view>
+          </view>
+          <view class="progress-track">
+            <view class="progress-fill" style="width: {{item.progressWidth}};"></view>
+            <view class="progress-star">★</view>
+          </view>
         </view>
-        <view class="cover-gloss"></view>
-        <view class="theme-status">{{item.statusText}}</view>
       </view>
       <view class="theme-main">
-        <view>
-          <view class="theme-name">{{item.name}}</view>
-          <view class="theme-desc">{{item.description}}</view>
+        <view class="theme-copy">
+          <view class="theme-name">{{item.packTitle}}</view>
+          <view class="theme-desc">{{item.packNote}}</view>
         </view>
         <view class="select-dot"></view>
       </view>
     </view>
   </view>
 
+  <view wx:if="{{pendingTheme}}" class="selected-preview">
+    <view class="selected-label">{{confirmLabel}}</view>
+    <view class="selected-name">{{pendingTheme.name}}</view>
+    <view class="selected-desc">{{pendingTheme.description}}</view>
+    <view wx:if="{{cooldownVisible}}" class="cooldown-line">{{cooldownInfo.remainingDays}} 天后可更换 · {{cooldownInfo.nextSwitchDate}}</view>
+  </view>
+
   <view wx:if="{{pendingTheme}}" class="confirm-bar">
     <view class="confirm-copy">
       <view class="confirm-label">{{confirmLabel}}</view>
       <view class="confirm-name">{{pendingTheme.name}}</view>
-      <view wx:if="{{cooldownVisible}}" class="cooldown-line">{{cooldownInfo.remainingDays}} 天后可更换 · {{cooldownInfo.nextSwitchDate}}</view>
     </view>
     <button class="confirm-btn {{confirmButtonClass}}" bindtap="confirmTheme">{{confirmButtonText}}</button>
   </view>
