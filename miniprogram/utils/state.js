@@ -11,6 +11,7 @@ const LAST_SWITCH_DATE_KEY = 'childtime_last_switch_date'
 const SETTINGS_KEY = 'childtime_settings'
 const CHILD_NAME_KEY = 'childtime_child_name'
 const CHILD_PROFILE_KEY = 'childtime_child_profile'
+const BACKUP_KEY = 'childtime_local_backup'
 const SWITCH_COOLDOWN_DAYS = 15
 const DEFAULT_SETTINGS = {
   voiceEnabled: true,
@@ -75,6 +76,11 @@ function daysBetween(startKey, endKey) {
 
 function taskStorageKey() {
   return `${TASKS_KEY}_${todayKey()}`
+}
+
+function allTaskStorageKeys() {
+  const info = wx.getStorageInfoSync()
+  return (info.keys || []).filter((key) => String(key).startsWith(`${TASKS_KEY}_`))
 }
 
 function getTasks() {
@@ -531,6 +537,97 @@ function clearActiveSeriesCollection(seriesId = getActiveSeriesId()) {
   clearTodayPackState()
 }
 
+function buildLocalBackup() {
+  const taskKeys = allTaskStorageKeys()
+  const tasksByDate = taskKeys.reduce((result, key) => {
+    result[key] = wx.getStorageSync(key)
+    return result
+  }, {})
+
+  return {
+    version: 1,
+    createdAt: new Date().toISOString(),
+    createdDate: todayKey(),
+    data: {
+      tasksByDate,
+      collection: getCollection(),
+      lastPack: getLastPack(),
+      lastPackMeta: getLastPackMeta(),
+      packDate: wx.getStorageSync(PACK_DATE_KEY) || '',
+      packGeneratedDate: wx.getStorageSync(PACK_GENERATED_DATE_KEY) || '',
+      activeSeriesId: wx.getStorageSync(ACTIVE_SERIES_KEY) || '',
+      lastSwitchDate: wx.getStorageSync(LAST_SWITCH_DATE_KEY) || '',
+      settings: getSettings(),
+      childProfile: getChildProfile(),
+      childName: getChildName()
+    }
+  }
+}
+
+function saveLocalBackup() {
+  const backup = buildLocalBackup()
+  wx.setStorageSync(BACKUP_KEY, backup)
+  return backup
+}
+
+function getLocalBackupInfo() {
+  const backup = wx.getStorageSync(BACKUP_KEY)
+  if (!backup || !backup.data) {
+    return {
+      exists: false,
+      createdAt: '',
+      createdDate: '',
+      taskDayCount: 0,
+      collectionSeriesCount: 0
+    }
+  }
+
+  return {
+    exists: true,
+    createdAt: backup.createdAt || '',
+    createdDate: backup.createdDate || '',
+    taskDayCount: Object.keys(backup.data.tasksByDate || {}).length,
+    collectionSeriesCount: Object.keys(backup.data.collection || {}).length
+  }
+}
+
+function restoreLocalBackup() {
+  const backup = wx.getStorageSync(BACKUP_KEY)
+  if (!backup || !backup.data) {
+    return {
+      ok: false,
+      message: '还没有本地备份'
+    }
+  }
+
+  allTaskStorageKeys().forEach((key) => wx.removeStorageSync(key))
+  Object.keys(backup.data.tasksByDate || {}).forEach((key) => {
+    wx.setStorageSync(key, backup.data.tasksByDate[key])
+  })
+  wx.setStorageSync(COLLECTION_KEY, backup.data.collection || {})
+  wx.setStorageSync(PACK_KEY, backup.data.lastPack || [])
+  wx.setStorageSync(PACK_META_KEY, backup.data.lastPackMeta || {})
+  if (backup.data.packDate) wx.setStorageSync(PACK_DATE_KEY, backup.data.packDate)
+  else wx.removeStorageSync(PACK_DATE_KEY)
+  if (backup.data.packGeneratedDate) wx.setStorageSync(PACK_GENERATED_DATE_KEY, backup.data.packGeneratedDate)
+  else wx.removeStorageSync(PACK_GENERATED_DATE_KEY)
+  if (backup.data.activeSeriesId) wx.setStorageSync(ACTIVE_SERIES_KEY, backup.data.activeSeriesId)
+  else wx.removeStorageSync(ACTIVE_SERIES_KEY)
+  if (backup.data.lastSwitchDate) wx.setStorageSync(LAST_SWITCH_DATE_KEY, backup.data.lastSwitchDate)
+  else wx.removeStorageSync(LAST_SWITCH_DATE_KEY)
+  wx.setStorageSync(SETTINGS_KEY, backup.data.settings || DEFAULT_SETTINGS)
+  saveChildProfile(backup.data.childProfile || { name: backup.data.childName || '' })
+
+  return {
+    ok: true,
+    message: '已恢复本地备份'
+  }
+}
+
+function clearLocalBackup() {
+  wx.removeStorageSync(BACKUP_KEY)
+}
+
 module.exports = {
   getTasks,
   saveTasks,
@@ -571,5 +668,9 @@ module.exports = {
   clearTodayTasks,
   addDebugDuplicates,
   clearTodayPackState,
-  clearActiveSeriesCollection
+  clearActiveSeriesCollection,
+  saveLocalBackup,
+  getLocalBackupInfo,
+  restoreLocalBackup,
+  clearLocalBackup
 }

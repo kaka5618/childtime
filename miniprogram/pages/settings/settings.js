@@ -18,6 +18,8 @@ Page({
     voiceType: 'gentle',
     volume: 60,
     voiceOptionsClass: '',
+    backupExists: false,
+    backupSummary: '还没有本地备份',
     debugVisible: false,
     voiceTypes: [
       { key: 'gentle', label: '温柔', activeClass: 'active' },
@@ -35,6 +37,7 @@ Page({
       const activeTheme = getTheme(state.getActiveSeriesId())
       const profile = state.getChildProfile()
       const childName = profile.name || '小朋友'
+      const backupInfo = state.getLocalBackupInfo()
       this.setData({
         activeTheme,
         activeThemeName: activeTheme ? activeTheme.name : '未选择',
@@ -49,7 +52,9 @@ Page({
         voiceType: settings.voiceType,
         volume: settings.volume,
         voiceOptionsClass: settings.voiceEnabled ? '' : 'disabled',
-        voiceTypes: this.buildVoiceTypes(settings.voiceType)
+        voiceTypes: this.buildVoiceTypes(settings.voiceType),
+        backupExists: backupInfo.exists,
+        backupSummary: this.buildBackupSummary(backupInfo)
       })
     } catch (error) {
       this.setData({
@@ -68,7 +73,9 @@ Page({
         voiceType: 'gentle',
         volume: 60,
         voiceOptionsClass: '',
-        voiceTypes: this.buildVoiceTypes('gentle')
+        voiceTypes: this.buildVoiceTypes('gentle'),
+        backupExists: false,
+        backupSummary: '还没有本地备份'
       })
       wx.showToast({ title: '设置加载失败', icon: 'none' })
     }
@@ -97,6 +104,11 @@ Page({
       { key: 'middle', label: '小学中年级', activeClass: activeKey === 'middle' ? 'active' : '' },
       { key: 'upper', label: '小学高年级', activeClass: activeKey === 'upper' ? 'active' : '' }
     ]
+  },
+
+  buildBackupSummary(info) {
+    if (!info.exists) return '还没有本地备份'
+    return `备份日期 ${info.createdDate} · 任务 ${info.taskDayCount} 天 · 收藏 ${info.collectionSeriesCount} 套`
   },
 
   goThemeSelect() {
@@ -156,6 +168,49 @@ Page({
   changeDailyTarget(event) {
     const profile = state.saveChildProfile({ dailyTargetMinutes: Number(event.detail.value) })
     this.setData({ dailyTargetMinutes: profile.dailyTargetMinutes })
+  },
+
+  createLocalBackup() {
+    const backup = state.saveLocalBackup()
+    const backupInfo = state.getLocalBackupInfo()
+    this.setData({
+      backupExists: backupInfo.exists,
+      backupSummary: this.buildBackupSummary(backupInfo)
+    })
+    wx.showToast({ title: backup.createdDate ? '已备份' : '已保存', icon: 'success' })
+  },
+
+  restoreLocalBackup() {
+    wx.showModal({
+      title: '恢复本地备份',
+      content: '会用备份覆盖当前本机上的任务、收藏、档案和开包记录。确认恢复？',
+      confirmText: '恢复',
+      confirmColor: '#7BA68C',
+      success: (res) => {
+        if (!res.confirm) return
+        const result = state.restoreLocalBackup()
+        wx.showToast({ title: result.message, icon: result.ok ? 'success' : 'none' })
+        if (result.ok) this.refreshSettings()
+      }
+    })
+  },
+
+  clearLocalBackup() {
+    wx.showModal({
+      title: '删除本地备份',
+      content: '只删除备份快照，不会删除当前任务和收藏。',
+      confirmText: '删除',
+      confirmColor: '#C85A54',
+      success: (res) => {
+        if (!res.confirm) return
+        state.clearLocalBackup()
+        this.setData({
+          backupExists: false,
+          backupSummary: '还没有本地备份'
+        })
+        wx.showToast({ title: '已删除备份', icon: 'success' })
+      }
+    })
   },
 
   toggleVoice(event) {

@@ -59,6 +59,17 @@
     </view>
   </view>
 
+  <view class="panel block backup-block">
+    <view class="block-title">本地备份</view>
+    <view class="muted">{{backupSummary}}</view>
+    <view class="backup-actions">
+      <button class="backup-btn primary" bindtap="createLocalBackup">保存备份</button>
+      <button class="backup-btn" bindtap="restoreLocalBackup">恢复备份</button>
+      <button class="backup-btn danger" bindtap="clearLocalBackup">删除备份</button>
+    </view>
+    <view class="setting-note">备份只保存在当前设备，后续接入微信登录后可迁移到云端。</view>
+  </view>
+
   <view class="panel block">
     <view class="block-title">抽卡概率</view>
     <view class="row"><text>传说 SSR</text><text>3.0%</text></view>
