@@ -25,6 +25,140 @@
   overflow: hidden;
 }
 
+.home-ambient {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.ambient-cloud {
+  position: absolute;
+  width: 118rpx;
+  height: 42rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow:
+    34rpx -10rpx 0 8rpx rgba(255, 255, 255, 0.72),
+    68rpx 0 0 0 rgba(255, 255, 255, 0.64);
+}
+
+.cloud-a {
+  top: 154rpx;
+  left: -120rpx;
+  opacity: 0.82;
+  animation: cloud-drift-a 16s linear infinite;
+}
+
+.cloud-b {
+  top: 272rpx;
+  right: -160rpx;
+  opacity: 0.56;
+  transform: scale(0.72);
+  animation: cloud-drift-b 20s linear infinite;
+}
+
+.energy-wave {
+  position: absolute;
+  left: 50%;
+  top: 365rpx;
+  width: 360rpx;
+  height: 220rpx;
+  border: 4rpx solid rgba(255, 226, 101, 0.22);
+  border-radius: 50%;
+  opacity: 0;
+  transform: translateX(-50%) scale(0.72);
+}
+
+.wave-a {
+  animation: energy-wave 3.4s ease-out infinite;
+}
+
+.wave-b {
+  animation: energy-wave 3.4s ease-out 1.7s infinite;
+}
+
+.floating-star {
+  position: absolute;
+  color: #ffe36b;
+  font-size: 28rpx;
+  line-height: 1;
+  opacity: 0.8;
+  text-shadow: 0 0 14rpx rgba(255, 226, 107, 0.72);
+}
+
+.star-a {
+  top: 226rpx;
+  left: 150rpx;
+  animation: star-twinkle 2.8s ease-in-out infinite;
+}
+
+.star-b {
+  top: 324rpx;
+  right: 174rpx;
+  animation: star-twinkle 2.8s ease-in-out 0.9s infinite;
+}
+
+.flower {
+  position: absolute;
+  width: 48rpx;
+  height: 48rpx;
+  transform-origin: 50% 100%;
+  animation: flower-sway 3.2s ease-in-out infinite;
+}
+
+.flower-a {
+  left: 70rpx;
+  bottom: 114rpx;
+}
+
+.flower-b {
+  right: 86rpx;
+  bottom: 86rpx;
+  transform: scale(0.82);
+  animation: flower-sway-small 3.2s ease-in-out 0.8s infinite;
+}
+
+.petal,
+.flower-core {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.petal {
+  width: 22rpx;
+  height: 22rpx;
+  background: #fff7ce;
+}
+
+.petal-top {
+  top: 0;
+  left: 13rpx;
+}
+
+.petal-right {
+  top: 13rpx;
+  right: 0;
+}
+
+.petal-bottom {
+  bottom: 0;
+  left: 13rpx;
+}
+
+.petal-left {
+  top: 13rpx;
+  left: 0;
+}
+
+.flower-core {
+  top: 15rpx;
+  left: 15rpx;
+  width: 18rpx;
+  height: 18rpx;
+  background: #ffd45f;
+}
+
 .topbar {
   position: relative;
   z-index: 2;
@@ -507,6 +641,77 @@
 
   50% {
     transform: translateX(-50%) translateY(-6rpx);
+  }
+}
+
+@keyframes cloud-drift-a {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(940rpx);
+  }
+}
+
+@keyframes cloud-drift-b {
+  0% {
+    transform: translateX(0) scale(0.72);
+  }
+
+  100% {
+    transform: translateX(-940rpx) scale(0.72);
+  }
+}
+
+@keyframes energy-wave {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.72);
+  }
+
+  22% {
+    opacity: 0.52;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) scale(1.16);
+  }
+}
+
+@keyframes star-twinkle {
+  0%,
+  100% {
+    opacity: 0.42;
+    transform: scale(0.8) rotate(0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.12) rotate(12deg);
+  }
+}
+
+@keyframes flower-sway {
+  0%,
+  100% {
+    transform: rotate(-4deg);
+  }
+
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes flower-sway-small {
+  0%,
+  100% {
+    transform: scale(0.82) rotate(-4deg);
+  }
+
+  50% {
+    transform: scale(0.82) rotate(5deg);
   }
 }
 

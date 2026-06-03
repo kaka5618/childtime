@@ -2,6 +2,29 @@
   <image class="scene-bg-img" src="/assets/ui/home-scene-bg-extended.jpg" mode="aspectFill" />
 
   <view class="hero-section">
+    <view class="home-ambient">
+      <view class="ambient-cloud cloud-a"></view>
+      <view class="ambient-cloud cloud-b"></view>
+      <view class="energy-wave wave-a"></view>
+      <view class="energy-wave wave-b"></view>
+      <view class="floating-star star-a">★</view>
+      <view class="floating-star star-b">★</view>
+      <view class="flower flower-a">
+        <view class="petal petal-top"></view>
+        <view class="petal petal-right"></view>
+        <view class="petal petal-bottom"></view>
+        <view class="petal petal-left"></view>
+        <view class="flower-core"></view>
+      </view>
+      <view class="flower flower-b">
+        <view class="petal petal-top"></view>
+        <view class="petal petal-right"></view>
+        <view class="petal petal-bottom"></view>
+        <view class="petal petal-left"></view>
+        <view class="flower-core"></view>
+      </view>
+    </view>
+
     <view class="topbar">
       <view class="kid-card">
         <image class="kid-avatar-img" src="/assets/ui/home-avatar-badge.png" mode="aspectFill" />
