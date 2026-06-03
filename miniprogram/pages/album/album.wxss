@@ -378,14 +378,14 @@
 
 .scrapbook-tabs {
   position: absolute;
-  right: 92rpx;
-  left: 118rpx;
-  bottom: 30rpx;
+  right: 88rpx;
+  left: 112rpx;
+  bottom: 108rpx;
   z-index: 20;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 28rpx;
-  height: 112rpx;
+  gap: 20rpx;
+  height: 92rpx;
   pointer-events: auto;
 }
 
@@ -394,9 +394,17 @@
   height: 100%;
   align-items: center;
   justify-content: center;
-  border-radius: 18rpx;
+  border: 3rpx solid rgba(255, 255, 255, 0.74);
+  border-radius: 20rpx;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0)),
+    #f4c985;
+  box-shadow:
+    0 8rpx 0 rgba(160, 112, 55, 0.45),
+    0 14rpx 18rpx rgba(101, 72, 37, 0.14),
+    inset 0 0 0 3rpx rgba(255, 255, 255, 0.22);
   color: #6f4f25;
-  font-size: 31rpx;
+  font-size: 29rpx;
   text-shadow:
     0 3rpx 0 rgba(255, 247, 225, 0.96),
     3rpx 0 0 rgba(255, 247, 225, 0.9),
@@ -405,5 +413,22 @@
 }
 
 .tab-page.active {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0)),
+    #9fcf9f;
+  box-shadow:
+    0 8rpx 0 rgba(91, 131, 85, 0.46),
+    0 14rpx 18rpx rgba(75, 105, 66, 0.14),
+    inset 0 0 0 3rpx rgba(255, 255, 255, 0.24);
   color: #3f8a55;
+}
+
+.tab-page:nth-child(3) {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0)),
+    #efa799;
+  box-shadow:
+    0 8rpx 0 rgba(168, 91, 78, 0.42),
+    0 14rpx 18rpx rgba(106, 67, 48, 0.14),
+    inset 0 0 0 3rpx rgba(255, 255, 255, 0.22);
 }
