@@ -31,7 +31,7 @@
   },
   "compileType": "miniprogram",
   "libVersion": "3.4.0",
-  "appid": "wx37fce4f44a5fa92b",
+  "appid": "touristappid",
   "projectname": "childtime",
   "miniprogramRoot": "miniprogram/",
   "cloudfunctionRoot": "cloudfunctions/",

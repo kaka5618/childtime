@@ -35,7 +35,7 @@ function buildCard(number) {
     no: `No.${String(number).padStart(2, '0')}`,
     name: names[number - 1],
     rarity,
-    image: `/assets/cards/star_dream_bubble/${id}.png`
+    image: `/assets/cards/star_dream_bubble/${id}.jpg`
   }
 }
 
