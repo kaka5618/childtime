@@ -1,7 +1,12 @@
 {
   "description": "儿童学习陪伴小程序 MVP",
   "packOptions": {
-    "ignore": [],
+    "ignore": [
+      {
+        "type": "folder",
+        "value": "星梦泡泡图片"
+      }
+    ],
     "include": []
   },
   "setting": {
