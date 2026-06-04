@@ -1,15 +1,20 @@
 App({
   onLaunch() {
     if (this.globalData.cloudSyncEnabled && wx.cloud) {
-      wx.cloud.init({
+      const cloudConfig = {
         traceUser: true
-      })
+      }
+      if (this.globalData.cloudEnvId) {
+        cloudConfig.env = this.globalData.cloudEnvId
+      }
+      wx.cloud.init(cloudConfig)
     }
   },
 
   globalData: {
     seriesId: 'star_dream_bubble',
-    cloudSyncEnabled: false,
+    cloudSyncEnabled: true,
+    cloudEnvId: '',
     cloudSyncFunction: 'syncUserData'
   }
 })
