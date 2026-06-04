@@ -1,4 +1,5 @@
 const state = require('../../utils/state')
+const { resolveCards } = require('../../utils/cloud-assets')
 const { getTheme, getActiveTheme } = require('../../utils/themes')
 
 function getCurrentTheme() {
@@ -96,6 +97,13 @@ Page({
       newCount,
       resultTitle: `获得 ${pack.length} 张卡`,
       resultSubtitle: `新卡 ${newCount} 张 · 重复 ${duplicateCount} 张`
+    })
+    this.resolveRevealImages(revealCards)
+  },
+
+  resolveRevealImages(revealCards) {
+    resolveCards(revealCards).then((resolvedCards) => {
+      this.setData({ revealCards: resolvedCards })
     })
   },
 

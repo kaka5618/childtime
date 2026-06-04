@@ -1,5 +1,5 @@
 <view class="card-face size-{{size}} rarity-{{card.rarity}} {{lockedClass}}">
-  <image wx:if="{{owned}}" class="card-img" src="{{card.image}}" mode="aspectFill"></image>
+  <image wx:if="{{owned}}" class="card-img" src="{{card.imageUrl}}" mode="aspectFill"></image>
   <view wx:else class="placeholder">{{card.no}}</view>
 
   <view class="card-shine"></view>

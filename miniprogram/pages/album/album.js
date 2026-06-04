@@ -1,4 +1,5 @@
 const { getCardsBySeries } = require('../../utils/cards')
+const { resolveCards } = require('../../utils/cloud-assets')
 const state = require('../../utils/state')
 const { getTheme } = require('../../utils/themes')
 
@@ -39,6 +40,10 @@ Page({
   },
 
   onShow() {
+    this.loadAlbum()
+  },
+
+  loadAlbum() {
     const seriesId = state.getActiveSeriesId()
     const collection = state.getSeriesCollection(seriesId)
     const cards = getCardsBySeries(seriesId)
@@ -64,6 +69,19 @@ Page({
       rewardSubtitle: this.getRewardSubtitle(recentReward.sourceText, recentReward.pack)
     })
     this.applyFilters()
+    this.resolveAlbumImages(viewCards, rewardCards)
+  },
+
+  resolveAlbumImages(viewCards, rewardCards) {
+    resolveCards([...viewCards, ...rewardCards]).then((resolvedCards) => {
+      const resolvedViewCards = resolvedCards.slice(0, viewCards.length)
+      const resolvedRewardCards = resolvedCards.slice(viewCards.length)
+      this.setData({
+        cards: resolvedViewCards,
+        rewardCards: resolvedRewardCards
+      })
+      this.applyFilters()
+    })
   },
 
   buildRewardCards(pack) {

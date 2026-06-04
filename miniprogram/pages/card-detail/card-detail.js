@@ -1,4 +1,5 @@
 const { getCard } = require('../../utils/cards')
+const { resolveCard } = require('../../utils/cloud-assets')
 const state = require('../../utils/state')
 
 Page({
@@ -57,6 +58,9 @@ Page({
         : '完成每日计划、装满能量袋后，开卡包有机会获得。',
       statusBadge: owned ? '合成状态' : '获取提示',
       obtainHint: owned ? '已经放进收藏本' : '获取方式：完成今日任务后开启卡包'
+    })
+    resolveCard(card).then((resolvedCard) => {
+      this.setData({ card: resolvedCard })
     })
   },
 

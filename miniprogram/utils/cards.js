@@ -29,13 +29,16 @@ function pad(number) {
 function buildCard(number) {
   const rarity = rarityForNumber(number)
   const id = `bubble_${prefixForRarity(rarity)}_${pad(number)}`
+  const image = '/assets/cards/card-placeholder.jpg'
   return {
     id,
     number,
     no: `No.${String(number).padStart(2, '0')}`,
     name: names[number - 1],
     rarity,
-    image: `/assets/cards/star_dream_bubble/${id}.jpg`
+    image,
+    imageUrl: image,
+    seriesId: 'star_dream_bubble'
   }
 }
 

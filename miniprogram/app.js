@@ -15,6 +15,8 @@ App({
     seriesId: 'star_dream_bubble',
     cloudSyncEnabled: true,
     cloudEnvId: '',
-    cloudSyncFunction: 'syncUserData'
+    cloudSyncFunction: 'syncUserData',
+    cloudAssetBaseFileID: '',
+    cloudAssetFileIDs: {}
   }
 })
