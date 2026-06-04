@@ -1,0 +1,9 @@
+{
+  "name": "syncUserData",
+  "version": "1.0.0",
+  "description": "Sync child profile, tasks, collection, and pack state for ChildTime.",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

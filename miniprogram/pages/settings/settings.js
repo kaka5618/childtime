@@ -309,7 +309,24 @@ Page({
       data: {
         payload: state.buildCloudSyncPayload()
       },
-      success: () => {
+      success: (res) => {
+        if (!res.result || !res.result.ok) {
+          const errorMessage = res.result && res.result.message ? res.result.message : '云函数返回异常'
+          const syncStatus = state.saveCloudSyncStatus({
+            cloudLinked: false,
+            lastResult: 'failed',
+            lastError: errorMessage
+          })
+          const nextAccountStatus = state.getAccountStatus()
+          this.setData({
+            accountSummary: this.buildAccountSummary(nextAccountStatus),
+            accountBadgeText: this.buildAccountBadgeText(nextAccountStatus),
+            syncSummary: this.buildSyncSummary(syncStatus)
+          })
+          wx.showToast({ title: '同步失败', icon: 'none' })
+          return
+        }
+
         const syncStatus = state.saveCloudSyncStatus({
           cloudLinked: true,
           lastResult: 'success',
