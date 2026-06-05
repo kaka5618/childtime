@@ -16,7 +16,7 @@ App({
     cloudSyncEnabled: true,
     cloudEnvId: 'cloudbase-d3g0zqjt752827234',
     cloudSyncFunction: 'syncUserData',
-    cloudAssetBaseFileID: 'cloud://cloudbase-d3g0zqjt752827234/card-assets',
+    cloudAssetBaseFileID: 'cloud://cloudbase-d3g0zqjt752827234.636c-cloudbase-d3g0zqjt752827234-1435290004/card-assets',
     cloudAssetFileIDs: {}
   }
 })
