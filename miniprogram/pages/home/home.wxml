@@ -1,5 +1,5 @@
 <view class="page home-page">
-  <image class="scene-bg-img" src="/assets/ui/home-scene-bg-extended.jpg" mode="aspectFill" />
+  <image class="scene-bg-img" src="{{sceneBgUrl}}" mode="aspectFill" />
 
   <view class="hero-section">
     <view class="home-ambient">

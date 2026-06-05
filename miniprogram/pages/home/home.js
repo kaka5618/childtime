@@ -1,5 +1,6 @@
 const state = require('../../utils/state')
 const { getTheme } = require('../../utils/themes')
+const { resolveAsset } = require('../../utils/cloud-assets')
 
 function getTaskIconPath(name) {
   const text = String(name || '')
@@ -50,7 +51,8 @@ Page({
       totalMinutes: 0,
       packText: '未获得'
     },
-    nextActionText: ''
+    nextActionText: '',
+    sceneBgUrl: '/assets/ui/home-scene-bg-extended.jpg'
   },
 
   onShow() {
@@ -59,7 +61,14 @@ Page({
       return
     }
     this.refresh()
+    this.resolveSceneBackground()
     this.promptForChildName()
+  },
+
+  resolveSceneBackground() {
+    resolveAsset('ui/home-scene-bg-extended.jpg', '/assets/ui/home-scene-bg-extended.jpg').then((sceneBgUrl) => {
+      this.setData({ sceneBgUrl })
+    })
   },
 
   refresh() {

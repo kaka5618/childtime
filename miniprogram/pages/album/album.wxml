@@ -1,6 +1,6 @@
 <view class="page album-page">
   <view class="book-shell">
-    <image class="scrapbook-bg-img" src="/assets/ui/album-scrapbook-bg.jpg" mode="widthFix" />
+    <image class="scrapbook-bg-img" src="{{scrapbookBgUrl}}" mode="widthFix" />
     <view class="book-ring ring-a"></view>
     <view class="book-ring ring-b"></view>
     <view class="book-ring ring-c"></view>

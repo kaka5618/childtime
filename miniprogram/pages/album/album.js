@@ -1,5 +1,5 @@
 const { getCardsBySeries } = require('../../utils/cards')
-const { resolveCards } = require('../../utils/cloud-assets')
+const { resolveAsset, resolveCards } = require('../../utils/cloud-assets')
 const state = require('../../utils/state')
 const { getTheme } = require('../../utils/themes')
 
@@ -36,11 +36,19 @@ Page({
       { key: 'R', label: '稀有' },
       { key: 'SR', label: '超稀有' },
       { key: 'SSR', label: '传说' }
-    ]
+    ],
+    scrapbookBgUrl: '/assets/ui/album-scrapbook-bg.jpg'
   },
 
   onShow() {
     this.loadAlbum()
+    this.resolveScrapbookBackground()
+  },
+
+  resolveScrapbookBackground() {
+    resolveAsset('ui/album-scrapbook-bg.jpg', '/assets/ui/album-scrapbook-bg.jpg').then((scrapbookBgUrl) => {
+      this.setData({ scrapbookBgUrl })
+    })
   },
 
   loadAlbum() {

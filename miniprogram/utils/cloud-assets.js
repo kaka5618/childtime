@@ -19,6 +19,11 @@ function buildCloudFileID(card, config) {
   return `${config.baseFileID}/cards/${seriesId}/${card.id}.jpg`
 }
 
+function buildCloudAssetFileID(path, config) {
+  if (!path || !config.enabled || !config.baseFileID) return ''
+  return `${config.baseFileID}/${String(path).replace(/^\/+/, '')}`
+}
+
 function getTempFileURLs(fileIDs) {
   if (!fileIDs.length || !wx.cloud || !wx.cloud.getTempFileURL) {
     return Promise.resolve({})
@@ -84,7 +89,18 @@ function resolveCard(card) {
   return resolveCards([card]).then((cards) => cards[0])
 }
 
+function resolveAsset(path, fallbackPath) {
+  const config = getCloudConfig()
+  const cloudFileID = buildCloudAssetFileID(path, config)
+  if (!cloudFileID) return Promise.resolve(fallbackPath || '')
+
+  return getTempFileURLs([cloudFileID]).then((urlMap) => {
+    return urlMap[cloudFileID] || fallbackPath || ''
+  })
+}
+
 module.exports = {
   resolveCard,
-  resolveCards
+  resolveCards,
+  resolveAsset
 }

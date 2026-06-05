@@ -1,5 +1,5 @@
 <view class="page focus-page" wx:if="{{task}}">
-  <image class="focus-bg-img" src="/assets/ui/focus-desk-bg.jpg" mode="aspectFill" />
+  <image class="focus-bg-img" src="{{focusBgUrl}}" mode="aspectFill" />
 
   <view class="focus-hero">
     <view class="back-btn" bindtap="goHome">‹</view>

@@ -1,5 +1,6 @@
 const state = require('../../utils/state')
 const audio = require('../../utils/audio')
+const { resolveAsset } = require('../../utils/cloud-assets')
 
 Page({
   data: {
@@ -13,7 +14,8 @@ Page({
     rewardText: '',
     canOpenPack: false,
     timerHint: '请专注到倒计时结束。',
-    completeButtonText: '长按完成'
+    completeButtonText: '长按完成',
+    focusBgUrl: '/assets/ui/focus-desk-bg.jpg'
   },
 
   timer: null,
@@ -32,7 +34,14 @@ Page({
       timeText: this.formatTime(secondsLeft)
     })
     this.startTimer()
+    this.resolveFocusBackground()
     audio.playVoice('taskStart')
+  },
+
+  resolveFocusBackground() {
+    resolveAsset('ui/focus-desk-bg.jpg', '/assets/ui/focus-desk-bg.jpg').then((focusBgUrl) => {
+      this.setData({ focusBgUrl })
+    })
   },
 
   onUnload() {
