@@ -14,9 +14,9 @@ App({
   globalData: {
     seriesId: 'star_dream_bubble',
     cloudSyncEnabled: true,
-    cloudEnvId: '',
+    cloudEnvId: 'cloudbase-d3g0zqjt752827234',
     cloudSyncFunction: 'syncUserData',
-    cloudAssetBaseFileID: '',
+    cloudAssetBaseFileID: 'cloud://cloudbase-d3g0zqjt752827234/card-assets',
     cloudAssetFileIDs: {}
   }
 })
