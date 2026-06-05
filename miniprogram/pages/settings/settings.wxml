@@ -70,6 +70,7 @@
     <view class="account-actions">
       <button class="account-btn primary" bindtap="connectWechatAccount">微信登录</button>
       <button class="account-btn sync" disabled="{{syncBusy}}" bindtap="syncCloudData">{{syncButtonText}}</button>
+      <button class="account-btn restore" disabled="{{syncBusy}}" bindtap="restoreCloudData">{{restoreCloudButtonText}}</button>
       <button class="account-btn" bindtap="disconnectWechatAccount">解除状态</button>
     </view>
     <view class="setting-note strong">{{syncSummary}}</view>

@@ -708,6 +708,48 @@ function restoreLocalBackup() {
   }
 }
 
+function restoreCloudPayload(payload) {
+  const cloudData = payload && payload.data ? payload.data : null
+  if (!cloudData) {
+    return {
+      ok: false,
+      message: '云端数据格式不正确'
+    }
+  }
+
+  const packState = cloudData.packState || {}
+
+  allTaskStorageKeys().forEach((key) => wx.removeStorageSync(key))
+  Object.keys(cloudData.tasksByDate || {}).forEach((key) => {
+    wx.setStorageSync(key, cloudData.tasksByDate[key])
+  })
+
+  wx.setStorageSync(COLLECTION_KEY, cloudData.collection || {})
+  wx.setStorageSync(PACK_KEY, packState.lastPack || [])
+  wx.setStorageSync(PACK_META_KEY, packState.lastPackMeta || {})
+  if (packState.packDate) wx.setStorageSync(PACK_DATE_KEY, packState.packDate)
+  else wx.removeStorageSync(PACK_DATE_KEY)
+  if (packState.packGeneratedDate) wx.setStorageSync(PACK_GENERATED_DATE_KEY, packState.packGeneratedDate)
+  else wx.removeStorageSync(PACK_GENERATED_DATE_KEY)
+  if (cloudData.activeSeriesId) wx.setStorageSync(ACTIVE_SERIES_KEY, cloudData.activeSeriesId)
+  else wx.removeStorageSync(ACTIVE_SERIES_KEY)
+  if (cloudData.lastSwitchDate) wx.setStorageSync(LAST_SWITCH_DATE_KEY, cloudData.lastSwitchDate)
+  else wx.removeStorageSync(LAST_SWITCH_DATE_KEY)
+  wx.setStorageSync(SETTINGS_KEY, cloudData.settings || DEFAULT_SETTINGS)
+  saveChildProfile(cloudData.childProfile || {})
+  saveCloudSyncStatus({
+    cloudLinked: true,
+    lastResult: 'success',
+    lastSyncAt: new Date().toISOString(),
+    lastError: ''
+  })
+
+  return {
+    ok: true,
+    message: '已从云端恢复'
+  }
+}
+
 function clearLocalBackup() {
   wx.removeStorageSync(BACKUP_KEY)
 }
@@ -759,6 +801,7 @@ module.exports = {
   clearTodayPackState,
   clearActiveSeriesCollection,
   buildCloudSyncPayload,
+  restoreCloudPayload,
   saveLocalBackup,
   getLocalBackupInfo,
   restoreLocalBackup,

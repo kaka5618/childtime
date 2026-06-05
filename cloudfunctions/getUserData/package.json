@@ -1,0 +1,9 @@
+{
+  "name": "getUserData",
+  "version": "1.0.0",
+  "description": "Read the latest ChildTime cloud sync snapshot for the current WeChat user.",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

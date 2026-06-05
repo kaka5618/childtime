@@ -23,6 +23,7 @@ Page({
     accountConnected: false,
     syncSummary: '还没有同步记录',
     syncButtonText: '同步云端',
+    restoreCloudButtonText: '云端恢复',
     syncBusy: false,
     backupExists: false,
     backupSummary: '还没有本地备份',
@@ -66,6 +67,7 @@ Page({
         accountConnected: accountStatus.loginReady,
         syncSummary: this.buildSyncSummary(syncStatus),
         syncButtonText: '同步云端',
+        restoreCloudButtonText: '云端恢复',
         syncBusy: false,
         backupExists: backupInfo.exists,
         backupSummary: this.buildBackupSummary(backupInfo)
@@ -93,6 +95,7 @@ Page({
         accountConnected: false,
         syncSummary: '还没有同步记录',
         syncButtonText: '同步云端',
+        restoreCloudButtonText: '云端恢复',
         syncBusy: false,
         backupExists: false,
         backupSummary: '还没有本地备份'
@@ -360,6 +363,68 @@ Page({
         this.setData({
           syncBusy: false,
           syncButtonText: '同步云端'
+        })
+      }
+    })
+  },
+
+  restoreCloudData() {
+    if (this.data.syncBusy) return
+
+    const accountStatus = state.getAccountStatus()
+    if (!accountStatus.loginReady) {
+      wx.showToast({ title: '先完成微信登录', icon: 'none' })
+      return
+    }
+
+    if (!this.isCloudSyncConfigured()) {
+      wx.showToast({ title: '云端未配置', icon: 'none' })
+      return
+    }
+
+    wx.showModal({
+      title: '从云端恢复',
+      content: '会用云端最近一次同步数据覆盖当前本机上的孩子档案、任务、收藏和开包记录。确认恢复？',
+      confirmText: '恢复',
+      confirmColor: '#7BA68C',
+      success: (modalRes) => {
+        if (!modalRes.confirm) return
+        this.fetchCloudData()
+      }
+    })
+  },
+
+  fetchCloudData() {
+    this.setData({
+      syncBusy: true,
+      restoreCloudButtonText: '恢复中'
+    })
+    wx.showLoading({ title: '恢复中' })
+
+    wx.cloud.callFunction({
+      name: 'getUserData',
+      success: (res) => {
+        if (!res.result || !res.result.ok) {
+          const message = res.result && res.result.message ? res.result.message : '云端没有可恢复数据'
+          wx.showToast({ title: message, icon: 'none' })
+          return
+        }
+
+        const result = state.restoreCloudPayload(res.result.payload)
+        wx.showToast({ title: result.message, icon: result.ok ? 'success' : 'none' })
+        if (result.ok) this.refreshSettings()
+      },
+      fail: (error) => {
+        wx.showToast({
+          title: error && error.errMsg ? '恢复失败' : '恢复失败',
+          icon: 'none'
+        })
+      },
+      complete: () => {
+        wx.hideLoading()
+        this.setData({
+          syncBusy: false,
+          restoreCloudButtonText: '云端恢复'
         })
       }
     })
