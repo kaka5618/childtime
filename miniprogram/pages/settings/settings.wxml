@@ -86,7 +86,7 @@
       <button class="backup-btn" bindtap="restoreLocalBackup">恢复备份</button>
       <button class="backup-btn danger" bindtap="clearLocalBackup">删除备份</button>
     </view>
-    <view class="setting-note">备份只保存在当前设备，后续接入微信登录后可迁移到云端。</view>
+    <view class="setting-note">备份只保存在当前设备；从云端恢复前会自动保存一份本机备份，方便误操作后回退。</view>
   </view>
 
   <view class="panel block">

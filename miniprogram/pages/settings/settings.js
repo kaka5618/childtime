@@ -526,7 +526,7 @@ Page({
 
     wx.showModal({
       title: '从云端恢复',
-      content: '会用云端最近一次同步数据覆盖当前本机上的孩子档案、任务、收藏和开包记录。确认恢复？',
+      content: '会先自动保存当前本机备份，再用云端最近一次同步数据覆盖孩子档案、任务、收藏和开包记录。确认恢复？',
       confirmText: '恢复',
       confirmColor: '#7BA68C',
       success: (modalRes) => {
@@ -552,9 +552,21 @@ Page({
           return
         }
 
+        const backup = state.saveLocalBackup()
         const result = state.restoreCloudPayload(res.result.payload)
-        wx.showToast({ title: result.message, icon: result.ok ? 'success' : 'none' })
-        if (result.ok) this.refreshSettings()
+        if (!result.ok) {
+          wx.showToast({ title: result.message, icon: 'none' })
+          return
+        }
+
+        const backupInfo = state.getLocalBackupInfo()
+        wx.showModal({
+          title: '已从云端恢复',
+          content: `恢复前已自动保存本机备份。\n备份日期：${backup.createdDate || backupInfo.createdDate}`,
+          showCancel: false,
+          confirmText: '知道了'
+        })
+        this.refreshSettings()
       },
       fail: (error) => {
         wx.showToast({
@@ -595,7 +607,7 @@ Page({
   restoreLocalBackup() {
     wx.showModal({
       title: '恢复本地备份',
-      content: '会用备份覆盖当前本机上的任务、收藏、档案和开包记录。确认恢复？',
+      content: '会用最近一次本地备份覆盖当前本机上的任务、收藏、档案和开包记录。这个备份也可能是云端恢复前自动保存的。确认恢复？',
       confirmText: '恢复',
       confirmColor: '#7BA68C',
       success: (res) => {
