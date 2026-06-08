@@ -6,6 +6,22 @@ cloud.init({
 
 const db = cloud.database()
 
+function getErrorText(error) {
+  return String(
+    (error && (error.errMsg || error.message || error.code || error.errCode)) || ''
+  )
+}
+
+function isCollectionMissing(error) {
+  const text = getErrorText(error)
+  return /collection not exists|Db or Table not exist|DATABASE_COLLECTION_NOT_EXIST|ResourceNotFound|-502005/i.test(text)
+}
+
+function isDocumentMissing(error) {
+  const text = getErrorText(error)
+  return /does not exist|document not exists|DOCUMENT_NOT_EXIST/i.test(text)
+}
+
 exports.main = async () => {
   const wxContext = cloud.getWXContext()
   const openid = wxContext.OPENID
@@ -37,7 +53,7 @@ exports.main = async () => {
       updatedAt: data.updatedAt || ''
     }
   } catch (error) {
-    if (error && /does not exist/i.test(String(error.message || error.errMsg || ''))) {
+    if (isCollectionMissing(error) || isDocumentMissing(error)) {
       return {
         ok: false,
         code: 'NO_SNAPSHOT',

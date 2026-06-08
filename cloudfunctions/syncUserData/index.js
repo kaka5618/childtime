@@ -6,6 +6,46 @@ cloud.init({
 
 const db = cloud.database()
 
+function getErrorText(error) {
+  return String(
+    (error && (error.errMsg || error.message || error.code || error.errCode)) || ''
+  )
+}
+
+function isCollectionMissing(error) {
+  const text = getErrorText(error)
+  return /collection not exists|Db or Table not exist|DATABASE_COLLECTION_NOT_EXIST|ResourceNotFound|-502005/i.test(text)
+}
+
+function isCollectionAlreadyExists(error) {
+  const text = getErrorText(error)
+  return /already exists|already exist|collection exists|DATABASE_COLLECTION_ALREADY_EXIST/i.test(text)
+}
+
+async function ensureCollection(collectionName) {
+  try {
+    await db.createCollection(collectionName)
+  } catch (error) {
+    if (isCollectionAlreadyExists(error)) {
+      return
+    }
+    throw error
+  }
+}
+
+async function setDocument(collectionName, docId, data) {
+  try {
+    return await db.collection(collectionName).doc(docId).set({ data })
+  } catch (error) {
+    if (!isCollectionMissing(error)) {
+      throw error
+    }
+
+    await ensureCollection(collectionName)
+    return db.collection(collectionName).doc(docId).set({ data })
+  }
+}
+
 function ensureObject(value) {
   return value && typeof value === 'object' && !Array.isArray(value) ? value : {}
 }
@@ -45,23 +85,19 @@ exports.main = async (event) => {
   const payload = normalizePayload(event && event.payload)
   const now = db.serverDate()
 
-  await db.collection('users').doc(openid).set({
-    data: {
-      openid,
-      childProfile: payload.data.childProfile,
-      activeSeriesId: payload.data.activeSeriesId,
-      lastSwitchDate: payload.data.lastSwitchDate,
-      settings: payload.data.settings,
-      updatedAt: now
-    }
+  await setDocument('users', openid, {
+    openid,
+    childProfile: payload.data.childProfile,
+    activeSeriesId: payload.data.activeSeriesId,
+    lastSwitchDate: payload.data.lastSwitchDate,
+    settings: payload.data.settings,
+    updatedAt: now
   })
 
-  await db.collection('user_sync_snapshots').doc(openid).set({
-    data: {
-      openid,
-      payload,
-      updatedAt: now
-    }
+  await setDocument('user_sync_snapshots', openid, {
+    openid,
+    payload,
+    updatedAt: now
   })
 
   return {
