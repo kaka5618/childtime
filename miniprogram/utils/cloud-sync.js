@@ -19,6 +19,11 @@ function canSync() {
   return Boolean(accountStatus.loginReady && isCloudConfigured())
 }
 
+function canAutoSync() {
+  const app = getApp()
+  return Boolean(app.globalData && app.globalData.cloudAutoSyncEnabled && canSync())
+}
+
 function formatSyncError(error, fallbackText) {
   const message = String(
     (error && (error.errMsg || error.message)) || fallbackText || '自动同步失败'
@@ -95,7 +100,7 @@ function syncNow() {
 }
 
 function scheduleSync(delay = 800) {
-  if (!canSync()) {
+  if (!canAutoSync()) {
     return
   }
 
@@ -111,6 +116,7 @@ function scheduleSync(delay = 800) {
 
 module.exports = {
   canSync,
+  canAutoSync,
   syncNow,
   scheduleSync
 }

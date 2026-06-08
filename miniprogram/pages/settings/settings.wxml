@@ -75,7 +75,7 @@
       <view class="account-btn account-wide" bindtap="disconnectWechatAccount">解除状态</view>
     </view>
     <view class="setting-note strong">{{syncSummary}}</view>
-    <view class="setting-note">当前先完成小程序端登录入口；接入云开发后，可用微信身份同步孩子档案、任务和收藏。</view>
+    <view class="setting-note">使用微信身份手动同步孩子档案、任务和收藏；需要时可点“同步云端”保存最新数据。</view>
   </view>
 
   <view class="panel block backup-block">
