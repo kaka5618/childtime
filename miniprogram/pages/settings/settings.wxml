@@ -68,11 +68,11 @@
       <view class="account-badge">{{accountBadgeText}}</view>
     </view>
     <view class="account-actions">
-      <button class="account-btn primary" bindtap="connectWechatAccount">微信登录</button>
-      <button class="account-btn sync" disabled="{{syncBusy}}" bindtap="syncCloudData">{{syncButtonText}}</button>
-      <button class="account-btn verify" disabled="{{syncBusy}}" bindtap="verifyCloudData">{{verifyCloudButtonText}}</button>
-      <button class="account-btn restore" disabled="{{syncBusy}}" bindtap="restoreCloudData">{{restoreCloudButtonText}}</button>
-      <button class="account-btn" bindtap="disconnectWechatAccount">解除状态</button>
+      <view class="account-btn primary" bindtap="connectWechatAccount">微信登录</view>
+      <view class="account-btn sync {{syncBusyClass}}" bindtap="syncCloudData">{{syncButtonText}}</view>
+      <view class="account-btn verify {{syncBusyClass}}" bindtap="verifyCloudData">{{verifyCloudButtonText}}</view>
+      <view class="account-btn restore {{syncBusyClass}}" bindtap="restoreCloudData">{{restoreCloudButtonText}}</view>
+      <view class="account-btn account-wide" bindtap="disconnectWechatAccount">解除状态</view>
     </view>
     <view class="setting-note strong">{{syncSummary}}</view>
     <view class="setting-note">当前先完成小程序端登录入口；接入云开发后，可用微信身份同步孩子档案、任务和收藏。</view>
@@ -82,9 +82,9 @@
     <view class="block-title">本地备份</view>
     <view class="muted">{{backupSummary}}</view>
     <view class="backup-actions">
-      <button class="backup-btn primary" bindtap="createLocalBackup">保存备份</button>
-      <button class="backup-btn" bindtap="restoreLocalBackup">恢复备份</button>
-      <button class="backup-btn danger" bindtap="clearLocalBackup">删除备份</button>
+      <view class="backup-btn primary" bindtap="createLocalBackup">保存备份</view>
+      <view class="backup-btn" bindtap="restoreLocalBackup">恢复备份</view>
+      <view class="backup-btn danger backup-wide" bindtap="clearLocalBackup">删除备份</view>
     </view>
     <view class="setting-note">备份只保存在当前设备；从云端恢复前会自动保存一份本机备份，方便误操作后回退。</view>
   </view>

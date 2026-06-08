@@ -27,6 +27,7 @@ Page({
     restoreCloudButtonText: '云端恢复',
     verifyCloudButtonText: '验证同步',
     syncBusy: false,
+    syncBusyClass: '',
     backupExists: false,
     backupSummary: '还没有本地备份',
     voiceTypes: [
@@ -71,6 +72,7 @@ Page({
         restoreCloudButtonText: '云端恢复',
         verifyCloudButtonText: '验证同步',
         syncBusy: false,
+        syncBusyClass: '',
         backupExists: backupInfo.exists,
         backupSummary: this.buildBackupSummary(backupInfo)
       })
@@ -100,6 +102,7 @@ Page({
         restoreCloudButtonText: '云端恢复',
         verifyCloudButtonText: '验证同步',
         syncBusy: false,
+        syncBusyClass: '',
         backupExists: false,
         backupSummary: '还没有本地备份'
       })
@@ -363,6 +366,7 @@ Page({
 
     this.setData({
       syncBusy: true,
+      syncBusyClass: 'disabled',
       syncButtonText: '同步中'
     })
     wx.showLoading({ title: '同步中' })
@@ -423,6 +427,7 @@ Page({
         wx.hideLoading()
         this.setData({
           syncBusy: false,
+          syncBusyClass: '',
           syncButtonText: '同步云端'
         })
       }
@@ -445,6 +450,7 @@ Page({
 
     this.setData({
       syncBusy: true,
+      syncBusyClass: 'disabled',
       verifyCloudButtonText: '验证中'
     })
     wx.showLoading({ title: '验证中' })
@@ -503,6 +509,7 @@ Page({
         wx.hideLoading()
         this.setData({
           syncBusy: false,
+          syncBusyClass: '',
           verifyCloudButtonText: '验证同步'
         })
       }
@@ -538,6 +545,7 @@ Page({
   fetchCloudData() {
     this.setData({
       syncBusy: true,
+      syncBusyClass: 'disabled',
       restoreCloudButtonText: '恢复中'
     })
     wx.showLoading({ title: '恢复中' })
@@ -577,6 +585,7 @@ Page({
         wx.hideLoading()
         this.setData({
           syncBusy: false,
+          syncBusyClass: '',
           restoreCloudButtonText: '云端恢复'
         })
       }
