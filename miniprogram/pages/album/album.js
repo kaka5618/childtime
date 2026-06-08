@@ -1,5 +1,6 @@
 const { getCardsBySeries } = require('../../utils/cards')
 const { resolveAsset, resolveCards } = require('../../utils/cloud-assets')
+const cloudSync = require('../../utils/cloud-sync')
 const state = require('../../utils/state')
 const { getTheme } = require('../../utils/themes')
 
@@ -184,6 +185,7 @@ Page({
           return
         }
 
+        cloudSync.scheduleSync()
         wx.navigateTo({ url: '/pages/pack-open/pack-open?source=synthesis' })
       }
     })

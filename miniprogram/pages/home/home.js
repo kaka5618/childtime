@@ -1,4 +1,5 @@
 const state = require('../../utils/state')
+const cloudSync = require('../../utils/cloud-sync')
 const { getTheme } = require('../../utils/themes')
 const { resolveAsset } = require('../../utils/cloud-assets')
 
@@ -152,6 +153,7 @@ Page({
       nameDraft: ''
     })
     this.refresh()
+    cloudSync.scheduleSync()
   },
 
   getGreetingNote(tasks, allDone, openedToday) {

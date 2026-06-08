@@ -1,5 +1,6 @@
 const state = require('../../utils/state')
 const audio = require('../../utils/audio')
+const cloudSync = require('../../utils/cloud-sync')
 const { resolveAsset } = require('../../utils/cloud-assets')
 
 Page({
@@ -103,6 +104,7 @@ Page({
       }
     })
     state.saveTasks(tasks)
+    cloudSync.scheduleSync()
     this.stopTimer()
 
     const allDone = state.allCompleted(tasks)

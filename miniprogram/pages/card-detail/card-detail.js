@@ -1,5 +1,6 @@
 const { getCard } = require('../../utils/cards')
 const { resolveCard } = require('../../utils/cloud-assets')
+const cloudSync = require('../../utils/cloud-sync')
 const state = require('../../utils/state')
 
 Page({
@@ -82,6 +83,7 @@ Page({
           return
         }
 
+        cloudSync.scheduleSync()
         wx.redirectTo({ url: '/pages/pack-open/pack-open?source=synthesis' })
       }
     })

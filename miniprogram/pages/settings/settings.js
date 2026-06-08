@@ -1,4 +1,5 @@
 const state = require('../../utils/state')
+const cloudSync = require('../../utils/cloud-sync')
 const { getTheme } = require('../../utils/themes')
 
 Page({
@@ -254,6 +255,7 @@ Page({
       nameEditorVisible: false,
       nameDraft: ''
     })
+    cloudSync.scheduleSync()
     wx.showToast({ title: '已保存', icon: 'success' })
   },
 
@@ -264,6 +266,7 @@ Page({
       avatarEmoji: profile.avatarEmoji,
       avatarOptions: this.buildAvatarOptions(profile.avatarKey)
     })
+    cloudSync.scheduleSync()
   },
 
   selectGrade(event) {
@@ -273,11 +276,13 @@ Page({
       gradeLabel: profile.gradeLabel,
       gradeOptions: this.buildGradeOptions(profile.gradeKey)
     })
+    cloudSync.scheduleSync()
   },
 
   changeDailyTarget(event) {
     const profile = state.saveChildProfile({ dailyTargetMinutes: Number(event.detail.value) })
     this.setData({ dailyTargetMinutes: profile.dailyTargetMinutes })
+    cloudSync.scheduleSync()
   },
 
   connectWechatAccount() {
@@ -627,6 +632,7 @@ Page({
       voiceEnabled,
       voiceOptionsClass: voiceEnabled ? '' : 'disabled'
     })
+    cloudSync.scheduleSync()
   },
 
   changeVoiceType(event) {
@@ -636,12 +642,14 @@ Page({
       voiceType: type,
       voiceTypes: this.buildVoiceTypes(type)
     })
+    cloudSync.scheduleSync()
   },
 
   changeVolume(event) {
     const volume = Number(event.detail.value)
     state.saveSettings({ volume })
     this.setData({ volume })
+    cloudSync.scheduleSync()
   },
 
   revealDebugTools() {

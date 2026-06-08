@@ -1,4 +1,5 @@
 const state = require('../../utils/state')
+const cloudSync = require('../../utils/cloud-sync')
 
 const TASK_TEMPLATES = [
   { key: 'math', name: '数学练习', minutes: 20, activeClass: '' },
@@ -111,6 +112,7 @@ Page({
         }
       })
       state.saveTasks(nextTasks)
+      cloudSync.scheduleSync()
       wx.navigateBack()
       return
     }
@@ -122,6 +124,7 @@ Page({
       completed: false
     })
     state.saveTasks(tasks)
+    cloudSync.scheduleSync()
     wx.navigateBack()
   },
 
@@ -139,6 +142,7 @@ Page({
         if (!res.confirm) return
         const nextTasks = state.getTasks().filter((task) => task.id !== this.data.taskId)
         state.saveTasks(nextTasks)
+        cloudSync.scheduleSync()
         wx.navigateBack()
       }
     })

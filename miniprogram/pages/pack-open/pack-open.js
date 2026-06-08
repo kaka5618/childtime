@@ -1,4 +1,5 @@
 const state = require('../../utils/state')
+const cloudSync = require('../../utils/cloud-sync')
 const { resolveCards } = require('../../utils/cloud-assets')
 const { getTheme, getActiveTheme } = require('../../utils/themes')
 
@@ -111,6 +112,7 @@ Page({
     if (this.data.source === 'daily' && !this.data.claimed && !state.hasOpenedToday()) {
       state.claimLastPack()
       state.markOpenedToday()
+      cloudSync.scheduleSync()
     }
     this.setData({
       revealed: true,

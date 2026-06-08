@@ -1,4 +1,5 @@
 const state = require('../../utils/state')
+const cloudSync = require('../../utils/cloud-sync')
 const { themes } = require('../../utils/themes')
 const { getCard, getCardsBySeries } = require('../../utils/cards')
 const { resolveCards } = require('../../utils/cloud-assets')
@@ -137,6 +138,7 @@ Page({
     }
 
     state.setActiveSeriesId(this.data.pendingId)
+    cloudSync.scheduleSync()
     wx.redirectTo({ url: '/pages/home/home' })
   }
 })
