@@ -29,7 +29,6 @@ Page({
     syncBusy: false,
     backupExists: false,
     backupSummary: '还没有本地备份',
-    debugVisible: false,
     voiceTypes: [
       { key: 'gentle', label: '温柔', activeClass: 'active' },
       { key: 'bright', label: '清亮', activeClass: '' }
@@ -675,71 +674,5 @@ Page({
     state.saveSettings({ volume })
     this.setData({ volume })
     cloudSync.scheduleSync()
-  },
-
-  revealDebugTools() {
-    wx.showModal({
-      title: '家长验证',
-      content: '请输入 8 + 7 的答案',
-      editable: true,
-      placeholderText: '答案',
-      confirmText: '验证',
-      confirmColor: '#7BA68C',
-      success: (res) => {
-        if (!res.confirm) return
-        if (String(res.content || '').trim() !== '15') {
-          wx.showToast({ title: '验证未通过', icon: 'none' })
-          return
-        }
-        this.setData({ debugVisible: true })
-        wx.showToast({ title: '已显示调试工具', icon: 'none' })
-      }
-    })
-  },
-
-  addDebugTasks() {
-    state.addDebugTasks()
-    wx.showToast({ title: '已添加测试任务', icon: 'success' })
-  },
-
-  completeDebugTasks() {
-    state.completeAllTodayTasks()
-    wx.showToast({ title: '已完成今日任务', icon: 'success' })
-  },
-
-  clearDebugTasks() {
-    wx.showModal({
-      title: '清空今日任务',
-      content: '会清空今日任务和今日开包状态。',
-      confirmColor: '#C85A54',
-      success: (res) => {
-        if (!res.confirm) return
-        state.clearTodayTasks()
-        wx.showToast({ title: '已清空', icon: 'success' })
-      }
-    })
-  },
-
-  addDebugDuplicates() {
-    const card = state.addDebugDuplicates()
-    wx.showToast({ title: card ? '已添加重复卡' : '没有卡池', icon: 'none' })
-  },
-
-  resetDebugPack() {
-    state.clearTodayPackState()
-    wx.showToast({ title: '已重置开包', icon: 'success' })
-  },
-
-  clearDebugCollection() {
-    wx.showModal({
-      title: '清空收藏',
-      content: '会清空当前主题收藏和今日开包状态。',
-      confirmColor: '#C85A54',
-      success: (res) => {
-        if (!res.confirm) return
-        state.clearActiveSeriesCollection()
-        wx.showToast({ title: '已清空收藏', icon: 'success' })
-      }
-    })
   }
 })

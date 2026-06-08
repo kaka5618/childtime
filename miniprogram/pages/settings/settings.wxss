@@ -113,7 +113,6 @@
 
 .setting-btn::after,
 .voice-type::after,
-.debug-btn::after,
 .account-btn::after,
 .account-btn.verify::after,
 .backup-btn::after,
@@ -380,34 +379,6 @@
 }
 
 .backup-btn.danger {
-  background: rgba(200, 90, 84, 0.12);
-  color: #b84f4a;
-}
-
-.debug-block {
-  border-color: rgba(200, 90, 84, 0.24);
-}
-
-.debug-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14rpx;
-  margin-top: 18rpx;
-}
-
-.debug-btn {
-  height: 66rpx;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  border-radius: 999rpx;
-  background: rgba(123, 166, 140, 0.14);
-  color: #4e6356;
-  font-size: 23rpx;
-  line-height: 66rpx;
-}
-
-.debug-btn.danger {
   background: rgba(200, 90, 84, 0.12);
   color: #b84f4a;
 }

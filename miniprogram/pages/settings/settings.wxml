@@ -106,25 +106,12 @@
 
   <view class="panel block">
     <view class="block-title">保底规则</view>
-    <view class="muted">每个卡包随机包含 1-5 张卡。当前主题未集齐时，每日基础包至少包含 1 张未拥有卡。MVP 版本先使用本地存储模拟收藏进度。</view>
+    <view class="muted">每个卡包随机包含 1-5 张卡。当前主题未集齐时，每日基础包至少包含 1 张未拥有卡，帮助孩子持续推进收藏进度。</view>
   </view>
 
   <view class="panel block">
-    <view class="block-title" bindlongpress="revealDebugTools">合成规则</view>
+    <view class="block-title">合成规则</view>
     <view class="muted">同一张卡拥有 4 张或以上时，可以在收藏本中消耗 3 张重复卡合成 1 个额外卡包，并至少保留 1 张收藏卡。合成包不占用每日基础开包机会。</view>
-  </view>
-
-  <view wx:if="{{debugVisible}}" class="panel block debug-block">
-    <view class="block-title">调试工具</view>
-    <view class="muted">MVP 本地验收使用，上线前隐藏。</view>
-    <view class="debug-grid">
-      <button class="debug-btn" bindtap="addDebugTasks">加测试任务</button>
-      <button class="debug-btn" bindtap="completeDebugTasks">完成任务</button>
-      <button class="debug-btn" bindtap="resetDebugPack">重置开包</button>
-      <button class="debug-btn" bindtap="addDebugDuplicates">加重复卡</button>
-      <button class="debug-btn danger" bindtap="clearDebugTasks">清空任务</button>
-      <button class="debug-btn danger" bindtap="clearDebugCollection">清空收藏</button>
-    </view>
   </view>
 
   <view wx:if="{{nameEditorVisible}}" class="name-modal-mask">

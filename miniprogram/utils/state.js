@@ -536,62 +536,6 @@ function synthesizePack(sourceCardId, seriesId = getActiveSeriesId()) {
   }
 }
 
-function clearTodayPackState() {
-  wx.removeStorageSync(PACK_DATE_KEY)
-  wx.removeStorageSync(PACK_GENERATED_DATE_KEY)
-  wx.removeStorageSync(PACK_KEY)
-  wx.removeStorageSync(PACK_META_KEY)
-}
-
-function addDebugTasks() {
-  saveTasks([
-    {
-      id: `debug_task_${Date.now()}_1`,
-      name: '数学练习',
-      minutes: 20,
-      completed: false
-    },
-    {
-      id: `debug_task_${Date.now()}_2`,
-      name: '语文阅读',
-      minutes: 15,
-      completed: false
-    }
-  ])
-  clearTodayPackState()
-}
-
-function completeAllTodayTasks() {
-  const now = Date.now()
-  const tasks = getTasks().map((task) => ({
-    ...task,
-    completed: true,
-    completedAt: task.completedAt || now
-  }))
-  saveTasks(tasks)
-}
-
-function clearTodayTasks() {
-  saveTasks([])
-  clearTodayPackState()
-}
-
-function addDebugDuplicates(seriesId = getActiveSeriesId()) {
-  const cards = getCardsBySeries(seriesId)
-  if (!cards.length) return null
-
-  const collection = getSeriesCollection(seriesId)
-  const card = cards[0]
-  collection[card.id] = Math.max(collection[card.id] || 0, 4)
-  saveSeriesCollection(seriesId, collection)
-  return card
-}
-
-function clearActiveSeriesCollection(seriesId = getActiveSeriesId()) {
-  saveSeriesCollection(seriesId, {})
-  clearTodayPackState()
-}
-
 function buildLocalBackup() {
   const taskKeys = allTaskStorageKeys()
   const tasksByDate = taskKeys.reduce((result, key) => {
@@ -794,12 +738,6 @@ module.exports = {
   claimLastPack,
   rollPack,
   synthesizePack,
-  addDebugTasks,
-  completeAllTodayTasks,
-  clearTodayTasks,
-  addDebugDuplicates,
-  clearTodayPackState,
-  clearActiveSeriesCollection,
   buildCloudSyncPayload,
   restoreCloudPayload,
   saveLocalBackup,
