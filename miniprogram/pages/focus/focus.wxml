@@ -3,7 +3,7 @@
 
   <view class="focus-hero">
     <view class="back-btn" bindtap="goHome">‹</view>
-    <view class="hero-title">星梦泡泡</view>
+    <view class="hero-title">星星学习计划</view>
     <view class="hero-subtitle">认真学习，星星会为你发光</view>
   </view>
 

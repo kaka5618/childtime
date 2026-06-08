@@ -10,7 +10,7 @@
     "pages/settings/settings"
   ],
   "window": {
-    "navigationBarTitleText": "星梦泡泡",
+    "navigationBarTitleText": "星星学习计划",
     "navigationBarBackgroundColor": "#7BA68C",
     "navigationBarTextStyle": "white",
     "backgroundColor": "#FAF6F0"
