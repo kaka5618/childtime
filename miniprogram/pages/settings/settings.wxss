@@ -152,12 +152,14 @@
 
 .avatar-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 12rpx;
   margin-top: 14rpx;
 }
 
 .avatar-option {
+  box-sizing: border-box;
+  min-width: 0;
   height: 112rpx;
   margin: 0;
   padding: 8rpx 0 10rpx;
@@ -187,12 +189,14 @@
 
 .grade-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12rpx;
   margin-top: 14rpx;
 }
 
 .grade-option {
+  box-sizing: border-box;
+  min-width: 0;
   height: 64rpx;
   margin: 0;
   padding: 0;
@@ -240,6 +244,8 @@
 }
 
 .voice-type {
+  box-sizing: border-box;
+  min-width: 0;
   flex: 1;
   height: 64rpx;
   margin: 0;
@@ -287,12 +293,14 @@
 
 .account-actions {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12rpx;
   margin-top: 20rpx;
 }
 
 .account-btn {
+  box-sizing: border-box;
+  min-width: 0;
   height: 70rpx;
   margin: 0;
   padding: 0;
@@ -352,12 +360,14 @@
 
 .backup-actions {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12rpx;
   margin-top: 18rpx;
 }
 
 .backup-btn {
+  box-sizing: border-box;
+  min-width: 0;
   height: 66rpx;
   margin: 0;
   padding: 0;
@@ -452,18 +462,21 @@
 }
 
 .name-modal-actions {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 18rpx;
+  display: flex;
   width: 100%;
   margin-top: 34rpx;
+  gap: 18rpx;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .name-modal-btn {
   box-sizing: border-box;
   display: flex;
+  flex: 1 1 0;
   min-width: 0;
-  width: 100%;
+  max-width: 240rpx;
   height: 78rpx;
   margin: 0;
   padding: 0;
