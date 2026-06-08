@@ -2,7 +2,7 @@ App({
   onLaunch() {
     if (this.globalData.cloudSyncEnabled && wx.cloud) {
       const cloudConfig = {
-        traceUser: true
+        traceUser: false
       }
       if (this.globalData.cloudEnvId) {
         cloudConfig.env = this.globalData.cloudEnvId

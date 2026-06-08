@@ -1,5 +1,3 @@
-const tempUrlCache = {}
-
 function getCloudConfig() {
   const app = typeof getApp === 'function' ? getApp() : null
   const globalData = app && app.globalData ? app.globalData : {}
@@ -24,34 +22,6 @@ function buildCloudAssetFileID(path, config) {
   return `${config.baseFileID}/${String(path).replace(/^\/+/, '')}`
 }
 
-function getTempFileURLs(fileIDs) {
-  if (!fileIDs.length || !wx.cloud || !wx.cloud.getTempFileURL) {
-    return Promise.resolve({})
-  }
-
-  const pendingFileIDs = fileIDs.filter((fileID) => !tempUrlCache[fileID])
-  if (!pendingFileIDs.length) {
-    return Promise.resolve(tempUrlCache)
-  }
-
-  return new Promise((resolve) => {
-    wx.cloud.getTempFileURL({
-      fileList: pendingFileIDs,
-      success: (res) => {
-        ;(res.fileList || []).forEach((item) => {
-          if (item.status === 0 && item.tempFileURL) {
-            tempUrlCache[item.fileID] = item.tempFileURL
-          }
-        })
-        resolve(tempUrlCache)
-      },
-      fail: () => {
-        resolve(tempUrlCache)
-      }
-    })
-  })
-}
-
 function attachLocalCloudFileIDs(cards) {
   const config = getCloudConfig()
   if (!config.enabled) {
@@ -66,22 +36,14 @@ function attachLocalCloudFileIDs(cards) {
     const cloudFileID = buildCloudFileID(card, config)
     return {
       ...card,
-      imageUrl: cloudFileID && tempUrlCache[cloudFileID] ? tempUrlCache[cloudFileID] : card.image,
+      imageUrl: cloudFileID || card.image,
       cloudFileID
     }
   })
 }
 
 function resolveCards(cards) {
-  const localCards = attachLocalCloudFileIDs(cards)
-  const fileIDs = Array.from(new Set(localCards.map((card) => card.cloudFileID).filter(Boolean)))
-
-  return getTempFileURLs(fileIDs).then((urlMap) => {
-    return localCards.map((card) => ({
-      ...card,
-      imageUrl: card.cloudFileID && urlMap[card.cloudFileID] ? urlMap[card.cloudFileID] : card.image
-    }))
-  })
+  return Promise.resolve(attachLocalCloudFileIDs(cards))
 }
 
 function resolveCard(card) {
@@ -90,13 +52,7 @@ function resolveCard(card) {
 }
 
 function resolveAsset(path, fallbackPath) {
-  const config = getCloudConfig()
-  const cloudFileID = buildCloudAssetFileID(path, config)
-  if (!cloudFileID) return Promise.resolve(fallbackPath || '')
-
-  return getTempFileURLs([cloudFileID]).then((urlMap) => {
-    return urlMap[cloudFileID] || fallbackPath || ''
-  })
+  return Promise.resolve(fallbackPath || '')
 }
 
 module.exports = {
