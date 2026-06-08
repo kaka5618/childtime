@@ -7,22 +7,22 @@
         <view class="muted">{{childName}} · {{gradeLabel}} · 目标 {{dailyTargetMinutes}} 分钟</view>
       </view>
     </view>
-    <button class="setting-btn" bindtap="editChildName">修改名字</button>
+    <view class="setting-btn" bindtap="editChildName">修改名字</view>
 
     <view class="profile-section">
       <view class="option-label">头像贴纸</view>
       <view class="avatar-grid">
-        <button wx:for="{{avatarOptions}}" wx:key="key" class="avatar-option {{item.activeClass}}" data-key="{{item.key}}" data-emoji="{{item.emoji}}" bindtap="selectAvatar">
+        <view wx:for="{{avatarOptions}}" wx:key="key" class="avatar-option {{item.activeClass}}" data-key="{{item.key}}" data-emoji="{{item.emoji}}" bindtap="selectAvatar">
           <view class="avatar-emoji">{{item.emoji}}</view>
           <view class="avatar-label">{{item.label}}</view>
-        </button>
+        </view>
       </view>
     </view>
 
     <view class="profile-section">
       <view class="option-label">年龄段</view>
       <view class="grade-grid">
-        <button wx:for="{{gradeOptions}}" wx:key="key" class="grade-option {{item.activeClass}}" data-key="{{item.key}}" data-label="{{item.label}}" bindtap="selectGrade">{{item.label}}</button>
+        <view wx:for="{{gradeOptions}}" wx:key="key" class="grade-option {{item.activeClass}}" data-key="{{item.key}}" data-label="{{item.label}}" bindtap="selectGrade">{{item.label}}</view>
       </view>
     </view>
 
@@ -36,7 +36,7 @@
     <view class="block-title">当前收集</view>
     <view class="muted">{{activeThemeName}}</view>
     <view wx:if="{{nextSwitchDate}}" class="setting-note">每 15 天可更换一次收集主题。下次可更换：{{nextSwitchDate}}</view>
-    <button class="setting-btn" bindtap="goThemeSelect">选择卡包</button>
+    <view class="setting-btn" bindtap="goThemeSelect">选择卡包</view>
   </view>
 
   <view class="panel block">
@@ -51,7 +51,7 @@
     <view class="voice-options {{voiceOptionsClass}}">
       <view class="option-label">音色</view>
       <view class="voice-type-row">
-        <button wx:for="{{voiceTypes}}" wx:key="key" class="voice-type {{item.activeClass}}" data-type="{{item.key}}" bindtap="changeVoiceType">{{item.label}}</button>
+        <view wx:for="{{voiceTypes}}" wx:key="key" class="voice-type {{item.activeClass}}" data-type="{{item.key}}" bindtap="changeVoiceType">{{item.label}}</view>
       </view>
 
       <view class="option-label volume-label">音量 {{volume}}%</view>
@@ -93,7 +93,7 @@
     <view class="block-title">隐私与数据</view>
     <view class="muted">孩子名字、头像贴纸、学习任务、收藏进度和开包记录用于展示计划、同步进度和恢复数据。</view>
     <view class="setting-note">微信登录只用于识别同一个微信账号下的数据；不使用手机号、定位或通讯录。</view>
-    <button class="setting-btn privacy-btn" bindtap="openPrivacyGuide">查看隐私指引</button>
+    <view class="setting-btn privacy-btn" bindtap="openPrivacyGuide">查看隐私指引</view>
   </view>
 
   <view class="panel block">

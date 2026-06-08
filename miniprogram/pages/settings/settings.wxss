@@ -97,10 +97,15 @@
 }
 
 .setting-btn {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
   height: 72rpx;
   margin-top: 20rpx;
   border: 0;
   border-radius: 999rpx;
+  align-items: center;
+  justify-content: center;
   background: linear-gradient(180deg, #dff3c5, #a6d982);
   box-shadow:
     0 8rpx 0 rgba(91, 131, 85, 0.46),
@@ -109,6 +114,7 @@
   color: #3e6d31;
   font-size: 26rpx;
   line-height: 72rpx;
+  text-align: center;
 }
 
 .setting-btn::after,
@@ -152,21 +158,26 @@
 
 .avatar-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12rpx;
   margin-top: 14rpx;
 }
 
 .avatar-option {
   box-sizing: border-box;
+  display: flex;
   min-width: 0;
-  height: 112rpx;
+  height: 86rpx;
   margin: 0;
-  padding: 8rpx 0 10rpx;
+  padding: 0 18rpx;
   border: 3rpx solid rgba(123, 166, 140, 0.2);
-  border-radius: 22rpx;
+  border-radius: 999rpx;
+  align-items: center;
+  justify-content: center;
+  gap: 10rpx;
   background: rgba(255, 255, 255, 0.78);
   color: #5d4934;
+  overflow: hidden;
 }
 
 .avatar-option.active,
@@ -178,13 +189,18 @@
 }
 
 .avatar-emoji {
-  font-size: 42rpx;
-  line-height: 52rpx;
+  flex: none;
+  font-size: 34rpx;
+  line-height: 1;
 }
 
 .avatar-label {
-  font-size: 20rpx;
-  line-height: 24rpx;
+  min-width: 0;
+  font-size: 24rpx;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .grade-grid {
@@ -196,6 +212,7 @@
 
 .grade-option {
   box-sizing: border-box;
+  display: flex;
   min-width: 0;
   height: 64rpx;
   margin: 0;
@@ -203,9 +220,13 @@
   border: 3rpx solid rgba(123, 166, 140, 0.2);
   border-radius: 999rpx;
   background: rgba(255, 255, 255, 0.82);
+  align-items: center;
+  justify-content: center;
   color: #4e6356;
   font-size: 23rpx;
   line-height: 64rpx;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .setting-note {
@@ -245,6 +266,7 @@
 
 .voice-type {
   box-sizing: border-box;
+  display: flex;
   min-width: 0;
   flex: 1;
   height: 64rpx;
@@ -252,10 +274,14 @@
   padding: 0;
   border: 3rpx solid rgba(123, 166, 140, 0.2);
   border-radius: 999rpx;
+  align-items: center;
+  justify-content: center;
   background: rgba(255, 255, 255, 0.82);
   color: #4e6356;
   font-size: 24rpx;
   line-height: 64rpx;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .voice-type.active {
