@@ -594,12 +594,9 @@ Page({
 
   isCloudSyncConfigured() {
     const app = getApp()
-    return Boolean(
-      app.globalData &&
-      app.globalData.cloudSyncEnabled &&
-      wx.cloud &&
-      wx.cloud.callFunction
-    )
+    if (!app || !app.globalData || !app.globalData.cloudSyncEnabled) return false
+    if (typeof app.initCloud === 'function') return app.initCloud()
+    return Boolean(wx.cloud && wx.cloud.callFunction)
   },
 
   createLocalBackup() {

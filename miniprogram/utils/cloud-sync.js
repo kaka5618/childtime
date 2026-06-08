@@ -4,19 +4,17 @@ let syncTimer = null
 let syncInFlight = false
 let syncQueued = false
 
-function isCloudConfigured() {
+function isCloudConfigured(options = {}) {
   const app = getApp()
-  return Boolean(
-    app.globalData &&
-    app.globalData.cloudSyncEnabled &&
-    wx.cloud &&
-    wx.cloud.callFunction
-  )
+  if (!app || !app.globalData || !app.globalData.cloudSyncEnabled) return false
+  if (options.init && typeof app.initCloud === 'function') return app.initCloud()
+  if (typeof app.hasCloudRuntime === 'function') return app.hasCloudRuntime()
+  return Boolean(wx.cloud && wx.cloud.callFunction)
 }
 
-function canSync() {
+function canSync(options = {}) {
   const accountStatus = state.getAccountStatus()
-  return Boolean(accountStatus.loginReady && isCloudConfigured())
+  return Boolean(accountStatus.loginReady && isCloudConfigured(options))
 }
 
 function canAutoSync() {
@@ -41,7 +39,7 @@ function formatSyncError(error, fallbackText) {
 }
 
 function syncNow() {
-  if (!canSync()) {
+  if (!canSync({ init: true })) {
     return Promise.resolve({ ok: false, skipped: true })
   }
 
