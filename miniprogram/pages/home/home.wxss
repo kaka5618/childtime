@@ -46,17 +46,15 @@
 
 .cloud-a {
   top: 126rpx;
-  left: -190rpx;
+  left: 28rpx;
   opacity: 0.62;
-  animation: cloud-drift-a 22s linear infinite;
 }
 
 .cloud-b {
   top: 242rpx;
-  right: -220rpx;
+  right: 36rpx;
   opacity: 0.46;
   transform: scale(0.78);
-  animation: cloud-drift-b 26s linear infinite;
 }
 
 .energy-wave {
@@ -72,11 +70,11 @@
 }
 
 .wave-a {
-  animation: energy-wave 3.4s ease-out infinite;
+  display: none;
 }
 
 .wave-b {
-  animation: energy-wave 3.4s ease-out 1.7s infinite;
+  display: none;
 }
 
 .floating-star {
@@ -91,13 +89,11 @@
 .star-a {
   top: 226rpx;
   left: 150rpx;
-  animation: star-twinkle 2.8s ease-in-out infinite;
 }
 
 .star-b {
   top: 324rpx;
   right: 174rpx;
-  animation: star-twinkle 2.8s ease-in-out 0.9s infinite;
 }
 
 .flower {
@@ -105,7 +101,6 @@
   width: 48rpx;
   height: 48rpx;
   transform-origin: 50% 100%;
-  animation: flower-sway 3.2s ease-in-out infinite;
 }
 
 .flower-a {
@@ -117,7 +112,6 @@
   right: 86rpx;
   bottom: 86rpx;
   transform: scale(0.82);
-  animation: flower-sway-small 3.2s ease-in-out 0.8s infinite;
 }
 
 .petal,
@@ -269,7 +263,6 @@
   box-shadow: 0 10rpx 20rpx rgba(138, 93, 19, 0.16);
   text-shadow: 0 2rpx 0 rgba(255, 248, 220, 0.9);
   transform: translateX(-50%);
-  animation: soft-float 3.6s ease-in-out infinite;
 }
 
 .energy-label {
@@ -283,7 +276,6 @@
   font-weight: 900;
   text-align: center;
   text-shadow: 0 4rpx 0 rgba(255, 248, 218, 0.72);
-  animation: energy-glow 2.8s ease-in-out infinite;
 }
 
 .energy-label text {
@@ -305,13 +297,13 @@
 .spark-one {
   top: -24rpx;
   left: 35%;
-  animation: collect-spark-a 2.8s ease-in-out infinite;
+  display: none;
 }
 
 .spark-two {
   right: 34%;
   bottom: -24rpx;
-  animation: collect-spark-b 2.8s ease-in-out 0.7s infinite;
+  display: none;
 }
 
 .energy-tag {

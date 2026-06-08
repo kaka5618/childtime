@@ -140,7 +140,6 @@
   height: 30rpx;
   border-radius: 50%;
   background: rgba(112, 83, 43, 0.12);
-  filter: blur(2rpx);
   content: "";
 }
 
@@ -300,7 +299,6 @@
   height: 30rpx;
   border-radius: 50%;
   background: rgba(62, 82, 70, 0.18);
-  filter: blur(2rpx);
 }
 
 .preview-card {
@@ -557,7 +555,7 @@
 }
 
 .preview .pack-box {
-  filter: saturate(0.72);
+  opacity: 0.86;
 }
 
 .preview .pack-ribbon {
