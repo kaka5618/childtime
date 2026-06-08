@@ -89,6 +89,13 @@
     <view class="setting-note">备份只保存在当前设备；从云端恢复前会自动保存一份本机备份，方便误操作后回退。</view>
   </view>
 
+  <view class="panel block privacy-block">
+    <view class="block-title">隐私与数据</view>
+    <view class="muted">孩子名字、头像贴纸、学习任务、收藏进度和开包记录用于展示计划、同步进度和恢复数据。</view>
+    <view class="setting-note">微信登录只用于识别同一个微信账号下的数据；不使用手机号、定位或通讯录。</view>
+    <button class="setting-btn privacy-btn" bindtap="openPrivacyGuide">查看隐私指引</button>
+  </view>
+
   <view class="panel block">
     <view class="block-title">抽卡概率</view>
     <view class="row"><text>传说 SSR</text><text>3.0%</text></view>

@@ -637,6 +637,19 @@ Page({
     })
   },
 
+  openPrivacyGuide() {
+    if (wx.openPrivacyContract) {
+      wx.openPrivacyContract({
+        fail: () => {
+          wx.showToast({ title: '请先在微信后台配置隐私指引', icon: 'none' })
+        }
+      })
+      return
+    }
+
+    wx.showToast({ title: '当前环境暂不支持查看', icon: 'none' })
+  },
+
   toggleVoice(event) {
     const voiceEnabled = event.detail.value
     state.saveSettings({ voiceEnabled })

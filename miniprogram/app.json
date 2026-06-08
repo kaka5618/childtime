@@ -15,6 +15,7 @@
     "navigationBarTextStyle": "white",
     "backgroundColor": "#FAF6F0"
   },
+  "__usePrivacyCheck__": true,
   "style": "v2",
   "lazyCodeLoading": "requiredComponents",
   "sitemapLocation": "sitemap.json"
