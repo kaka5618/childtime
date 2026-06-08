@@ -118,7 +118,7 @@
     <view class="name-modal">
       <view class="name-modal-star">★</view>
       <view class="name-modal-title">修改名字</view>
-      <input class="name-modal-input" maxlength="8" value="{{nameDraft}}" placeholder="例如：小星星" bindinput="onNameDraftInput" focus />
+      <input class="name-modal-input" maxlength="8" value="{{nameDraft}}" placeholder="例如：小星星" bindinput="onNameDraftInput" />
       <view class="name-modal-actions">
         <view class="name-modal-btn secondary" bindtap="closeNameEditor">取消</view>
         <view class="name-modal-btn" bindtap="saveNameEditor">保存</view>

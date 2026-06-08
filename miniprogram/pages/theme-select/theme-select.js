@@ -2,7 +2,6 @@ const state = require('../../utils/state')
 const cloudSync = require('../../utils/cloud-sync')
 const { themes } = require('../../utils/themes')
 const { getCard, getCardsBySeries } = require('../../utils/cards')
-const { resolveCards } = require('../../utils/cloud-assets')
 
 function buildThemeView(theme) {
   const previewCards = (theme.previewCardIds || [])
@@ -14,7 +13,10 @@ function buildThemeView(theme) {
 
   return {
     ...theme,
-    previewCards,
+    previewCards: previewCards.map((card) => ({
+      ...card,
+      imageUrl: card.image
+    })),
     hasPreviewCards: previewCards.length > 0,
     hasCoverSymbol: previewCards.length === 0,
     ownedCount: progress.owned,
@@ -76,30 +78,6 @@ Page({
       pendingTheme,
       cooldownInfo,
       ...buildPageView(themeViews, selectedId, selectedId, pendingTheme, cooldownInfo)
-    })
-    this.resolveThemePreviewImages(themeViews)
-  },
-
-  resolveThemePreviewImages(themeViews) {
-    const previewCards = []
-    themeViews.forEach((theme) => {
-      previewCards.push(...theme.previewCards)
-    })
-    resolveCards(previewCards).then((resolvedCards) => {
-      let cursor = 0
-      const resolvedThemeViews = themeViews.map((theme) => {
-        const count = theme.previewCards.length
-        const nextPreviewCards = resolvedCards.slice(cursor, cursor + count)
-        cursor += count
-        return {
-          ...theme,
-          previewCards: nextPreviewCards
-        }
-      })
-      this.setData({
-        themes: resolvedThemeViews,
-        ...buildPageView(resolvedThemeViews, this.data.selectedId, this.data.pendingId, this.data.pendingTheme, this.data.cooldownInfo)
-      })
     })
   },
 

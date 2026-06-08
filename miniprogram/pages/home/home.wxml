@@ -113,7 +113,7 @@
     <view class="name-modal">
       <view class="name-modal-star">★</view>
       <view class="name-modal-title">怎么称呼你？</view>
-      <input class="name-modal-input" maxlength="8" value="{{nameDraft}}" placeholder="例如：小星星" bindinput="onNameDraftInput" focus />
+      <input class="name-modal-input" maxlength="8" value="{{nameDraft}}" placeholder="例如：小星星" bindinput="onNameDraftInput" />
       <view class="name-modal-btn" bindtap="saveNamePrompt">保存</view>
     </view>
   </view>
