@@ -24,6 +24,7 @@ Page({
     syncSummary: '还没有同步记录',
     syncButtonText: '同步云端',
     restoreCloudButtonText: '云端恢复',
+    verifyCloudButtonText: '验证同步',
     syncBusy: false,
     backupExists: false,
     backupSummary: '还没有本地备份',
@@ -68,6 +69,7 @@ Page({
         syncSummary: this.buildSyncSummary(syncStatus),
         syncButtonText: '同步云端',
         restoreCloudButtonText: '云端恢复',
+        verifyCloudButtonText: '验证同步',
         syncBusy: false,
         backupExists: backupInfo.exists,
         backupSummary: this.buildBackupSummary(backupInfo)
@@ -96,6 +98,7 @@ Page({
         syncSummary: '还没有同步记录',
         syncButtonText: '同步云端',
         restoreCloudButtonText: '云端恢复',
+        verifyCloudButtonText: '验证同步',
         syncBusy: false,
         backupExists: false,
         backupSummary: '还没有本地备份'
@@ -151,6 +154,60 @@ Page({
     if (syncStatus.lastResult === 'success') return `上次同步成功 ${this.formatTimeText(syncStatus.lastSyncAt)}`
     if (syncStatus.lastResult === 'unconfigured') return '云端还未配置，本机数据没有上传。'
     return syncStatus.lastError ? `同步失败：${syncStatus.lastError}` : '同步失败，请稍后重试。'
+  },
+
+  buildPayloadSummary(payload) {
+    const cloudData = payload && payload.data ? payload.data : {}
+    const tasksByDate = cloudData.tasksByDate || {}
+    const collection = cloudData.collection || {}
+    const taskCount = Object.keys(tasksByDate).reduce((total, key) => {
+      const tasks = Array.isArray(tasksByDate[key]) ? tasksByDate[key] : []
+      return total + tasks.length
+    }, 0)
+    const cardCount = Object.keys(collection).reduce((total, seriesId) => {
+      const series = collection[seriesId] || {}
+      return total + Object.keys(series).filter((cardId) => Number(series[cardId] || 0) > 0).length
+    }, 0)
+    const childName = cloudData.childProfile && cloudData.childProfile.name
+      ? cloudData.childProfile.name
+      : '未填写名字'
+
+    return `孩子：${childName} · 任务 ${taskCount} 个 · 收藏 ${cardCount} 张`
+  },
+
+  payloadDataMatches(localPayload, cloudPayload) {
+    const localData = localPayload && localPayload.data ? localPayload.data : {}
+    const cloudData = cloudPayload && cloudPayload.data ? cloudPayload.data : {}
+    return this.stableStringify(localData) === this.stableStringify(cloudData)
+  },
+
+  stableStringify(value) {
+    if (Array.isArray(value)) {
+      return `[${value.map((item) => this.stableStringify(item)).join(',')}]`
+    }
+    if (value && typeof value === 'object') {
+      return `{${Object.keys(value).sort().map((key) => {
+        return `${JSON.stringify(key)}:${this.stableStringify(value[key])}`
+      }).join(',')}}`
+    }
+    return JSON.stringify(value)
+  },
+
+  formatCloudError(error, fallbackText) {
+    const message = String(
+      (error && (error.errMsg || error.message)) || fallbackText || '云端调用失败'
+    )
+    if (/FUNCTION_NOT_FOUND|FunctionName parameter could not be found/i.test(message)) {
+      return '云函数还没有部署'
+    }
+    if (/collection not exists|Db or Table not exist|DATABASE_COLLECTION_NOT_EXIST|-502005/i.test(message)) {
+      return '云数据库集合还没创建'
+    }
+    if (/timeout/i.test(message)) {
+      return '云端响应超时，请稍后重试'
+    }
+    if (message.length > 42) return `${message.slice(0, 42)}...`
+    return message
   },
 
   formatTimeText(value) {
@@ -318,7 +375,7 @@ Page({
           const syncStatus = state.saveCloudSyncStatus({
             cloudLinked: false,
             lastResult: 'failed',
-            lastError: errorMessage
+            lastError: this.formatCloudError(null, errorMessage)
           })
           const nextAccountStatus = state.getAccountStatus()
           this.setData({
@@ -348,7 +405,7 @@ Page({
         const syncStatus = state.saveCloudSyncStatus({
           cloudLinked: false,
           lastResult: 'failed',
-          lastError: error && error.errMsg ? error.errMsg : '云函数调用失败'
+          lastError: this.formatCloudError(error, '云函数调用失败')
         })
         const nextAccountStatus = state.getAccountStatus()
         this.setData({
@@ -363,6 +420,86 @@ Page({
         this.setData({
           syncBusy: false,
           syncButtonText: '同步云端'
+        })
+      }
+    })
+  },
+
+  verifyCloudData() {
+    if (this.data.syncBusy) return
+
+    const accountStatus = state.getAccountStatus()
+    if (!accountStatus.loginReady) {
+      wx.showToast({ title: '先完成微信登录', icon: 'none' })
+      return
+    }
+
+    if (!this.isCloudSyncConfigured()) {
+      wx.showToast({ title: '云端未配置', icon: 'none' })
+      return
+    }
+
+    this.setData({
+      syncBusy: true,
+      verifyCloudButtonText: '验证中'
+    })
+    wx.showLoading({ title: '验证中' })
+
+    wx.cloud.callFunction({
+      name: 'getUserData',
+      success: (res) => {
+        if (!res.result || !res.result.ok) {
+          const message = res.result && res.result.message ? res.result.message : '云端没有可验证数据'
+          wx.showModal({
+            title: '还不能验证',
+            content: message,
+            showCancel: false,
+            confirmText: '知道了'
+          })
+          return
+        }
+
+        const localPayload = state.buildCloudSyncPayload()
+        const cloudPayload = res.result.payload
+        const summary = this.buildPayloadSummary(cloudPayload)
+        const matched = this.payloadDataMatches(localPayload, cloudPayload)
+
+        const syncStatus = state.saveCloudSyncStatus({
+          cloudLinked: matched,
+          lastResult: matched ? 'success' : 'failed',
+          lastSyncAt: matched ? new Date().toISOString() : '',
+          lastError: matched ? '' : '云端和本机不一致'
+        })
+        const nextAccountStatus = state.getAccountStatus()
+        this.setData({
+          accountSummary: this.buildAccountSummary(nextAccountStatus),
+          accountBadgeText: this.buildAccountBadgeText(nextAccountStatus),
+          syncSummary: this.buildSyncSummary(syncStatus)
+        })
+
+        wx.showModal({
+          title: matched ? '验证通过' : '需要重新同步',
+          content: matched
+            ? `云端数据和本机一致。\n${summary}`
+            : `云端数据和本机不一致，请先点“同步云端”再验证。\n${summary}`,
+          showCancel: false,
+          confirmText: '知道了'
+        })
+      },
+      fail: (error) => {
+        const message = this.formatCloudError(error, '验证失败')
+        wx.showModal({
+          title: '验证失败',
+          content: message,
+          showCancel: false,
+          confirmText: '知道了'
+        })
+      },
+      complete: () => {
+        wx.hideLoading()
+        this.setData({
+          syncBusy: false,
+          verifyCloudButtonText: '验证同步'
         })
       }
     })
@@ -406,7 +543,7 @@ Page({
       success: (res) => {
         if (!res.result || !res.result.ok) {
           const message = res.result && res.result.message ? res.result.message : '云端没有可恢复数据'
-          wx.showToast({ title: message, icon: 'none' })
+          wx.showToast({ title: this.formatCloudError(null, message), icon: 'none' })
           return
         }
 
@@ -416,7 +553,7 @@ Page({
       },
       fail: (error) => {
         wx.showToast({
-          title: error && error.errMsg ? '恢复失败' : '恢复失败',
+          title: this.formatCloudError(error, '恢复失败'),
           icon: 'none'
         })
       },
